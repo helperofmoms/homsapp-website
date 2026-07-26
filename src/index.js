@@ -108,6 +108,40 @@ export default {
       // now that the migration is complete, to minimize the admin API's
       // attack surface. Logos are still served below from LOGOS_KV.
 
+      // Kill-switch service worker: homsapp.com used to run GoDaddy's
+      // Website Builder, which registers a Workbox service worker
+      // (scope "/") in every visitor's browser. That old worker is still
+      // active in returning visitors' browsers and intercepts requests
+      // (including images) with its own stale Cache Storage, which is why
+      // some visitors still see broken images even though the new site
+      // serves everything correctly. Serving a real /sw.js here lets
+      // browsers pick up "an update" to the worker they already have
+      // installed; this version immediately clears all caches and
+      // unregisters itself, then reloads any open tabs, so the browser
+      // goes back to loading everything fresh from the network.
+      if (url.pathname === '/sw.js' && request.method === 'GET') {
+        const killSwitch = `
+self.addEventListener('install', () => { self.skipWaiting(); });
+self.addEventListener('activate', (event) => {
+  event.waitUntil((async () => {
+    const keys = await caches.keys();
+    await Promise.all(keys.map((k) => caches.delete(k)));
+    await self.registration.unregister();
+    const clientsList = await self.clients.matchAll({ type: 'window' });
+    for (const client of clientsList) {
+      client.navigate(client.url);
+    }
+  })());
+});
+`;
+        return new Response(killSwitch, {
+          headers: {
+            'content-type': 'application/javascript',
+            'cache-control': 'no-cache, no-store, must-revalidate'
+          }
+        });
+      }
+
       if (url.pathname.startsWith('/partner-logos/') && request.method === 'GET') {
         const filename = url.pathname.replace('/partner-logos/', '');
         const obj = await env.LOGOS_KV.getWithMetadata(filename, 'arrayBuffer');
