@@ -1,0 +1,539 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>Become an Enrichment Partner — HOMs Homeschool</title><meta content="Apply to become a HOMs Enrichment Partner and get featured in front of homeschool families near you." name="description"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/><style>
+:root{ --blue:#0EA5E9; --purple:#6C5CE7; --purple-deep:#4F3DC6; --green:#43B05C; --lavender:#EEF0FD; --lavender-deep:#E2E5FB; --ink:#241F45; --muted:#5B5876; --white:#FFFFFF; --radius-lg:28px; --shadow:0 20px 40px -18px rgba(76,63,190,0.25); }
+*{box-sizing:border-box;} html{scroll-behavior:smooth;}
+body{ margin:0; font-family:'Poppins',sans-serif; color:var(--ink); background:var(--white); -webkit-font-smoothing:antialiased; }
+h1,h2,h3{ font-family:'Poppins',sans-serif; font-weight:700; margin:0; line-height:1.15; }
+p{margin:0;color:var(--muted);line-height:1.6;}
+a{text-decoration:none;} img,svg{display:block;}
+.wrap{max-width:760px;margin:0 auto;padding:0 24px;}
+.btn{ display:inline-flex; align-items:center; justify-content:center; gap:8px; font-family:'Poppins',sans-serif; font-weight:700; font-size:16px; padding:16px 30px; border-radius:999px; cursor:pointer; border:none; transition:transform .15s ease, box-shadow .15s ease; }
+.btn:hover{transform:translateY(-2px);}
+.btn-primary{ background:linear-gradient(135deg,var(--blue),var(--purple)); color:#fff; box-shadow:0 14px 28px -10px rgba(108,92,231,0.55); }
+.btn-cta-green{ background:linear-gradient(135deg,var(--blue),var(--green)); color:#fff; box-shadow:0 14px 28px -10px rgba(67,176,92,0.5); width:100%; padding:17px 30px; font-size:16.5px; }
+.btn-cta-green:disabled{opacity:.6;cursor:not-allowed;transform:none;}
+header{ position:sticky;top:0;z-index:50; background:rgba(255,255,255,0.9); backdrop-filter:blur(8px); border-bottom:1px solid #F0EFFB; }
+.nav{ display:flex;align-items:center;justify-content:space-between; padding:16px 24px; max-width:1140px;margin:0 auto; }
+.logo{display:flex;align-items:center;gap:10px;}
+.logo-cube{width:34px;height:34px;}
+.logo-text{display:flex;flex-direction:column;line-height:1;}
+.logo-word{font-family:'Poppins',sans-serif;font-weight:800;font-size:22px;letter-spacing:0.5px;}
+.logo-sub{font-family:'Poppins',sans-serif;font-size:9px;letter-spacing:2.5px;color:var(--blue);font-weight:700;margin-top:1px;}
+.back-link{color:var(--purple-deep);font-weight:600;font-size:14.5px;}
+.page-hero{ background:radial-gradient(circle at 15% 15%, #F4F1FE 0%, var(--lavender) 45%, var(--lavender) 100%); padding:50px 0 38px; text-align:center; }
+.page-hero .eyebrow{ font-size:12.5px;font-weight:800;letter-spacing:1.5px;color:var(--green); text-transform:uppercase;margin-bottom:12px;display:block; }
+.page-hero h1{font-size:32px;color:var(--ink);margin-bottom:12px;}
+.page-hero p{font-size:15.5px;max-width:520px;margin:0 auto;}
+.form-section{padding:44px 0 90px;}
+.form-card{background:#fff;border:1px solid #F0EFFB;border-radius:var(--radius-lg);box-shadow:var(--shadow);padding:36px;}
+.form-group{margin-bottom:22px;position:relative;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.form-row.three{grid-template-columns:1.4fr 0.7fr 1.2fr;}
+label{display:block;font-weight:700;font-size:13.5px;color:var(--ink);margin-bottom:7px;}
+label .req{color:#D6395B;}
+label .opt{color:var(--muted);font-weight:500;font-size:12px;}
+input[type=text],input[type=email],input[type=tel],input[type=url],select,textarea{
+  width:100%;font-family:'Poppins',sans-serif;font-size:14.5px;color:var(--ink);
+  padding:13px 14px;border:1.5px solid #E2E5FB;border-radius:12px;background:#FAFAFF;
+  transition:border-color .15s ease;
+}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--purple);background:#fff;}
+textarea{resize:vertical;min-height:90px;}
+.char-count{font-size:12px;color:var(--muted);text-align:right;margin-top:5px;}
+.file-drop{
+  border:2px dashed #D9DDF7;border-radius:14px;padding:22px;text-align:center;cursor:pointer;
+  background:#FAFAFF;transition:border-color .15s ease;position:relative;
+}
+.file-drop:hover{border-color:var(--purple);}
+.file-drop input{position:absolute;inset:0;opacity:0;cursor:pointer;}
+.file-drop p{font-size:13.5px;}
+.logo-preview{width:64px;height:64px;border-radius:12px;object-fit:contain;border:1px solid #E2E5FB;background:#fff;margin:0 auto 10px;padding:6px;display:none;}
+.section-divider{border:none;border-top:1px solid #F0EFFB;margin:30px 0;}
+.section-label{font-size:12.5px;font-weight:800;letter-spacing:1px;color:var(--purple-deep);text-transform:uppercase;margin-bottom:16px;display:block;}
+.success-card{display:none;text-align:center;padding:20px 10px 6px;}
+.success-icon{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--green));display:flex;align-items:center;justify-content:center;margin:0 auto 18px;}
+.success-card h2{font-size:24px;margin-bottom:10px;}
+.success-card p{font-size:15px;max-width:420px;margin:0 auto;}
+footer{background:var(--ink);padding:32px 0;text-align:center;}
+footer p{color:#8B87AB;font-size:12.5px;}
+
+/* multi-select checkbox dropdown */
+.ms-dropdown{position:relative;}
+.ms-toggle{width:100%;text-align:left;font-family:'Poppins',sans-serif;font-size:14.5px;color:var(--ink);padding:13px 14px;border:1.5px solid #E2E5FB;border-radius:12px;background:#FAFAFF;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;transition:border-color .15s ease;}
+.ms-toggle .ms-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.ms-toggle .ms-label.placeholder{color:#9490AE;}
+.ms-toggle .ms-chevron{flex-shrink:0;color:#9490AE;font-size:11px;transition:transform .15s ease;}
+.ms-dropdown.open .ms-toggle{border-color:var(--purple);background:#fff;}
+.ms-dropdown.open .ms-chevron{transform:rotate(180deg);}
+.ms-dropdown.invalid .ms-toggle{border-color:#D6395B;}
+.ms-panel{position:absolute;top:calc(100% + 6px);left:0;right:0;background:#fff;border:1.5px solid #E2E5FB;border-radius:14px;box-shadow:0 16px 32px -12px rgba(76,63,190,0.3);padding:8px;max-height:230px;overflow-y:auto;z-index:20;display:none;}
+.ms-dropdown.open .ms-panel{display:block;}
+.ms-option{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:500;padding:9px 10px;border-radius:8px;cursor:pointer;}
+.ms-option:hover{background:var(--lavender);}
+.ms-option input{width:16px;height:16px;accent-color:var(--purple);cursor:pointer;flex-shrink:0;}
+.field-error{display:none;font-size:12px;color:#D6395B;font-weight:600;margin-top:6px;}
+.field-error.show{display:block;}
+.hidden-field{display:none !important;}
+
+/* toggles (nationwide + grade/age) */
+.toggle-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.toggle-switch{position:relative;display:inline-block;width:42px;height:24px;flex-shrink:0;}
+.toggle-switch input{opacity:0;width:0;height:0;}
+.toggle-slider{position:absolute;cursor:pointer;inset:0;background:#D9DDF7;border-radius:999px;transition:.15s ease;}
+.toggle-slider::before{content:"";position:absolute;height:18px;width:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.15s ease;box-shadow:0 2px 4px rgba(0,0,0,0.2);}
+.toggle-switch input:checked + .toggle-slider{background:linear-gradient(135deg,var(--blue),var(--green));}
+.toggle-switch input:checked + .toggle-slider::before{transform:translateX(18px);}
+.toggle-label{font-size:13.5px;font-weight:600;color:var(--muted);}
+.nationwide-badge{display:none;align-items:center;gap:6px;font-size:13.5px;font-weight:700;color:var(--green);background:#EAF7EE;padding:13px 14px;border-radius:12px;margin-top:2px;}
+.nationwide-badge.show{display:flex;}
+.sub-fields{margin-top:2px;}
+.sub-fields .form-group:last-child{margin-bottom:0;}
+
+.agreement-check{display:flex;align-items:flex-start;gap:10px;font-weight:500;cursor:pointer;}
+.agreement-check input{width:18px;height:18px;margin-top:2px;accent-color:var(--purple);cursor:pointer;flex-shrink:0;}
+.agreement-check span{font-size:13.5px;line-height:1.6;color:var(--muted);font-weight:500;}
+.agreement-check a{color:var(--purple-deep);font-weight:700;text-decoration:underline;}
+
+@media (max-width:640px){ .form-row,.form-row.three{grid-template-columns:1fr;} .form-card{padding:26px 22px;} }
+</style></head><body>
+
+<header><div class="nav"><div class="logo"><svg class="logo-cube" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><polygon fill="#0EA5E9" points="50,4 90,26 50,48 10,26"></polygon><polygon fill="#43B05C" points="10,26 50,48 50,96 10,74"></polygon><polygon fill="#8B7EF0" points="90,26 50,48 50,96 90,74"></polygon></svg><div class="logo-text"><div class="logo-word"><span style="color:var(--blue)">H</span><span style="color:var(--purple-deep)">O</span><span style="color:var(--green)">M</span><span style="color:var(--purple)">s</span></div><div class="logo-sub">HOMESCHOOL</div></div></div><a class="back-link" href="enrichment-partners.html">&larr; Back to Enrichment Partners</a></div></header>
+
+<section class="page-hero"><div class="wrap"><span class="eyebrow">Cross-Marketing Program</span><h1>Become an Enrichment Partner</h1><p>Tell us about your program below. Submissions are reviewed by the HOMs team before appearing in the app — we'll follow up by email once yours is approved.</p></div></section>
+
+<section class="form-section"><div class="wrap">
+  <form class="form-card" id="partner-form">
+    <span class="section-label">Enrichment Partner Application</span>
+
+    <div class="form-group">
+      <label>Logo / Icon <span class="opt">(optional — square image works best)</span></label>
+      <img class="logo-preview" id="logo-preview" alt="Logo preview"/>
+      <div class="file-drop">
+        <p id="file-drop-text">Tap to upload a logo image</p>
+        <input type="file" id="logoFile" name="logoFile" accept="image/*">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="orgName">Program or Business Name <span class="req">*</span></label>
+      <input type="text" id="orgName" name="orgName" placeholder="e.g. The Art Room - Art Clubs" required>
+    </div>
+
+    <div class="form-group">
+      <label>Location Type <span class="req">*</span></label>
+      <div class="ms-dropdown" id="locationType-dropdown">
+        <button type="button" class="ms-toggle"><span class="ms-label placeholder">Select one or more types</span><span class="ms-chevron">&#9662;</span></button>
+        <div class="ms-panel">
+          <label class="ms-option"><input type="checkbox" value="Co-op"> Co-op</label>
+          <label class="ms-option"><input type="checkbox" value="Educational Program"> Educational Program</label>
+          <label class="ms-option"><input type="checkbox" value="Event"> Event</label>
+          <label class="ms-option"><input type="checkbox" value="Farm"> Farm</label>
+          <label class="ms-option"><input type="checkbox" value="Gym"> Gym</label>
+          <label class="ms-option"><input type="checkbox" value="Hybrid School"> Hybrid School</label>
+          <label class="ms-option"><input type="checkbox" value="Micro School"> Micro School</label>
+          <label class="ms-option"><input type="checkbox" value="Museum"> Museum</label>
+          <label class="ms-option"><input type="checkbox" value="Product"> Product</label>
+          <label class="ms-option"><input type="checkbox" value="Recreation Center"> Recreation Center</label>
+          <label class="ms-option"><input type="checkbox" value="Studio"> Studio</label>
+        </div>
+      </div>
+      <p class="field-error" id="locationType-error">Please select at least one location type.</p>
+    </div>
+
+    <div class="form-group">
+      <label for="offerTitle">Offer Title <span class="opt">(optional)</span></label>
+      <input type="text" id="offerTitle" name="offerTitle" placeholder="e.g. Art Clubs">
+    </div>
+
+    <div class="form-group">
+      <label>Subject Category <span class="req">*</span></label>
+      <div class="ms-dropdown" id="subject-dropdown">
+        <button type="button" class="ms-toggle"><span class="ms-label placeholder">Select one or more subjects</span><span class="ms-chevron">&#9662;</span></button>
+        <div class="ms-panel">
+          <label class="ms-option"><input type="checkbox" value="Art"> Art</label>
+          <label class="ms-option"><input type="checkbox" value="Faith Studies"> Faith Studies</label>
+          <label class="ms-option"><input type="checkbox" value="Foreign Language"> Foreign Language</label>
+          <label class="ms-option"><input type="checkbox" value="Health &amp; PE"> Health &amp; PE</label>
+          <label class="ms-option"><input type="checkbox" value="Language Arts"> Language Arts</label>
+          <label class="ms-option"><input type="checkbox" value="Life Skills"> Life Skills</label>
+          <label class="ms-option"><input type="checkbox" value="Mathematics"> Mathematics</label>
+          <label class="ms-option"><input type="checkbox" value="Music &amp; Theatre Arts"> Music &amp; Theatre Arts</label>
+          <label class="ms-option"><input type="checkbox" value="Science"> Science</label>
+          <label class="ms-option"><input type="checkbox" value="Social Studies / History"> Social Studies / History</label>
+          <label class="ms-option"><input type="checkbox" value="STEM / STEAM"> STEM / STEAM</label>
+        </div>
+      </div>
+      <p class="field-error" id="subject-error">Please select at least one subject.</p>
+    </div>
+
+    <div class="form-group">
+      <label>Grade / Age Range <span class="req">*</span></label>
+      <div class="toggle-row">
+        <label class="toggle-switch"><input type="checkbox" id="gradeAgeToggle"><span class="toggle-slider"></span></label>
+        <span class="toggle-label" id="gradeAgeToggleLabel">Showing Grade Levels — toggle for Age Ranges</span>
+      </div>
+      <div class="ms-dropdown" id="grades-dropdown">
+        <button type="button" class="ms-toggle"><span class="ms-label placeholder">Select one or more grades</span><span class="ms-chevron">&#9662;</span></button>
+        <div class="ms-panel">
+          <label class="ms-option"><input type="checkbox" value="All Grades"> All Grades</label>
+          <label class="ms-option"><input type="checkbox" value="Pre-K"> Pre-K</label>
+          <label class="ms-option"><input type="checkbox" value="Kindergarten"> Kindergarten</label>
+          <label class="ms-option"><input type="checkbox" value="1st Grade"> 1st Grade</label>
+          <label class="ms-option"><input type="checkbox" value="2nd Grade"> 2nd Grade</label>
+          <label class="ms-option"><input type="checkbox" value="3rd Grade"> 3rd Grade</label>
+          <label class="ms-option"><input type="checkbox" value="4th Grade"> 4th Grade</label>
+          <label class="ms-option"><input type="checkbox" value="5th Grade"> 5th Grade</label>
+          <label class="ms-option"><input type="checkbox" value="6th Grade"> 6th Grade</label>
+          <label class="ms-option"><input type="checkbox" value="7th Grade"> 7th Grade</label>
+          <label class="ms-option"><input type="checkbox" value="8th Grade"> 8th Grade</label>
+          <label class="ms-option"><input type="checkbox" value="9th Grade"> 9th Grade</label>
+          <label class="ms-option"><input type="checkbox" value="10th Grade"> 10th Grade</label>
+          <label class="ms-option"><input type="checkbox" value="11th Grade"> 11th Grade</label>
+          <label class="ms-option"><input type="checkbox" value="12th Grade"> 12th Grade</label>
+        </div>
+      </div>
+      <div class="ms-dropdown hidden-field" id="ages-dropdown">
+        <button type="button" class="ms-toggle"><span class="ms-label placeholder">Select one or more age ranges</span><span class="ms-chevron">&#9662;</span></button>
+        <div class="ms-panel">
+          <label class="ms-option"><input type="checkbox" value="All Ages"> All Ages</label>
+          <label class="ms-option"><input type="checkbox" value="3yrs-5yrs"> 3yrs-5yrs</label>
+          <label class="ms-option"><input type="checkbox" value="6yrs-8yrs"> 6yrs-8yrs</label>
+          <label class="ms-option"><input type="checkbox" value="9yrs-11yrs"> 9yrs-11yrs</label>
+          <label class="ms-option"><input type="checkbox" value="12yrs-14yrs"> 12yrs-14yrs</label>
+          <label class="ms-option"><input type="checkbox" value="15yrs-18yrs"> 15yrs-18yrs</label>
+        </div>
+      </div>
+      <p class="field-error" id="gradeAge-error">Please select at least one grade or age range.</p>
+    </div>
+
+    <div class="form-group">
+      <label for="website">Website / Program URL <span class="req">*</span></label>
+      <input type="url" id="website" name="website" placeholder="https://" required>
+    </div>
+
+    <div class="form-group">
+      <label for="learnMore">Learn More Link <span class="opt">(optional — defaults to your website URL above)</span></label>
+      <input type="url" id="learnMore" name="learnMore" placeholder="https://">
+    </div>
+
+    <div class="form-group">
+      <label for="description">Short Description <span class="req">*</span></label>
+      <textarea id="description" name="description" maxlength="220" placeholder="A quick description of your program, who it's for, and what makes it great for homeschool families. Scheduling details, pricing, etc." required></textarea>
+      <div class="char-count"><span id="desc-count">0</span>/220</div>
+    </div>
+
+    <div class="form-group">
+      <label>Location <span class="req">*</span></label>
+      <div class="toggle-row">
+        <label class="toggle-switch"><input type="checkbox" id="nationwideToggle"><span class="toggle-slider"></span></label>
+        <span class="toggle-label">This program is Nationwide (ships or is available anywhere)</span>
+      </div>
+
+      <div class="sub-fields" id="address-fields">
+        <div class="form-group">
+          <label for="streetAddress">Address <span class="req">*</span></label>
+          <input type="text" id="streetAddress" name="streetAddress" placeholder="123 Main St" required>
+        </div>
+        <div class="form-row three">
+          <div class="form-group">
+            <label for="city">City <span class="req">*</span></label>
+            <input type="text" id="city" name="city" placeholder="Frederick" required>
+          </div>
+          <div class="form-group">
+            <label for="state">State <span class="req">*</span></label>
+            <input type="text" id="state" name="state" placeholder="MD" maxlength="2" required style="text-transform:uppercase">
+          </div>
+          <div class="form-group">
+            <label for="county">County <span class="opt">(optional)</span></label>
+            <input type="text" id="county" name="county" placeholder="Frederick County">
+          </div>
+        </div>
+      </div>
+
+      <div class="nationwide-badge" id="nationwide-badge">&#10003; Marked as Nationwide</div>
+    </div>
+
+    <hr class="section-divider">
+    <span class="section-label">Your Contact Info</span>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="contactName">Contact Name <span class="req">*</span></label>
+        <input type="text" id="contactName" name="contactName" required>
+      </div>
+      <div class="form-group">
+        <label for="contactEmail">Contact Email <span class="req">*</span></label>
+        <input type="email" id="contactEmail" name="contactEmail" required>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="contactRole">Role <span class="opt">(optional — e.g. Owner, Director, Marketing Manager)</span></label>
+      <input type="text" id="contactRole" name="contactRole" placeholder="e.g. Marketing Manager">
+    </div>
+
+    <div class="form-group">
+      <label for="contactPhone">Contact Phone <span class="opt">(optional)</span></label>
+      <input type="tel" id="contactPhone" name="contactPhone" placeholder="(240) 555-0100">
+    </div>
+
+    <div class="form-group">
+      <label for="notes">Anything else we should know? <span class="opt">(optional)</span></label>
+      <textarea id="notes" name="notes"></textarea>
+    </div>
+
+    <hr class="section-divider">
+    <span class="section-label">Partner Agreement</span>
+
+    <div class="form-group">
+      <label class="agreement-check">
+        <input type="checkbox" id="agreementCheck" required>
+        <span>I have read and agree to the <a href="https://homsapp-website.helperofmoms.workers.dev/enrichment-partner-agreement.pdf" target="_blank" rel="noopener">HOMs Enrichment Partner Agreement</a>. I understand that if my application is approved, this constitutes my digital signature on that agreement, which also incorporates the HOMs <a href="https://homsapp-website.helperofmoms.workers.dev/terms-and-conditions.pdf" target="_blank" rel="noopener">Terms &amp; Conditions</a> and <a href="https://homsapp-website.helperofmoms.workers.dev/privacy-policy.pdf" target="_blank" rel="noopener">Privacy Policy</a> by reference. <span class="req">*</span></span>
+      </label>
+      <p class="field-error" id="agreement-error">You must agree to the Partner Agreement before submitting.</p>
+    </div>
+
+    <button type="submit" class="btn btn-cta-green">Submit for Review</button>
+  </form>
+
+  <div class="form-card success-card" id="success-card">
+    <div class="success-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <h2>Thanks! Your submission is pending review.</h2>
+    <p>The HOMs team reviews every Enrichment Partner application before it goes live in the app. We'll be in touch at the email you provided once yours is approved.</p>
+  </div>
+</div></section>
+
+<footer><p>© 2026 HOMs Homeschool. All rights reserved.</p></footer>
+
+<script>
+const form = document.getElementById('partner-form');
+const successCard = document.getElementById('success-card');
+const descField = document.getElementById('description');
+const descCount = document.getElementById('desc-count');
+const logoFile = document.getElementById('logoFile');
+const logoPreview = document.getElementById('logo-preview');
+const fileDropText = document.getElementById('file-drop-text');
+
+const nationwideToggle = document.getElementById('nationwideToggle');
+const addressFields = document.getElementById('address-fields');
+const nationwideBadge = document.getElementById('nationwide-badge');
+const streetAddressInput = document.getElementById('streetAddress');
+const cityInput = document.getElementById('city');
+const stateInput = document.getElementById('state');
+
+const gradeAgeToggle = document.getElementById('gradeAgeToggle');
+const gradeAgeToggleLabel = document.getElementById('gradeAgeToggleLabel');
+const gradesDropdown = document.getElementById('grades-dropdown');
+const agesDropdown = document.getElementById('ages-dropdown');
+
+descField.addEventListener('input', () => { descCount.textContent = descField.value.length; });
+
+let logoDataUrl = '';
+logoFile.addEventListener('change', () => {
+  const file = logoFile.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    logoDataUrl = e.target.result;
+    logoPreview.src = logoDataUrl;
+    logoPreview.style.display = 'block';
+    fileDropText.textContent = file.name;
+  };
+  reader.readAsDataURL(file);
+});
+
+nationwideToggle.addEventListener('change', () => {
+  const isNationwide = nationwideToggle.checked;
+  addressFields.classList.toggle('hidden-field', isNationwide);
+  nationwideBadge.classList.toggle('show', isNationwide);
+  streetAddressInput.required = !isNationwide;
+  cityInput.required = !isNationwide;
+  stateInput.required = !isNationwide;
+});
+
+gradeAgeToggle.addEventListener('change', () => {
+  const showAges = gradeAgeToggle.checked;
+  gradesDropdown.classList.toggle('hidden-field', showAges);
+  agesDropdown.classList.toggle('hidden-field', !showAges);
+  gradeAgeToggleLabel.textContent = showAges
+    ? 'Showing Age Ranges — toggle for Grade Levels'
+    : 'Showing Grade Levels — toggle for Age Ranges';
+  document.getElementById('gradeAge-error').classList.remove('show');
+});
+
+// --- multi-select checkbox dropdowns ---
+function initMultiSelect(dropdownId, placeholderText) {
+  const dropdown = document.getElementById(dropdownId);
+  const toggle = dropdown.querySelector('.ms-toggle');
+  const label = toggle.querySelector('.ms-label');
+  const panel = dropdown.querySelector('.ms-panel');
+  const checkboxes = panel.querySelectorAll('input[type=checkbox]');
+
+  toggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    document.querySelectorAll('.ms-dropdown.open').forEach((d) => { if (d !== dropdown) d.classList.remove('open'); });
+    dropdown.classList.toggle('open');
+  });
+  panel.addEventListener('click', (e) => e.stopPropagation());
+
+  checkboxes.forEach((cb) => cb.addEventListener('change', () => {
+    updateLabel();
+    dropdown.classList.remove('invalid');
+  }));
+
+  function updateLabel() {
+    const checked = Array.from(checkboxes).filter((c) => c.checked).map((c) => c.value);
+    if (checked.length === 0) {
+      label.textContent = placeholderText;
+      label.classList.add('placeholder');
+    } else if (checked.length <= 2) {
+      label.textContent = checked.join(', ');
+      label.classList.remove('placeholder');
+    } else {
+      label.textContent = checked[0] + ', ' + checked[1] + ' +' + (checked.length - 2) + ' more';
+      label.classList.remove('placeholder');
+    }
+  }
+  updateLabel();
+}
+
+function getChecked(dropdownId) {
+  return Array.from(document.querySelectorAll('#' + dropdownId + ' input[type=checkbox]:checked')).map((c) => c.value);
+}
+
+initMultiSelect('subject-dropdown', 'Select one or more subjects');
+initMultiSelect('locationType-dropdown', 'Select one or more types');
+initMultiSelect('grades-dropdown', 'Select one or more grades');
+initMultiSelect('ages-dropdown', 'Select one or more age ranges');
+
+document.addEventListener('click', () => {
+  document.querySelectorAll('.ms-dropdown.open').forEach((d) => d.classList.remove('open'));
+});
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const subjects = getChecked('subject-dropdown');
+  const locationTypes = getChecked('locationType-dropdown');
+  const gradeAgeMode = gradeAgeToggle.checked ? 'ages' : 'grades';
+  const gradeAgeValues = getChecked(gradeAgeMode === 'ages' ? 'ages-dropdown' : 'grades-dropdown');
+  const isNationwide = nationwideToggle.checked;
+
+  let valid = true;
+
+  document.getElementById('subject-error').classList.toggle('show', subjects.length === 0);
+  document.getElementById('subject-dropdown').classList.toggle('invalid', subjects.length === 0);
+  if (subjects.length === 0) valid = false;
+
+  document.getElementById('locationType-error').classList.toggle('show', locationTypes.length === 0);
+  document.getElementById('locationType-dropdown').classList.toggle('invalid', locationTypes.length === 0);
+  if (locationTypes.length === 0) valid = false;
+
+  document.getElementById('gradeAge-error').classList.toggle('show', gradeAgeValues.length === 0);
+  if (gradeAgeValues.length === 0) valid = false;
+
+  const agreementChecked = document.getElementById('agreementCheck').checked;
+  document.getElementById('agreement-error').classList.toggle('show', !agreementChecked);
+  if (!agreementChecked) valid = false;
+
+  if (!valid || !form.checkValidity()) {
+    form.reportValidity();
+    return;
+  }
+
+  const submission = {
+    id: 'partner_' + Date.now(),
+    status: 'pending',
+    submittedAt: new Date().toISOString(),
+    orgName: document.getElementById('orgName').value.trim(),
+    offerTitle: document.getElementById('offerTitle').value.trim(),
+    subjects: subjects,
+    locationTypes: locationTypes,
+    gradeAgeMode: gradeAgeMode,
+    gradeAgeValues: gradeAgeValues,
+    website: document.getElementById('website').value.trim(),
+    learnMore: document.getElementById('learnMore').value.trim(),
+    description: descField.value.trim(),
+    isNationwide: isNationwide,
+    streetAddress: isNationwide ? '' : streetAddressInput.value.trim(),
+    city: isNationwide ? '' : cityInput.value.trim(),
+    state: isNationwide ? '' : stateInput.value.trim().toUpperCase(),
+    county: isNationwide ? '' : document.getElementById('county').value.trim(),
+    logoDataUrl: logoDataUrl,
+    contactName: document.getElementById('contactName').value.trim(),
+    contactEmail: document.getElementById('contactEmail').value.trim(),
+    contactRole: document.getElementById('contactRole').value.trim(),
+    contactPhone: document.getElementById('contactPhone').value.trim(),
+    notes: document.getElementById('notes').value.trim()
+  };
+
+  const submitBtn = form.querySelector('button[type=submit]');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Submitting...';
+
+  try {
+    const res = await fetch('/api/submit-partner', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(submission)
+    });
+    if (!res.ok) throw new Error('Submission failed (' + res.status + ')');
+
+    sendAgreementCopy(submission);
+
+    form.style.display = 'none';
+    successCard.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } catch (err) {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Submit for Review';
+    alert('Something went wrong submitting your application. Please try again in a moment, or email helperofmoms@gmail.com directly.');
+  }
+});
+
+// Fills the "Enrichment Partner" signature block of the Partner Agreement template
+// with this submission's data and emails a copy to the HOMs team.
+// PROTOTYPE NOTE: a static site can't send email on its own, so this opens a
+// pre-filled email via mailto: as a stand-in. The real backend (AWS + SES/SendGrid,
+// built by the HOMs dev team) would send this silently server-side instead.
+function sendAgreementCopy(submission) {
+  const today = new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+  const timestamp = new Date().toLocaleString();
+  const locationLine = submission.isNationwide
+    ? 'Nationwide'
+    : [submission.streetAddress, submission.city, submission.state].filter(Boolean).join(', ') + (submission.county ? ' (' + submission.county + ')' : '');
+
+  const agreementText =
+'HOMs ENRICHMENT PARTNER AGREEMENT — SIGNATURE COPY\n' +
+'Digitally agreed via checkbox on the Become a Partner form\n' +
+'--------------------------------------------------------\n\n' +
+'Enrichment Partner\n' +
+'Business Name: ' + submission.orgName + '\n' +
+'Offer Title: ' + (submission.offerTitle || 'N/A') + '\n' +
+'Business Website: ' + submission.website + '\n' +
+'Email: ' + submission.contactEmail + '\n' +
+'Company Phone: ' + (submission.contactPhone || 'N/A') + '\n' +
+'Authorized Representative Name: ' + submission.contactName + '\n' +
+'Title: ' + (submission.contactRole || 'N/A') + '\n' +
+'Signature: [Digitally agreed via checkbox — not a wet signature]\n' +
+'Date: ' + today + '\n\n' +
+'--------------------------------------------------------\n' +
+'Additional application details (from Become a Partner form)\n' +
+'Subject Category: ' + submission.subjects.join(', ') + '\n' +
+'Location Type: ' + submission.locationTypes.join(', ') + '\n' +
+'Grade/Age Range (' + submission.gradeAgeMode + '): ' + submission.gradeAgeValues.join(', ') + '\n' +
+'Location: ' + locationLine + '\n' +
+'Description: ' + submission.description + '\n' +
+'Submitted: ' + timestamp + '\n\n' +
+'Full HOMs Enrichment Partner Agreement: https://homsapp-website.helperofmoms.workers.dev/enrichment-partner-agreement.pdf';
+
+  const subject = 'New Enrichment Partner Agreement — ' + submission.orgName;
+  const mailtoUrl = 'mailto:helperofmoms@gmail.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(agreementText);
+
+  const link = document.createElement('a');
+  link.href = mailtoUrl;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+</script>
+</body></html>

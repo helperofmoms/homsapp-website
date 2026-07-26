@@ -6,5 +6,11 @@
     "directory": "./",
     "binding": "ASSETS",
     "not_found_handling": "404-page"
-  }
+  },
+  "kv_namespaces": [
+    {
+      "binding": "PARTNERS_KV",
+      "id": "3534f4602e0a479d90e3588063d98e2b"
+    }
+  ]
 }
