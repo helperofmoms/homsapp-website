@@ -53,9 +53,12 @@ header{background:var(--ink);padding:18px 0;}
 .billing-chip.active{color:#1C7A4E;background:#EAF7EE;}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 22px;border-radius:999px;font-size:13.5px;font-weight:600;box-shadow:0 12px 30px -10px rgba(0,0,0,0.4);opacity:0;pointer-events:none;transition:opacity .2s ease;}
 .toast.show{opacity:1;}
+.admin-right{display:flex;align-items:center;gap:14px;}
+.logout-btn{font-family:'Poppins',sans-serif;font-weight:700;font-size:12.5px;color:#fff;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.25);padding:6px 14px;border-radius:999px;cursor:pointer;transition:background .15s ease;}
+.logout-btn:hover{background:rgba(255,255,255,0.18);}
 </style></head><body>
 
-<header><div class="wrap admin-bar"><div class="admin-tag"><span class="admin-badge">Admin</span><span class="admin-title">Enrichment Partner Review</span></div><span class="admin-note">Live — backed by Cloudflare KV</span></div></header>
+<header><div class="wrap admin-bar"><div class="admin-tag"><span class="admin-badge">Admin</span><span class="admin-title">Enrichment Partner Review</span></div><div class="admin-right"><span class="admin-note">Live — backed by Cloudflare KV</span><button class="logout-btn" id="logout-btn" type="button">Log out</button></div></div></header>
 
 <div class="wrap page-top">
   <h1>Pending Enrichment Partners</h1>
@@ -369,6 +372,13 @@ document.getElementById('approved-list').addEventListener('click', async (e) => 
     sendActivationEmail(item);
     showToast('Activation email re-sent to ' + item.contactEmail);
   }
+});
+
+document.getElementById('logout-btn').addEventListener('click', () => {
+  sessionStorage.removeItem('homsAdminToken');
+  ADMIN_TOKEN = '';
+  DATA = { pending: [], approved: [], activated: [] };
+  render();
 });
 
 document.querySelectorAll('.tab').forEach((tabBtn) => {
