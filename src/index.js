@@ -103,31 +103,10 @@ export default {
         return json({ ok: true, item });
       }
 
-      // One-time migration helper: mirrors an external image (e.g. a GoDaddy
-      // img1.wsimg.com logo) into LOGOS_KV so it can be served from our own
-      // domain instead. Admin-gated, and restricted to a small allowlist of
-      // source hosts to avoid turning this into an open fetch proxy.
-      if (url.pathname === '/api/admin/mirror-logo' && request.method === 'POST') {
-        const body = await request.json();
-        if (!isAdmin(request, env, body)) return json({ error: 'unauthorized' }, 401);
-
-        const { url: sourceUrl, filename } = body;
-        if (!sourceUrl || !filename) return json({ error: 'missing url or filename' }, 400);
-
-        const allowedHosts = ['img1.wsimg.com'];
-        const sourceHost = new URL(sourceUrl).hostname;
-        if (!allowedHosts.includes(sourceHost)) return json({ error: 'source host not allowed' }, 400);
-
-        const sourceRes = await fetch(sourceUrl);
-        if (!sourceRes.ok) return json({ error: 'failed to fetch source', status: sourceRes.status }, 502);
-
-        const contentType = sourceRes.headers.get('content-type') || 'application/octet-stream';
-        const buf = await sourceRes.arrayBuffer();
-
-        await env.LOGOS_KV.put(filename, buf, { metadata: { contentType } });
-
-        return json({ ok: true, filename, contentType, size: buf.byteLength });
-      }
+      // NOTE: the one-time /api/admin/mirror-logo migration endpoint used to
+      // pull the 14 partner logos off GoDaddy into LOGOS_KV has been removed
+      // now that the migration is complete, to minimize the admin API's
+      // attack surface. Logos are still served below from LOGOS_KV.
 
       if (url.pathname.startsWith('/partner-logos/') && request.method === 'GET') {
         const filename = url.pathname.replace('/partner-logos/', '');
