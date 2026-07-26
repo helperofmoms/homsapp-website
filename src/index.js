@@ -102,6 +102,46 @@ export default {
 
         return json({ ok: true, item });
       }
+
+      // One-time migration helper: mirrors an external image (e.g. a GoDaddy
+      // img1.wsimg.com logo) into LOGOS_KV so it can be served from our own
+      // domain instead. Admin-gated, and restricted to a small allowlist of
+      // source hosts to avoid turning this into an open fetch proxy.
+      if (url.pathname === '/api/admin/mirror-logo' && request.method === 'POST') {
+        const body = await request.json();
+        if (!isAdmin(request, env, body)) return json({ error: 'unauthorized' }, 401);
+
+        const { url: sourceUrl, filename } = body;
+        if (!sourceUrl || !filename) return json({ error: 'missing url or filename' }, 400);
+
+        const allowedHosts = ['img1.wsimg.com'];
+        const sourceHost = new URL(sourceUrl).hostname;
+        if (!allowedHosts.includes(sourceHost)) return json({ error: 'source host not allowed' }, 400);
+
+        const sourceRes = await fetch(sourceUrl);
+        if (!sourceRes.ok) return json({ error: 'failed to fetch source', status: sourceRes.status }, 502);
+
+        const contentType = sourceRes.headers.get('content-type') || 'application/octet-stream';
+        const buf = await sourceRes.arrayBuffer();
+
+        await env.LOGOS_KV.put(filename, buf, { metadata: { contentType } });
+
+        return json({ ok: true, filename, contentType, size: buf.byteLength });
+      }
+
+      if (url.pathname.startsWith('/partner-logos/') && request.method === 'GET') {
+        const filename = url.pathname.replace('/partner-logos/', '');
+        const obj = await env.LOGOS_KV.getWithMetadata(filename, 'arrayBuffer');
+        if (!obj || !obj.value) return new Response('Not found', { status: 404 });
+
+        const contentType = (obj.metadata && obj.metadata.contentType) || 'application/octet-stream';
+        return new Response(obj.value, {
+          headers: {
+            'content-type': contentType,
+            'cache-control': 'public, max-age=86400'
+          }
+        });
+      }
     } catch (err) {
       return json({ error: 'server error', message: String(err) }, 500);
     }
