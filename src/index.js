@@ -104,7 +104,7 @@ export default {
       // -----------------------------------------------------------------
       // Google Sign-In: login kickoff, callback, logout.
       // -----------------------------------------------------------------
-      if (url.pathname === '/auth/google/login' && request.method === 'GET') {
+      if (url.pathname === '/auth/google/start' && request.method === 'GET') {
         const state = base64UrlEncode(crypto.getRandomValues(new Uint8Array(16)));
         const redirectUri = url.origin + '/auth/google/callback';
         const params = new URLSearchParams({
@@ -182,7 +182,7 @@ export default {
       }
 
       if (url.pathname === '/auth/logout') {
-        const headers = new Headers({ Location: '/auth/google/login' });
+        const headers = new Headers({ Location: '/admin-login.html' });
         headers.append(
           'Set-Cookie',
           'homs_admin_session=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0'
@@ -336,7 +336,7 @@ self.addEventListener('activate', (event) => {
     if (isAdminPageRequest && request.method === 'GET') {
       const valid = await isSessionValid(request, env);
       if (!valid) {
-        return Response.redirect(url.origin + '/auth/google/login', 302);
+        return Response.redirect(url.origin + '/admin-login.html', 302);
       }
       if (url.hostname === 'admin.homsapp.com' && url.pathname === '/') {
         const assetUrl = new URL(request.url);
