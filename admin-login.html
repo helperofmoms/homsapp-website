@@ -90,6 +90,20 @@ tabBtns.forEach(btn => btn.addEventListener('click', () => {
   panels[btn.dataset.tab].classList.add('active');
 }));
 
+function activateTab(name) {
+  tabBtns.forEach(b => {
+    const isMatch = b.dataset.tab === name;
+    b.classList.toggle('active', isMatch);
+    b.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+  });
+  Object.entries(panels).forEach(function(entry) { panels[entry[0]].classList.toggle('active', entry[0] === name); });
+}
+
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('tab') === 'partner') {
+  activateTab('partner');
+}
+
 const methodBtns = document.querySelectorAll('.method-btn');
 const phoneInput = document.getElementById('partner-phone');
 const emailInput = document.getElementById('partner-email');
