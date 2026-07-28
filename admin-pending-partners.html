@@ -81,25 +81,20 @@ header{background:var(--ink);padding:18px 0;}
 // Enrichment Partner price is created in the Stripe dashboard.
 const STRIPE_PAYMENT_LINK_PLACEHOLDER = 'https://buy.stripe.com/REPLACE_WITH_YOUR_5_DOLLAR_PAYMENT_LINK';
 
-let ADMIN_TOKEN = sessionStorage.getItem('homsAdminToken') || '';
 let DATA = { pending: [], approved: [], activated: [] };
 
-function askForToken() {
-  const entered = prompt('Enter the HOMs admin passcode:');
-  ADMIN_TOKEN = (entered || '').trim();
-  sessionStorage.setItem('homsAdminToken', ADMIN_TOKEN);
-}
+// Auth is handled server-side now via Google Sign-In: the Worker redirects
+// to /auth/google/login before this page is ever served if there's no valid
+// session cookie, so by the time this script runs we're already logged in.
+// These fetches rely on the browser sending that session cookie automatically
+// (same-origin, no token needed). A 401/403 here just means the session
+// expired mid-visit, so we bounce back through the login flow.
 
 async function apiGet() {
-  if (!ADMIN_TOKEN) askForToken();
-  const res = await fetch('/api/admin/data?token=' + encodeURIComponent(ADMIN_TOKEN));
-  if (res.status === 401) {
-    sessionStorage.removeItem('homsAdminToken');
-    ADMIN_TOKEN = '';
-    alert('Incorrect passcode. Please try again.');
-    askForToken();
-    if (!ADMIN_TOKEN) return { pending: [], approved: [], activated: [] };
-    return apiGet();
+  const res = await fetch('/api/admin/data');
+  if (res.status === 401 || res.status === 403) {
+    window.location.href = '/auth/google/login';
+    return { pending: [], approved: [], activated: [] };
   }
   if (!res.ok) throw new Error('Failed to load data (' + res.status + ')');
   return res.json();
@@ -109,12 +104,10 @@ async function apiPost(path, extra) {
   const res = await fetch(path, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
-    body: JSON.stringify(Object.assign({ token: ADMIN_TOKEN }, extra))
+    body: JSON.stringify(extra || {})
   });
-  if (res.status === 401) {
-    alert('Your session passcode was rejected. Please re-enter it.');
-    sessionStorage.removeItem('homsAdminToken');
-    ADMIN_TOKEN = '';
+  if (res.status === 401 || res.status === 403) {
+    window.location.href = '/auth/google/login';
     return null;
   }
   if (!res.ok) throw new Error('Request failed (' + res.status + ')');
@@ -375,10 +368,7 @@ document.getElementById('approved-list').addEventListener('click', async (e) => 
 });
 
 document.getElementById('logout-btn').addEventListener('click', () => {
-  sessionStorage.removeItem('homsAdminToken');
-  ADMIN_TOKEN = '';
-  DATA = { pending: [], approved: [], activated: [] };
-  render();
+  window.location.href = '/auth/logout';
 });
 
 document.querySelectorAll('.tab').forEach((tabBtn) => {
