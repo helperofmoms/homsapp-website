@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Admin Sign In — HOMs Homeschool</title><meta name="robots" content="noindex"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet"/><style>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Sign In — HOMs Homeschool</title><meta name="robots" content="noindex"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet"/><style>
 :root{ --blue:#0EA5E9; --purple:#6C5CE7; --purple-deep:#4F3DC6; --green:#43B05C; --lavender:#EEF0FD; --ink:#241F45; --muted:#5B5876; --radius-lg:28px; --shadow:0 20px 40px -18px rgba(76,63,190,0.25); }
 *{box-sizing:border-box;}
 body{margin:0;min-height:100vh;font-family:'Poppins',sans-serif;color:var(--ink);
@@ -9,30 +9,103 @@ body{margin:0;min-height:100vh;font-family:'Poppins',sans-serif;color:var(--ink)
 .logo-text{display:flex;flex-direction:column;line-height:1;}
 .logo-word{font-weight:800;font-size:24px;letter-spacing:0.5px;}
 .logo-sub{font-size:10px;letter-spacing:2.5px;color:var(--blue);font-weight:700;margin-top:2px;}
-.card{background:#fff;border:1px solid #F0EFFB;border-radius:var(--radius-lg);box-shadow:var(--shadow);padding:40px 36px;max-width:400px;width:100%;text-align:center;}
+.shell{max-width:400px;width:100%;}
+.tab-toggle{display:flex;background:#fff;border:1.5px solid #E2E5FB;border-radius:999px;padding:4px;margin-bottom:18px;box-shadow:var(--shadow);}
+.tab-btn{flex:1;border:none;background:transparent;font-family:'Poppins',sans-serif;font-weight:700;font-size:14px;padding:10px 20px;border-radius:999px;cursor:pointer;color:var(--muted);transition:background .15s ease,color .15s ease;}
+.tab-btn.active{background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;}
+.card{background:#fff;border:1px solid #F0EFFB;border-radius:var(--radius-lg);box-shadow:var(--shadow);padding:40px 36px;width:100%;text-align:center;}
 .admin-badge{display:inline-block;background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;font-size:11px;font-weight:800;letter-spacing:1px;padding:4px 12px;border-radius:999px;margin-bottom:16px;text-transform:uppercase;}
+.partner-badge{background:linear-gradient(135deg,var(--green),var(--blue));}
 .card h1{font-size:22px;margin:0 0 8px;font-weight:700;}
-.card p.sub{font-size:14.5px;color:var(--muted);margin:0 0 28px;line-height:1.6;}
+.card p.sub{font-size:14.5px;color:var(--muted);margin:0 0 24px;line-height:1.6;}
 .google-btn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;padding:13px 20px;
   background:#fff;border:1.5px solid #E2E5FB;border-radius:12px;font-family:'Poppins',sans-serif;
   font-size:15px;font-weight:600;color:var(--ink);cursor:pointer;transition:box-shadow .15s ease,border-color .15s ease;text-decoration:none;}
 .google-btn:hover{border-color:var(--purple);box-shadow:0 10px 20px -12px rgba(76,63,190,0.35);}
-.footnote{margin-top:24px;font-size:12.5px;color:var(--muted);}
+.method-toggle{display:flex;gap:8px;margin-bottom:16px;}
+.method-btn{flex:1;border:1.5px solid #E2E5FB;background:#FAFAFF;font-family:'Poppins',sans-serif;font-weight:600;font-size:13.5px;padding:9px 14px;border-radius:10px;cursor:pointer;color:var(--muted);transition:border-color .15s ease,color .15s ease,background .15s ease;}
+.method-btn.active{border-color:var(--purple);color:var(--purple-deep);background:#fff;}
+.partner-input{width:100%;font-family:'Poppins',sans-serif;font-size:14.5px;color:var(--ink);padding:13px 14px;border:1.5px solid #E2E5FB;border-radius:12px;background:#FAFAFF;margin-bottom:16px;transition:border-color .15s ease;}
+.partner-input:focus{outline:none;border-color:var(--purple);background:#fff;}
+.send-link-btn{background:linear-gradient(135deg,var(--blue),var(--green));color:#fff;border:none;cursor:pointer;width:100%;padding:13px 20px;border-radius:12px;font-family:'Poppins',sans-serif;font-size:15px;font-weight:700;transition:box-shadow .15s ease;}
+.send-link-btn:hover{box-shadow:0 10px 20px -12px rgba(67,176,92,0.4);}
+.status-msg{margin-top:16px;padding:12px 14px;border-radius:10px;background:var(--lavender);color:var(--purple-deep);font-weight:600;font-size:13px;line-height:1.5;display:none;}
+.status-msg.show{display:block;}
+.footnote{margin-top:22px;font-size:12.5px;color:var(--muted);}
 .footnote a{color:var(--purple-deep);font-weight:600;text-decoration:none;}
 .footnote a:hover{text-decoration:underline;}
+.panel{display:none;}
+.panel.active{display:block;}
 </style></head><body>
 <div class="brand">
   <svg class="logo-cube" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><polygon fill="#0EA5E9" points="50,4 90,26 50,48 10,26"></polygon><polygon fill="#43B05C" points="10,26 50,48 50,96 10,74"></polygon><polygon fill="#8B7EF0" points="90,26 50,48 50,96 90,74"></polygon></svg>
   <div class="logo-text"><div class="logo-word"><span style="color:var(--blue)">H</span><span style="color:var(--purple-deep)">O</span><span style="color:var(--green)">M</span><span style="color:var(--purple)">s</span></div><div class="logo-sub">HOMESCHOOL</div></div>
 </div>
-<div class="card">
-  <span class="admin-badge">Admin</span>
-  <h1>Sign in to continue</h1>
-  <p class="sub">Sign in with your authorized Google account to manage Enrichment Partner applications.</p>
-  <a class="google-btn" href="/auth/google/start">
-    <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.9-2.26 5.36-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
-    Sign in with Google
-  </a>
-  <p class="footnote">Not an Enrichment Partner yet? <a href="/become-a-partner.html">Apply here</a>.</p>
+
+<div class="shell">
+  <div class="tab-toggle" role="tablist">
+    <button type="button" class="tab-btn active" data-tab="admin" role="tab" aria-selected="true">Admin</button>
+    <button type="button" class="tab-btn" data-tab="partner" role="tab" aria-selected="false">Partner</button>
+  </div>
+
+  <div class="card panel active" id="admin-panel" role="tabpanel">
+    <span class="admin-badge">Admin</span>
+    <h1>Sign in to continue</h1>
+    <p class="sub">Sign in with your authorized Google account to manage Enrichment Partner applications.</p>
+    <a class="google-btn" href="/auth/google/start">
+      <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.9-2.26 5.36-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+      Sign in with Google
+    </a>
+    <p class="footnote">Not an Enrichment Partner yet? <a href="/become-a-partner.html">Apply here</a>.</p>
+  </div>
+
+  <div class="card panel" id="partner-panel" role="tabpanel">
+    <span class="admin-badge partner-badge">Partner</span>
+    <h1>Sign in to continue</h1>
+    <p class="sub">Enter your phone number or email and we'll send you a one-time login link.</p>
+
+    <div class="method-toggle">
+      <button type="button" class="method-btn active" data-method="phone">Phone</button>
+      <button type="button" class="method-btn" data-method="email">Email</button>
+    </div>
+
+    <form id="partner-login-form">
+      <input type="tel" id="partner-phone" class="partner-input" placeholder="(240) 555-0100" autocomplete="tel">
+      <input type="email" id="partner-email" class="partner-input" placeholder="you@example.com" autocomplete="email" style="display:none;">
+      <button type="submit" class="send-link-btn">Send Login Link</button>
+    </form>
+    <p class="status-msg" id="partner-status"></p>
+    <p class="footnote">Not a partner yet? <a href="/become-a-partner.html">Apply here</a>.</p>
+  </div>
 </div>
+
+<script>
+const tabBtns = document.querySelectorAll('.tab-btn');
+const panels = { admin: document.getElementById('admin-panel'), partner: document.getElementById('partner-panel') };
+tabBtns.forEach(btn => btn.addEventListener('click', () => {
+  tabBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+  btn.classList.add('active');
+  btn.setAttribute('aria-selected', 'true');
+  Object.values(panels).forEach(p => p.classList.remove('active'));
+  panels[btn.dataset.tab].classList.add('active');
+}));
+
+const methodBtns = document.querySelectorAll('.method-btn');
+const phoneInput = document.getElementById('partner-phone');
+const emailInput = document.getElementById('partner-email');
+methodBtns.forEach(btn => btn.addEventListener('click', () => {
+  methodBtns.forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const isPhone = btn.dataset.method === 'phone';
+  phoneInput.style.display = isPhone ? 'block' : 'none';
+  emailInput.style.display = isPhone ? 'none' : 'block';
+}));
+
+document.getElementById('partner-login-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const status = document.getElementById('partner-status');
+  status.textContent = "Partner sign-in is launching soon! For now, please email helperofmoms@gmail.com and we'll help you manage your listing.";
+  status.classList.add('show');
+});
+</script>
 </body></html>
