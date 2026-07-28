@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+concurrency:
+  group: deploy-main
+  cancel-in-progress: true
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -20,7 +24,3 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: 5804f869825cb74ce6ac59c98afd91e0
           wranglerVersion: "4"
-          secrets: |
-            ADMIN_TOKEN
-        env:
-          ADMIN_TOKEN: ${{ secrets.ADMIN_TOKEN }}
