@@ -53,6 +53,15 @@ textarea{resize:vertical;min-height:90px;}
 .success-icon{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--green));display:flex;align-items:center;justify-content:center;margin:0 auto 18px;}
 .success-card h2{font-size:24px;margin-bottom:10px;}
 .success-card p{font-size:15px;max-width:420px;margin:0 auto;}
+.pricing-card{display:none;background:#fff;border:1px solid #F0EFFB;border-radius:var(--radius-lg);box-shadow:var(--shadow);padding:32px 36px;margin-top:20px;text-align:center;}
+.pricing-badge{display:inline-block;font-size:12px;font-weight:800;letter-spacing:1px;color:var(--purple-deep);background:var(--lavender);padding:6px 14px;border-radius:999px;margin-bottom:14px;text-transform:uppercase;}
+.pricing-amount{font-family:'Poppins',sans-serif;font-weight:800;font-size:40px;color:var(--ink);}
+.pricing-amount span{font-size:16px;font-weight:600;color:var(--muted);}
+.pricing-sub{font-size:13.5px;margin-top:4px;margin-bottom:22px;}
+.pricing-benefits{list-style:none;margin:0;padding:0;text-align:left;display:flex;flex-direction:column;gap:14px;}
+.pricing-benefits li{display:flex;align-items:flex-start;gap:10px;font-size:14.5px;color:var(--ink);font-weight:500;line-height:1.5;}
+.pricing-benefits li::before{content:"";flex-shrink:0;width:20px;height:20px;margin-top:2px;background:linear-gradient(135deg,var(--blue),var(--green));border-radius:50%;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M20 6L9 17l-5-5' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:11px;}
+@media (max-width:640px){.pricing-card{padding:26px 22px;}}
 footer{background:var(--ink);padding:32px 0;text-align:center;}
 footer p{color:#8B87AB;font-size:12.5px;}
 
@@ -297,8 +306,19 @@ footer p{color:#8B87AB;font-size:12.5px;}
 
   <div class="form-card success-card" id="success-card">
     <div class="success-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-    <h2>Thanks! Your submission is pending review.</h2>
-    <p>The HOMs team reviews every Enrichment Partner application before it goes live in the app. We'll be in touch at the email you provided once yours is approved.</p>
+    <h2>Thanks for submitting your application!</h2>
+    <p>If you were approved, you'll be emailed to start subscribing with us!</p>
+  </div>
+
+  <div class="pricing-card" id="pricing-card">
+    <span class="pricing-badge">Enrichment Partner Membership</span>
+    <div class="pricing-amount">$5<span>/mo</span></div>
+    <p class="pricing-sub">Billed monthly after approval &middot; cancel anytime</p>
+    <ul class="pricing-benefits">
+      <li>Featured in the HOMs Enrichment Partners directory, seen by homeschool families near you</li>
+      <li>A backlink to your program from inside the HOMs app's Enrichment Finder feature</li>
+      <li>The reputability boost of being a HOMs-vetted, homeschool-friendly program</li>
+    </ul>
   </div>
 </div></section>
 
@@ -482,6 +502,7 @@ form.addEventListener('submit', async (e) => {
 
     form.style.display = 'none';
     successCard.style.display = 'block';
+    document.getElementById('pricing-card').style.display = 'block';
     window.scrollTo({ top: 0, behavior: 'smooth' });
   } catch (err) {
     submitBtn.disabled = false;
