@@ -330,7 +330,7 @@ self.addEventListener('activate', (event) => {
     // hostname. Both entry points require a valid Google session before the
     // admin HTML is served.
     const isAdminPageRequest =
-      url.pathname === '/admin-pending-partners.html' ||
+      url.pathname === '/admin-pending-partners.html' || url.pathname === '/admin-pending-partners' ||
       (url.hostname === 'admin.homsapp.com' && url.pathname === '/');
 
     if (isAdminPageRequest && request.method === 'GET') {
