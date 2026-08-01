@@ -201,6 +201,28 @@ export default {
         return new Response(null, { status: 302, headers });
       }
 
+      if (url.pathname === '/api/public/resources' && request.method === 'GET') {
+        const live = await getList(env, listKey('rp', 'activated'));
+        const safe = live.map((it) => ({
+          id: it.id,
+          title: it.title,
+          resourceType: it.resourceType,
+          workingStyle: it.workingStyle,
+          subject: it.subject,
+          subTopic: it.subTopic,
+          fromGrade: it.fromGrade,
+          toGrade: it.toGrade,
+          fromAge: it.fromAge,
+          toAge: it.toAge,
+          description: it.description,
+          sampleLink: it.sampleLink,
+          businessName: it.businessName,
+          resourceFileKey: it.resourceFileKey,
+          resourceFileName: it.resourceFileName
+        }));
+        return json({ resources: safe });
+      }
+
       if (url.pathname === '/api/submit-resource' && request.method === 'POST') {
         const submission = await request.json();
         submission.id = submission.id || 'rp_' + Date.now();
