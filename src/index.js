@@ -14,6 +14,17 @@ async function setList(env, key, list) {
   await env.PARTNERS_KV.put(key, JSON.stringify(list));
 }
 
+const PARTNER_TYPES = ['ep', 'rp'];
+const STAGES = ['pending', 'updated', 'approved', 'activated', 'declined'];
+
+function listKey(type, stage) {
+  return type + '_' + stage;
+}
+
+function validTypeStage(type, stage) {
+  return PARTNER_TYPES.indexOf(type) !== -1 && STAGES.indexOf(stage) !== -1;
+}
+
 // ---------------------------------------------------------------------------
 // Auth: Google Sign-In (session cookie) + legacy ADMIN_TOKEN as a fallback.
 // ---------------------------------------------------------------------------
@@ -190,15 +201,90 @@ export default {
         return new Response(null, { status: 302, headers });
       }
 
+      if (url.pathname === '/api/submit-resource' && request.method === 'POST') {
+        const submission = await request.json();
+        submission.id = submission.id || 'rp_' + Date.now();
+        submission.partnerType = 'rp';
+        submission.status = 'pending';
+        submission.submittedAt = submission.submittedAt || new Date().toISOString();
+        const list = await getList(env, listKey('rp', 'pending'));
+        list.push(submission);
+        await setList(env, listKey('rp', 'pending'), list);
+        return json({ ok: true, id: submission.id });
+      }
+
+      if (url.pathname === '/api/admin/all' && request.method === 'GET') {
+        if (!await isAdmin(request, env)) return json({ error: 'unauthorized' }, 401);
+        const out = {};
+        for (const t of PARTNER_TYPES) {
+          out[t] = {};
+          for (const st of STAGES) {
+            out[t][st] = await getList(env, listKey(t, st));
+          }
+        }
+        return json(out);
+      }
+
+      if (url.pathname === '/api/admin/move' && request.method === 'POST') {
+        const body = await request.json();
+        if (!await isAdmin(request, env, body)) return json({ error: 'unauthorized' }, 401);
+        const type = body.type, id = body.id, from = body.from, to = body.to;
+        if (!validTypeStage(type, from) || !validTypeStage(type, to)) return json({ error: 'bad request' }, 400);
+        const fromList = await getList(env, listKey(type, from));
+        const idx = fromList.findIndex((p) => p.id === id);
+        if (idx === -1) return json({ error: 'not found' }, 404);
+        const item = fromList.splice(idx, 1)[0];
+        const now = new Date().toISOString();
+        item.status = to;
+        if (to === 'approved') item.approvedAt = now;
+        if (to === 'activated') { item.activatedAt = now; item.billingStatus = 'active'; }
+        if (to === 'declined') item.declinedAt = now;
+        await setList(env, listKey(type, from), fromList);
+        const toList = await getList(env, listKey(type, to));
+        toList.push(item);
+        await setList(env, listKey(type, to), toList);
+        return json({ ok: true, item });
+      }
+
+      if (url.pathname === '/api/admin/save-item' && request.method === 'POST') {
+        const body = await request.json();
+        if (!await isAdmin(request, env, body)) return json({ error: 'unauthorized' }, 401);
+        const type = body.type, stage = body.stage, id = body.id, fields = body.fields || {};
+        if (!validTypeStage(type, stage)) return json({ error: 'bad request' }, 400);
+        const list = await getList(env, listKey(type, stage));
+        const idx = list.findIndex((p) => p.id === id);
+        if (idx === -1) return json({ error: 'not found' }, 404);
+        const merged = Object.assign({}, list[idx], fields);
+        merged.id = list[idx].id;
+        merged.partnerType = list[idx].partnerType || type;
+        merged.updatedAt = new Date().toISOString();
+        list[idx] = merged;
+        await setList(env, listKey(type, stage), list);
+        return json({ ok: true, item: merged });
+      }
+
+      if (url.pathname === '/api/admin/delete-item' && request.method === 'POST') {
+        const body = await request.json();
+        if (!await isAdmin(request, env, body)) return json({ error: 'unauthorized' }, 401);
+        const type = body.type, stage = body.stage, id = body.id;
+        if (!validTypeStage(type, stage)) return json({ error: 'bad request' }, 400);
+        const list = await getList(env, listKey(type, stage));
+        const idx = list.findIndex((p) => p.id === id);
+        if (idx === -1) return json({ error: 'not found' }, 404);
+        list.splice(idx, 1);
+        await setList(env, listKey(type, stage), list);
+        return json({ ok: true });
+      }
+
       if (url.pathname === '/api/submit-partner' && request.method === 'POST') {
         const submission = await request.json();
         submission.id = submission.id || ('partner_' + Date.now());
         submission.status = 'pending';
         submission.submittedAt = submission.submittedAt || new Date().toISOString();
 
-        const pending = await getList(env, 'pending');
+        const pending = await getList(env, listKey('ep', 'pending'));
         pending.push(submission);
-        await setList(env, 'pending', pending);
+        await setList(env, listKey('ep', 'pending'), pending);
 
         return json({ ok: true, id: submission.id });
       }
