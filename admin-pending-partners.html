@@ -1,393 +1,304 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>Pending Partners — HOMs Admin</title><meta content="noindex, nofollow" name="robots"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/><style>
-:root{ --blue:#0EA5E9; --purple:#6C5CE7; --purple-deep:#4F3DC6; --green:#43B05C; --lavender:#EEF0FD; --ink:#241F45; --muted:#5B5876; --white:#FFFFFF; }
-*{box-sizing:border-box;}
-body{ margin:0; font-family:'Poppins',sans-serif; color:var(--ink); background:#F6F5FC; -webkit-font-smoothing:antialiased; }
-h1,h2,h4{font-family:'Poppins',sans-serif;font-weight:700;margin:0;}
-p{margin:0;color:var(--muted);line-height:1.6;}
-a{text-decoration:none;}
-.wrap{max-width:920px;margin:0 auto;padding:0 24px;}
-header{background:var(--ink);padding:18px 0;}
-.admin-bar{display:flex;align-items:center;justify-content:space-between;}
-.admin-tag{display:flex;align-items:center;gap:10px;}
-.admin-badge{background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;font-size:11px;font-weight:800;letter-spacing:.6px;padding:4px 10px;border-radius:999px;text-transform:uppercase;}
-.admin-title{color:#fff;font-weight:700;font-size:16px;}
-.admin-note{color:#9C97BD;font-size:12.5px;}
-.page-top{padding:36px 0 8px;}
-.page-top h1{font-size:26px;margin-bottom:8px;}
-.page-top p{font-size:14.5px;max-width:560px;}
-.tabs{display:flex;gap:8px;margin:22px 0 4px;border-bottom:1px solid #E2E5FB;}
-.tab{padding:10px 4px;margin-right:22px;font-size:14px;font-weight:700;color:var(--muted);border-bottom:2px solid transparent;cursor:pointer;background:none;border-left:none;border-right:none;border-top:none;font-family:'Poppins',sans-serif;}
-.tab.active{color:var(--purple-deep);border-bottom-color:var(--purple-deep);}
-.list{padding:24px 0 80px;display:flex;flex-direction:column;gap:16px;}
-.list.hidden{display:none;}
-.empty-state{background:#fff;border:1px dashed #D9DDF7;border-radius:16px;padding:50px 24px;text-align:center;}
-.empty-state p{font-size:14.5px;max-width:380px;margin:0 auto;}
-.pending-card{background:#fff;border:1px solid #E7E9F3;border-radius:16px;padding:18px 20px;box-shadow:0 8px 20px -14px rgba(76,63,190,0.3);}
-.pending-top{display:flex;gap:14px;}
-.partner-icon{flex:0 0 auto;width:56px;height:56px;padding:6px;border:1px solid #E7E9F3;border-radius:10px;background:#fff;object-fit:contain;box-sizing:border-box;}
-.partner-icon.placeholder{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#B8B4D6;background:#F6F5FC;text-align:center;}
-.homs-info{min-width:0;flex:1;}
-.homs-info h4{font-size:15.5px;margin-bottom:3px;}
-.chip-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px;}
-.subject-chip{display:inline-block;font-size:11px;font-weight:700;color:var(--purple-deep);background:var(--lavender);padding:2px 9px;border-radius:999px;}
-.subject-chip.type-chip{color:#1C7A4E;background:#EAF7EE;}
-.subject-chip.age-chip{color:#B8791C;background:#FDF3E4;}
-.homs-loc{margin:0 0 6px;font-size:12.5px;font-weight:600;color:#7B65D9;}
-.homs-desc{margin:0 0 8px;font-size:13.5px;line-height:1.5;color:#5B5F73;}
-.homs-learn{display:inline-block;font-size:13px;font-weight:700;color:#1C9BF0;}
-.homs-learn:hover{text-decoration:underline;}
-.meta-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:12px;padding-top:12px;border-top:1px solid #F0EFFB;font-size:12.5px;color:var(--muted);}
-.meta-row strong{color:var(--ink);}
-.agreement-signed{color:#1C7A4E;font-weight:700;}
-.offer-title{font-size:13px;font-weight:500;color:var(--muted);}
-.actions{display:flex;gap:10px;margin-top:16px;}
-.action-btn{flex:1;font-family:'Poppins',sans-serif;font-weight:700;font-size:13.5px;padding:11px;border-radius:10px;border:none;cursor:pointer;transition:opacity .15s ease;}
-.action-btn:hover{opacity:.85;}
-.approve-btn{background:linear-gradient(135deg,var(--blue),var(--green));color:#fff;}
-.reject-btn{background:#fff;border:1.5px solid #F1C1CF;color:#D6395B;}
-.activate-btn{background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;}
-.resend-btn{background:#fff;border:1.5px solid #D9DDF7;color:var(--purple-deep);}
-.status-note{font-size:11.5px;color:#9C97BD;margin-top:10px;font-style:italic;}
-.billing-chip{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:999px;}
-.billing-chip.awaiting{color:#B8791C;background:#FDF3E4;}
-.billing-chip.active{color:#1C7A4E;background:#EAF7EE;}
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 22px;border-radius:999px;font-size:13.5px;font-weight:600;box-shadow:0 12px 30px -10px rgba(0,0,0,0.4);opacity:0;pointer-events:none;transition:opacity .2s ease;}
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Partner Review - HOMs Admin</title><meta name="robots" content="noindex"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root{ --blue:#0EA5E9; --purple:#6C5CE7; --purple-deep:#4F3DC6; --green:#43B05C; --lavender:#EEF0FD; --ink:#241F45; --muted:#5B5876; --rose:#D6395B; --amber:#B7791F; --radius-lg:22px; --shadow:0 20px 40px -18px rgba(76,63,190,0.25); }
+*{box-sizing:border-box;} body{margin:0;font-family:Poppins,sans-serif;color:var(--ink);background:#F6F5FC;display:flex;flex-direction:column;min-height:100vh;-webkit-font-smoothing:antialiased;}
+h1,h2,h3,h4{margin:0;font-weight:700;line-height:1.2;} p{margin:0;color:var(--muted);line-height:1.6;} a{text-decoration:none;}
+.admin-header{background:var(--ink);padding:16px 0;}
+.admin-header .inner{max-width:1180px;margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.badge{background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;font-size:11px;font-weight:800;letter-spacing:1px;padding:5px 13px;border-radius:999px;text-transform:uppercase;}
+.admin-header h1{color:#fff;font-size:19px;}
+.hdr-right{margin-left:auto;display:flex;align-items:center;gap:14px;}
+.hdr-note{color:#B8B4DE;font-size:12.5px;}
+.logout-btn{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-family:Poppins,sans-serif;font-weight:700;font-size:13px;padding:9px 18px;border-radius:999px;cursor:pointer;}
+.logout-btn:hover{background:rgba(255,255,255,0.2);}
+.page{flex:1;max-width:1180px;width:100%;margin:0 auto;padding:34px 24px 70px;}
+.type-switch{display:inline-flex;background:#fff;border:1.5px solid #E2E5FB;border-radius:999px;padding:4px;margin-bottom:22px;box-shadow:var(--shadow);}
+.type-btn{border:none;background:transparent;font-family:Poppins,sans-serif;font-weight:700;font-size:14px;padding:10px 22px;border-radius:999px;cursor:pointer;color:var(--muted);}
+.type-btn.active{background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;}
+.page h2{font-size:27px;margin-bottom:9px;}
+.intro{font-size:14.5px;max-width:760px;margin-bottom:24px;}
+.stage-tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid #E2E5FB;margin-bottom:24px;}
+.stage-tab{border:none;background:transparent;font-family:Poppins,sans-serif;font-weight:700;font-size:14px;padding:11px 16px;cursor:pointer;color:var(--muted);border-bottom:3px solid transparent;margin-bottom:-1px;}
+.stage-tab.active{color:var(--purple-deep);border-bottom-color:var(--purple-deep);}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:16px;}
+.card{background:#fff;border:1px solid #ECEAF9;border-radius:var(--radius-lg);padding:20px;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease;}
+.card:hover{transform:translateY(-3px);box-shadow:var(--shadow);}
+.card h3{font-size:16px;margin-bottom:5px;}
+.card .sub{font-size:12.5px;font-weight:600;color:var(--purple-deep);margin-bottom:9px;}
+.card .desc{font-size:13.5px;color:var(--muted);line-height:1.5;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.card .meta{margin-top:12px;padding-top:12px;border-top:1px solid #F2F1FB;font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.pill{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.6px;padding:3px 10px;border-radius:999px;text-transform:uppercase;}
+.pill-pending{background:#FFF4E5;color:var(--amber);} .pill-updated{background:#E8F1FE;color:#2563EB;} .pill-approved{background:#EDE9FE;color:var(--purple-deep);} .pill-activated{background:#E7F6EC;color:#227C42;} .pill-declined{background:#FDECEF;color:var(--rose);}
+.empty{background:#fff;border:2px dashed #DCD9F2;border-radius:var(--radius-lg);padding:56px 24px;text-align:center;color:var(--muted);font-size:14.5px;line-height:1.7;}
+.overlay{position:fixed;inset:0;background:rgba(36,31,69,0.55);display:none;align-items:flex-start;justify-content:center;padding:32px 16px;z-index:100;overflow-y:auto;}
+.overlay.open{display:flex;}
+.modal{background:#fff;border-radius:var(--radius-lg);max-width:640px;width:100%;box-shadow:0 30px 60px -20px rgba(36,31,69,0.5);}
+.modal-head{padding:22px 26px;border-bottom:1px solid #EFEDFA;display:flex;align-items:center;gap:12px;}
+.modal-head h3{font-size:18px;flex:1;}
+.close-x{border:none;background:#F2F1FB;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:17px;color:var(--muted);}
+.modal-body{padding:24px 26px;}
+.fld{margin-bottom:17px;} .fld label{display:block;font-weight:700;font-size:13px;margin-bottom:6px;}
+.fld input,.fld select,.fld textarea{width:100%;font-family:Poppins,sans-serif;font-size:14px;color:var(--ink);padding:11px 13px;border:1.5px solid #E2E5FB;border-radius:11px;background:#FAFAFF;}
+.fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--purple);background:#fff;}
+.fld textarea{min-height:88px;resize:vertical;}
+.fld-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.section-lbl{font-size:12px;font-weight:800;letter-spacing:1px;color:var(--purple-deep);text-transform:uppercase;margin:26px 0 14px;padding-top:18px;border-top:1px solid #EFEDFA;}
+.private-note{background:#FFF8EC;color:var(--amber);font-weight:700;font-size:13px;padding:11px 14px;border-radius:10px;margin-bottom:16px;}
+.file-box{border:2px dashed #DCD9F2;border-radius:12px;padding:20px;text-align:center;font-size:13.5px;color:var(--muted);line-height:1.6;background:#FAFAFF;}
+.file-box a{color:var(--purple-deep);font-weight:700;}
+.status-box{background:#F4F3FC;border-radius:11px;padding:12px 15px;font-weight:700;font-size:13px;margin-bottom:14px;}
+.status-now{background:#E7F6EC;color:#227C42;border-radius:11px;padding:13px 15px;font-size:14px;font-weight:600;margin-bottom:16px;}
+.moves{display:flex;align-items:center;gap:9px;flex-wrap:wrap;}
+.moves span{font-size:13px;color:var(--muted);font-weight:600;}
+.move-btn{border:none;background:#F2F1FB;font-family:Poppins,sans-serif;font-weight:700;font-size:13px;padding:10px 17px;border-radius:9px;cursor:pointer;color:var(--ink);}
+.move-btn:hover{background:#E4E1F7;}
+.move-btn.danger{background:#FDECEF;color:var(--rose);} .move-btn.danger:hover{background:#FBD9DF;}
+.modal-foot{padding:18px 26px;border-top:1px solid #EFEDFA;display:flex;justify-content:flex-end;gap:11px;}
+.btn-cancel{background:var(--ink);color:#fff;border:none;font-family:Poppins,sans-serif;font-weight:700;font-size:14px;padding:12px 26px;border-radius:11px;cursor:pointer;}
+.btn-save{background:var(--purple);color:#fff;border:none;font-family:Poppins,sans-serif;font-weight:700;font-size:14px;padding:12px 26px;border-radius:11px;cursor:pointer;}
+.btn-save:hover{background:var(--purple-deep);}
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;font-weight:600;font-size:14px;padding:13px 24px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .2s ease;z-index:200;}
 .toast.show{opacity:1;}
-.admin-right{display:flex;align-items:center;gap:14px;}
-.logout-btn{font-family:'Poppins',sans-serif;font-weight:700;font-size:12.5px;color:#fff;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.25);padding:6px 14px;border-radius:999px;cursor:pointer;transition:background .15s ease;}
-.logout-btn:hover{background:rgba(255,255,255,0.18);}
+@media (max-width:640px){ .fld-row{grid-template-columns:1fr;} .page h2{font-size:22px;} }
 footer .wrap{max-width:1140px;margin:0 auto;padding:0 24px;}
 footer .logo-cube{width:34px;height:34px;}
 footer .logo-text{display:flex;flex-direction:column;line-height:1;}
 footer .logo-word{font-family:'Poppins',sans-serif;font-weight:800;font-size:22px;letter-spacing:0.5px;}
 footer .logo-sub{font-family:'Poppins',sans-serif;font-size:9px;letter-spacing:2.5px;color:var(--blue);font-weight:700;margin-top:1px;}
 footer{background:var(--ink);padding:52px 0 28px;} .foot-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:32px;margin-bottom:36px;} .foot-logo .logo-word{color:#fff;} .foot-logo .logo-sub{color:#8FE0FF;} .foot-tag{color:#B8B4DE;font-size:14px;max-width:280px;margin-top:10px;line-height:1.8;} .foot-tag a{color:#B8B4DE;} .foot-tag a:hover{color:#fff;} .foot-links{display:flex;gap:56px;flex-wrap:wrap;} .foot-col h4{color:#fff;font-size:13px;letter-spacing:0.5px;margin-bottom:14px;font-family:'Poppins',sans-serif;font-weight:700;} .foot-col a{display:block;color:#B8B4DE;font-size:14px;margin-bottom:10px;} .foot-col a:hover{color:#fff;} .foot-bottom{ border-top:1px solid rgba(255,255,255,0.1); padding-top:22px; display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px; } .foot-bottom p{color:#8B87AB;font-size:12.5px;} .app-store-note{display:flex;align-items:center;gap:8px;color:#B8B4DE;font-size:12.5px;font-weight:600;} .social-icons{ display:flex; align-items:center; gap:10px; margin-top:18px; } .social-icons a{ width:38px; height:38px; border-radius:50%; display:grid; place-items:center; color:#fff; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.16); transition:transform .18s ease,background .18s ease,border-color .18s ease; } .social-icons a:hover{ transform:translateY(-3px); background:var(--purple); border-color:transparent; } .social-icons svg{ width:18px; height:18px; fill:currentColor; } .hero-photo{width:100%;height:auto;display:block;border-radius:26px;box-shadow:var(--shadow);object-fit:cover}.fc{padding:0;min-height:390px;perspective:1200px;cursor:pointer;background:transparent;border:0}.fc:hover{transform:none;box-shadow:none}.fi{position:relative;min-height:390px;transform-style:preserve-3d;transition:.65s}.fc.on .fi{transform:rotateY(180deg)}.ff,.fb{position:absolute;inset:0;border:1px solid #f0effb;border-radius:var(--radius-lg);background:#fff;backface-visibility:hidden;overflow:hidden}.ff{padding:34px 28px}.fb{transform:rotateY(180deg);display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(145deg,#f8f6ff,#eef9f4);padding:15px}.phone-shot{display:block;width:100%;height:auto;max-width:150px;margin:0 auto;filter:drop-shadow(0 16px 28px rgba(0,0,0,.28));}.how-grid .phone-shot{max-width:220px;}.tap,.fb>span{font-size:10px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;color:var(--purple)}.tap{display:block;margin-top:16px}.fb>span{margin-top:7px;color:var(--muted)}@media(max-width:900px){.fb svg{height:420px}}
-</style></head><body>
-
-<header><div class="wrap admin-bar"><div class="admin-tag"><span class="admin-badge">Admin</span><span class="admin-title">Enrichment Partner Review</span></div><div class="admin-right"><span class="admin-note">Live — backed by Cloudflare KV</span><button class="logout-btn" id="logout-btn" type="button">Log out</button></div></div></header>
-
-<div class="wrap page-top">
-  <h1>Pending Enrichment Partners</h1>
-  <p>Submissions from the "Become a Partner" form appear here for review, no matter what device or browser the partner used to apply. Approving a submission emails the partner a $5/mo activation link — they stay in Approved, not live, until billing is confirmed. Only partners in the Activated tab are actually live in the app. This runs on a real Cloudflare KV backend today; a Stripe webhook (instead of the manual "Mark as Paid" button) is the one piece still to come.</p>
-  <div class="tabs">
-    <button class="tab active" id="tab-pending" data-tab="pending">Pending (<span id="pending-count">0</span>)</button>
-    <button class="tab" id="tab-approved" data-tab="approved">Approved (<span id="approved-count">0</span>)</button>
-    <button class="tab" id="tab-activated" data-tab="activated">Activated (<span id="activated-count">0</span>)</button>
-  </div>
+</style></head>
+<body>
+<header class="admin-header"><div class="inner">
+<span class="badge">Admin</span>
+<h1>Partner Review</h1>
+<div class="hdr-right"><span class="hdr-note">Live - backed by Cloudflare KV</span>
+<button class="logout-btn" onclick="location.href='/auth/logout'">Log out</button></div>
+</div></header>
+<div class="page">
+<div class="type-switch">
+<button class="type-btn active" data-type="ep">Enrichment Partners</button>
+<button class="type-btn" data-type="rp">HOMs Box Partners</button>
 </div>
-
-<div class="wrap list" id="pending-list"></div>
-<div class="wrap list hidden" id="approved-list"></div>
-<div class="wrap list hidden" id="activated-list"></div>
-
+<h2 id="sec-title">Enrichment Partners</h2>
+<p class="intro" id="sec-intro"></p>
+<div class="stage-tabs" id="stage-tabs"></div>
+<div id="list-area"></div>
+</div>
+<footer><div class="wrap"><div class="foot-top"><div class="foot-logo"><div class="logo-word"><span style="color:#38BDF8">H</span><span style="color:#9B8AFB">O</span><span style="color:#63C97C">M</span><span style="color:#9B8AFB">s</span></div><div class="logo-sub">HOMESCHOOL</div><p class="foot-tag">Frederick, MD, USA<br/><a href="tel:+12405753007">(240) 575-3007</a><br/><a href="mailto:helperofmoms@gmail.com">helperofmoms@gmail.com</a><br/><a href="https://calendar.app.google/z4BnCS9aK1Xyihw97" target="_blank" rel="noopener">Schedule a Meeting</a></p><div aria-label="HOMs social media" class="social-icons"><a aria-label="Facebook" href="https://www.facebook.com/profile.php?id=61554172673611" rel="noopener" target="_blank" title="Facebook"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M14 8h3V4h-3c-3 0-5 2-5 5v2H6v4h3v7h4v-7h3l1-4h-4V9c0-.7.3-1 1-1z"></path></svg></a><a aria-label="Instagram" href="https://www.instagram.com/homshomeschool/" rel="noopener" target="_blank" title="Instagram"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 3a2 2 0 0 0-2 2v10c0 1.1.9 2 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7zm5 3a4 4 0 1 1 0 8 4 4 0 0 1 0-8zm0 2.2a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6zM17.5 6.5a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" fill-rule="evenodd"></path></svg></a><a aria-label="TikTok" href="https://www.tiktok.com/@jasmynajlounyhoms" rel="noopener" target="_blank" title="TikTok"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M14 3h3c.4 2.1 1.6 3.4 4 3.8v3a9 9 0 0 1-4-1.4v7.1a6 6 0 1 1-6-6c.4 0 .8 0 1 .1v3.2a3 3 0 1 0 2 2.8V3z"></path></svg></a><a aria-label="YouTube" href="https://www.youtube.com/@HOMsHomeschool" rel="noopener" target="_blank" title="YouTube"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M22 8.2a3 3 0 0 0-2.1-2.1C18 5.6 12 5.6 12 5.6s-6 0-7.9.5A3 3 0 0 0 2 8.2 31 31 0 0 0 1.5 12c0 1.3.1 2.6.5 3.8a3 3 0 0 0 2.1 2.1c1.9.5 7.9.5 7.9.5s6 0 7.9-.5a3 3 0 0 0 2.1-2.1c.4-1.2.5-2.5.5-3.8s-.1-2.6-.5-3.8zM10 15.5v-7l6 3.5-6 3.5z"></path></svg></a><a aria-label="LinkedIn" href="https://www.linkedin.com/in/homshomeschool/" rel="noopener" target="_blank" title="LinkedIn"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M5 3.5A2.5 2.5 0 1 1 5 8a2.5 2.5 0 0 1 0-5zM3 9h4v12H3V9zm6 0h4v1.7c.9-1.3 2.2-2.1 4-2.1 3.2 0 4 2.1 4 5.2V21h-4v-6.4c0-1.5 0-3-2-3s-2.3 1.5-2.3 2.9V21H9V9z"></path></svg></a></div></div><div class="foot-links"><div class="foot-col"><h4>PRODUCT</h4><a href="#features">Features</a><a href="#how-it-works">How It Works</a><a href="#pricing">Pricing</a><a href="enrichment-partners.html">Enrichment Partners</a></div><div class="foot-col"><h4>GET STARTED</h4><a href="https://app.helperofmoms.com" rel="noopener" target="_blank">Log In / Sign Up</a><a href="https://admin.homsapp.com/admin-pending-partners.html" rel="noopener">Admin</a><a href="https://admin.homsapp.com/admin-login.html?tab=partner" rel="noopener">Partner</a></div><div class="foot-col"><h4>LEGAL</h4><a href="https://homsapp-website.helperofmoms.workers.dev/terms-and-conditions.pdf" rel="noopener" target="_blank">Terms &amp; Conditions</a><a href="https://homsapp-website.helperofmoms.workers.dev/privacy-policy.pdf" rel="noopener" target="_blank">Privacy Policy</a><a href="https://homsapp-website.helperofmoms.workers.dev/refund-and-cancellation-policy.pdf" rel="noopener" target="_blank">Refund &amp; Cancellation Policy</a><a href="https://homsapp-website.helperofmoms.workers.dev/enrichment-partner-agreement.pdf" rel="noopener" target="_blank">Enrichment Partner Agreement</a></div></div></div><div class="foot-bottom"><p>© 2026 HOMs Homeschool. All rights reserved.</p><div class="app-store-note"><svg fill="none" height="16" viewbox="0 0 24 24" width="16"><path d="M16.5 3c.1 1.1-.3 2.2-1 3-.8.9-2 1.6-3.2 1.5-.2-1.1.3-2.3 1-3C14.1 3.6 15.4 3 16.5 3Z" fill="#B8B4DE"></path><path d="M20.5 17.3c-.5 1.2-.8 1.7-1.5 2.7-1 1.4-2.3 3.2-4 3.2-1.5 0-1.9-1-3.9-1s-2.5 1-4 1c-1.7 0-3-1.6-4-3-2.5-3.6-2.8-7.9-1.2-10.2 1.1-1.6 2.9-2.6 4.5-2.6 1.7 0 2.7 1.1 4 1.1 1.3 0 2.1-1.1 4-1.1 1.5 0 3 .8 4.1 2.2-3.6 2-3 7.2 2 7.7Z" fill="#B8B4DE"></path></svg><svg fill="none" height="16" viewbox="0 0 24 24" width="16"><path d="M4 3.5c-.3.3-.5.8-.5 1.3v14.4c0 .5.2 1 .5 1.3l.1.1L13 12 4.1 3.4l-.1.1Z" fill="#B8B4DE"></path><path d="M16.1 15.1 13 12l3.1-3.1 3.6 2.1c.9.5.9 1.5 0 2l-3.6 2.1Z" fill="#B8B4DE"></path><path d="M4.1 3.4 13 12l3.1-3.1-11-6.4c-.4-.2-.7-.1-1 .2Z" fill="#B8B4DE"></path><path d="M4.1 20.6 13 12l3.1 3.1-11 6.4c-.4.2-.7.1-1-.2Z" fill="#B8B4DE"></path></svg> Coming soon to the Apple Store and Google Play </div></div></div></footer>
+<div class="overlay" id="overlay"><div class="modal">
+<div class="modal-head"><h3 id="modal-title">Details</h3><button class="close-x" onclick="closeModal()">&times;</button></div>
+<div class="modal-body" id="modal-body"></div>
+<div class="modal-foot"><button class="btn-cancel" onclick="closeModal()">Cancel</button><button class="btn-save" onclick="saveItem()">Save changes</button></div>
+</div></div>
 <div class="toast" id="toast"></div>
-
 <script>
-// PROTOTYPE NOTE: replace with the real Stripe Payment Link once the $5/mo
-// Enrichment Partner price is created in the Stripe dashboard.
-const STRIPE_PAYMENT_LINK_PLACEHOLDER = 'https://buy.stripe.com/REPLACE_WITH_YOUR_5_DOLLAR_PAYMENT_LINK';
+var STAGES = ["pending","updated","approved","activated","declined"];
+var STAGE_LABELS = {pending:"Pending",updated:"Updated",approved:"Approved",activated:"Activated",declined:"Declined"};
+var INTROS = {
+  ep: "Applications from the Become an Enrichment Partner form appear here. Approving one emails the partner a $5/mo activation link - they stay in Approved, not live, until billing is confirmed. Only partners in Activated are live in the app.",
+  rp: "Resource submissions from HOMs Box Partners appear here - curriculum, videos, printables, planning and parenting material. Approving one emails a $5/mo activation link. Only resources in Activated are live in the HOMs Box. Edits made by a partner after approval land in Updated for your re-approval."
+};
+var SUBJECTS = ["Art","Faith Studies","Foreign Language","Health & PE","Language Arts","Life Skills","Mathematics","Music & Theatre Arts","Science","Social Studies / History","STEM / STEAM"];
+var RESOURCE_TYPES = ["Printable","Worksheet","Workbook","Curriculum","Unit Study","Lesson Plan","Project","Activity","Game","Video","Audio","Planner","Guide","Parenting Guidance"];
+var WORKING_STYLES = ["Independent","Parent-led","One-on-one","Group / Co-op","Hybrid"];
+var GRADES = ["Pre-K","K","1st","2nd","3rd","4th","5th","6th","7th","8th","9th","10th","11th","12th"];
+var AGES = ["3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18"];
 
-let DATA = { pending: [], approved: [], activated: [] };
+var EP_FIELDS = [
+  {k:"orgName",l:"Program or Business Name",t:"text"},
+  {k:"offerTitle",l:"Offer Title",t:"text"},
+  {k:"subjects",l:"Subject Category",t:"list"},
+  {k:"locationTypes",l:"Location Type",t:"list"},
+  {k:"gradeAgeValues",l:"Grade / Age Range",t:"list"},
+  {k:"website",l:"Website / Program URL",t:"text"},
+  {k:"learnMore",l:"Learn More Link",t:"text"},
+  {k:"description",l:"Short Description",t:"textarea"},
+  {k:"streetAddress",l:"Address",t:"text"},
+  {k:"city",l:"City",t:"text",half:true},
+  {k:"state",l:"State",t:"text",half:true},
+  {k:"county",l:"County",t:"text"},
+  {k:"notes",l:"Applicant notes",t:"textarea"}
+];
+var EP_CONTACT = [
+  {k:"contactName",l:"Contact name",t:"text"},
+  {k:"contactRole",l:"Role",t:"text"},
+  {k:"contactEmail",l:"Contact email",t:"text"},
+  {k:"contactPhone",l:"Contact phone",t:"text"}
+];
+var RP_FIELDS = [
+  {k:"title",l:"Title",t:"text"},
+  {k:"resourceType",l:"Resource type",t:"select",opts:RESOURCE_TYPES},
+  {k:"workingStyle",l:"Working style",t:"select",opts:WORKING_STYLES},
+  {k:"subject",l:"Subject",t:"select",opts:SUBJECTS},
+  {k:"subTopic",l:"Sub-topic",t:"text"},
+  {k:"fromGrade",l:"From Grade",t:"select",opts:GRADES,half:true},
+  {k:"toGrade",l:"To Grade",t:"select",opts:GRADES,half:true},
+  {k:"fromAge",l:"From Age",t:"select",opts:AGES,half:true},
+  {k:"toAge",l:"To Age",t:"select",opts:AGES,half:true},
+  {k:"description",l:"Description",t:"textarea"},
+  {k:"sampleLink",l:"Sample link",t:"text"}
+];
+var RP_CONTACT = [
+  {k:"businessName",l:"Business name or brand name",t:"text"},
+  {k:"contactName",l:"Contact name",t:"text"},
+  {k:"contactEmail",l:"Contact email",t:"text"},
+  {k:"contactPhone",l:"Contact phone",t:"text"}
+];
 
-// Auth is handled server-side now via Google Sign-In: the Worker redirects
-// to /auth/google/login before this page is ever served if there's no valid
-// session cookie, so by the time this script runs we're already logged in.
-// These fetches rely on the browser sending that session cookie automatically
-// (same-origin, no token needed). A 401/403 here just means the session
-// expired mid-visit, so we bounce back through the login flow.
+var state = {type:"ep", stage:"pending", data:null, current:null};
 
-async function apiGet() {
-  const res = await fetch('/api/admin/data');
-  if (res.status === 401 || res.status === 403) {
-    window.location.href = '/auth/google/login';
-    return { pending: [], approved: [], activated: [] };
-  }
-  if (!res.ok) throw new Error('Failed to load data (' + res.status + ')');
-  return res.json();
-}
+function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+function toast(msg){ var t=document.getElementById("toast"); t.textContent=msg; t.classList.add("show"); setTimeout(function(){t.classList.remove("show");},2200); }
+function fmtDate(iso){ if(!iso) return "-"; var d=new Date(iso); return d.toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"}); }
 
-async function apiPost(path, extra) {
-  const res = await fetch(path, {
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify(extra || {})
-  });
-  if (res.status === 401 || res.status === 403) {
-    window.location.href = '/auth/google/login';
-    return null;
-  }
-  if (!res.ok) throw new Error('Request failed (' + res.status + ')');
-  return res.json();
-}
-
-function showToast(msg) {
-  const toast = document.getElementById('toast');
-  toast.textContent = msg;
-  toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 2200);
-}
-function escapeHtml(str) {
-  const div = document.createElement('div');
-  div.textContent = str || '';
-  return div.innerHTML;
-}
-function formatDate(iso) {
-  const d = new Date(iso);
-  return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }) + ' at ' +
-    d.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' });
-}
-function locationLineFor(p) {
-  return p.isNationwide
-    ? 'Nationwide'
-    : [p.streetAddress, [p.city, p.state].filter(Boolean).join(', ')].filter(Boolean).join(' — ') + (p.county ? ' | ' + p.county : '');
-}
-function chipsFor(p) {
-  const subjectChips = (p.subjects && p.subjects.length ? p.subjects : [p.subject || 'Uncategorized'])
-    .map((s) => '<span class="subject-chip">' + escapeHtml(s) + '</span>').join(' ');
-  const locationTypeChips = (p.locationTypes && p.locationTypes.length)
-    ? p.locationTypes.map((t) => '<span class="subject-chip type-chip">' + escapeHtml(t) + '</span>').join(' ')
-    : '';
-  const gradeAgeChips = (p.gradeAgeValues && p.gradeAgeValues.length)
-    ? p.gradeAgeValues.map((g) => '<span class="subject-chip age-chip">' + escapeHtml(g) + '</span>').join(' ')
-    : '';
-  return { subjectChips, locationTypeChips, gradeAgeChips };
-}
-
-// Emails the newly approved partner a link to activate their $5/mo listing.
-// PROTOTYPE NOTE: opens a pre-filled email via mailto: since a static site can't
-// send email on its own. The real backend would send this automatically via
-// SES/SendGrid the moment an admin clicks Approve, with no client interaction.
-function sendActivationEmail(item) {
-  const body =
-'Hi ' + (item.contactName || 'there') + ',\n\n' +
-'Your HOMs Enrichment Partner application for ' + item.orgName + ' has been approved.\n\n' +
-'To activate your listing in the HOMs app directory, set up billing for the Enrichment Partner cross-marketing program ($5/month):\n\n' +
-STRIPE_PAYMENT_LINK_PLACEHOLDER + '\n\n' +
-'Your listing will go live as soon as your subscription is confirmed. If you have any questions, just reply to this email.\n\n' +
-'— The HOMs Team';
-
-  const subject = "You're approved! Activate your HOMs Enrichment Partner listing";
-  const mailtoUrl = 'mailto:' + encodeURIComponent(item.contactEmail) + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-
-  const link = document.createElement('a');
-  link.href = mailtoUrl;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-}
-
-function renderPending() {
-  const pending = DATA.pending;
-  document.getElementById('pending-count').textContent = pending.length;
-
-  const list = document.getElementById('pending-list');
-  list.innerHTML = '';
-
-  if (pending.length === 0) {
-    list.innerHTML = '<div class="empty-state"><p>No pending submissions right now. New applications from the "Become a Partner" form will show up here automatically.</p></div>';
-    return;
-  }
-
-  pending.forEach((p) => {
-    const card = document.createElement('div');
-    card.className = 'pending-card';
-    const logoHtml = p.logoDataUrl
-      ? '<img class="partner-icon" src="' + p.logoDataUrl + '" alt="' + escapeHtml(p.orgName) + ' logo">'
-      : '<div class="partner-icon placeholder">No Logo</div>';
-    const learnUrl = p.learnMore || p.website;
-    const locationLine = locationLineFor(p);
-    const { subjectChips, locationTypeChips, gradeAgeChips } = chipsFor(p);
-
-    card.innerHTML =
-      '<div class="pending-top">' +
-        logoHtml +
-        '<div class="homs-info">' +
-          '<div class="chip-row">' + subjectChips + locationTypeChips + '</div>' +
-          (gradeAgeChips ? '<div class="chip-row">' + gradeAgeChips + '</div>' : '') +
-          '<h4><a href="' + escapeHtml(p.website) + '" target="_blank" rel="noopener">' + escapeHtml(p.orgName) + '</a>' + (p.offerTitle ? ' <span class="offer-title">— ' + escapeHtml(p.offerTitle) + '</span>' : '') + '</h4>' +
-          '<p class="homs-loc">' + escapeHtml(locationLine) + '</p>' +
-          '<p class="homs-desc">' + escapeHtml(p.description) + '</p>' +
-          '<a class="homs-learn" href="' + escapeHtml(learnUrl) + '" target="_blank" rel="noopener">Learn More -&gt;</a>' +
-        '</div>' +
-      '</div>' +
-      '<div class="meta-row">' +
-        '<span><strong>Contact:</strong> ' + escapeHtml(p.contactName) + (p.contactRole ? ' (' + escapeHtml(p.contactRole) + ')' : '') + '</span>' +
-        '<span><strong>Email:</strong> ' + escapeHtml(p.contactEmail) + '</span>' +
-        (p.contactPhone ? '<span><strong>Phone:</strong> ' + escapeHtml(p.contactPhone) + '</span>' : '') +
-        '<span><strong>Submitted:</strong> ' + formatDate(p.submittedAt) + '</span>' +
-        '<span class="agreement-signed">&#10003; Agreement signed</span>' +
-      '</div>' +
-      (p.notes ? '<div class="meta-row"><span><strong>Notes:</strong> ' + escapeHtml(p.notes) + '</span></div>' : '') +
-      '<div class="actions">' +
-        '<button class="action-btn approve-btn" data-id="' + p.id + '" data-action="approve">Approve</button>' +
-        '<button class="action-btn reject-btn" data-id="' + p.id + '" data-action="reject">Reject</button>' +
-      '</div>' +
-      '<p class="status-note">Approving will email the partner a $5/mo activation link. Their listing goes live once billing is set up.</p>';
-
-    list.appendChild(card);
-  });
-}
-
-function renderApproved() {
-  const approved = DATA.approved;
-  document.getElementById('approved-count').textContent = approved.length;
-
-  const list = document.getElementById('approved-list');
-  list.innerHTML = '';
-
-  if (approved.length === 0) {
-    list.innerHTML = '<div class="empty-state"><p>No approved partners yet. Approve a pending submission to see it here.</p></div>';
-    return;
-  }
-
-  approved.forEach((p) => {
-    const card = document.createElement('div');
-    card.className = 'pending-card';
-    const logoHtml = p.logoDataUrl
-      ? '<img class="partner-icon" src="' + p.logoDataUrl + '" alt="' + escapeHtml(p.orgName) + ' logo">'
-      : '<div class="partner-icon placeholder">No Logo</div>';
-    const locationLine = locationLineFor(p);
-    const { subjectChips, locationTypeChips } = chipsFor(p);
-
-    card.innerHTML =
-      '<div class="pending-top">' +
-        logoHtml +
-        '<div class="homs-info">' +
-          '<div class="chip-row">' + subjectChips + locationTypeChips + '<span class="billing-chip awaiting">&#9203; Awaiting payment</span></div>' +
-          '<h4><a href="' + escapeHtml(p.website) + '" target="_blank" rel="noopener">' + escapeHtml(p.orgName) + '</a>' + (p.offerTitle ? ' <span class="offer-title">— ' + escapeHtml(p.offerTitle) + '</span>' : '') + '</h4>' +
-          '<p class="homs-loc">' + escapeHtml(locationLine) + '</p>' +
-          '<p class="homs-desc">' + escapeHtml(p.description) + '</p>' +
-        '</div>' +
-      '</div>' +
-      '<div class="meta-row">' +
-        '<span><strong>Contact:</strong> ' + escapeHtml(p.contactName) + '</span>' +
-        '<span><strong>Email:</strong> ' + escapeHtml(p.contactEmail) + '</span>' +
-        '<span><strong>Approved:</strong> ' + formatDate(p.approvedAt) + '</span>' +
-      '</div>' +
-      '<div class="actions">' +
-        '<button class="action-btn activate-btn" data-id="' + p.id + '" data-action="mark-paid">Mark as Paid &amp; Activate</button>' +
-        '<button class="action-btn resend-btn" data-id="' + p.id + '" data-action="resend">Resend Activation Email</button>' +
-      '</div>' +
-      '<p class="status-note">Not live yet. In production, this partner moves to Activated automatically the moment a Stripe webhook confirms their $5/mo payment — never before.</p>';
-
-    list.appendChild(card);
-  });
-}
-
-function renderActivated() {
-  const activated = DATA.activated;
-  document.getElementById('activated-count').textContent = activated.length;
-
-  const list = document.getElementById('activated-list');
-  list.innerHTML = '';
-
-  if (activated.length === 0) {
-    list.innerHTML = '<div class="empty-state"><p>No activated partners yet. Partners appear here once they have paid and are live in the app directory.</p></div>';
-    return;
-  }
-
-  activated.forEach((p) => {
-    const card = document.createElement('div');
-    card.className = 'pending-card';
-    const logoHtml = p.logoDataUrl
-      ? '<img class="partner-icon" src="' + p.logoDataUrl + '" alt="' + escapeHtml(p.orgName) + ' logo">'
-      : '<div class="partner-icon placeholder">No Logo</div>';
-    const learnUrl = p.learnMore || p.website;
-    const locationLine = locationLineFor(p);
-    const { subjectChips, locationTypeChips } = chipsFor(p);
-
-    card.innerHTML =
-      '<div class="pending-top">' +
-        logoHtml +
-        '<div class="homs-info">' +
-          '<div class="chip-row">' + subjectChips + locationTypeChips + '<span class="billing-chip active">&#10003; Active — $5/mo</span></div>' +
-          '<h4><a href="' + escapeHtml(p.website) + '" target="_blank" rel="noopener">' + escapeHtml(p.orgName) + '</a>' + (p.offerTitle ? ' <span class="offer-title">— ' + escapeHtml(p.offerTitle) + '</span>' : '') + '</h4>' +
-          '<p class="homs-loc">' + escapeHtml(locationLine) + '</p>' +
-          '<p class="homs-desc">' + escapeHtml(p.description) + '</p>' +
-          '<a class="homs-learn" href="' + escapeHtml(learnUrl) + '" target="_blank" rel="noopener">Learn More -&gt;</a>' +
-        '</div>' +
-      '</div>' +
-      '<div class="meta-row">' +
-        '<span><strong>Contact:</strong> ' + escapeHtml(p.contactName) + '</span>' +
-        '<span><strong>Email:</strong> ' + escapeHtml(p.contactEmail) + '</span>' +
-        '<span><strong>Billing active since:</strong> ' + formatDate(p.activatedAt) + '</span>' +
-      '</div>' +
-      '<p class="status-note">Live in the app Enrichment Partners directory. This partner has paid and is billed $5/mo going forward.</p>';
-
-    list.appendChild(card);
-  });
-}
-
-async function render() {
-  try {
-    DATA = await apiGet();
-  } catch (err) {
-    showToast('Could not reach the server. Try reloading the page.');
-    return;
-  }
-  renderPending();
-  renderApproved();
-  renderActivated();
-}
-
-document.getElementById('pending-list').addEventListener('click', async (e) => {
-  const btn = e.target.closest('.action-btn');
-  if (!btn) return;
-  const id = btn.dataset.id;
-  const action = btn.dataset.action;
-  btn.disabled = true;
-
-  const item = DATA.pending.find((p) => p.id === id);
-  if (!item) return;
-
-  if (action === 'approve') {
-    const result = await apiPost('/api/admin/approve', { id });
-    if (result && result.ok) {
-      sendActivationEmail(result.item);
-      showToast('Approved — activation email sent to ' + result.item.contactEmail);
-    }
-  } else {
-    const result = await apiPost('/api/admin/reject', { id });
-    if (result && result.ok) showToast('Rejected — ' + item.orgName + ' removed from the queue.');
-  }
+async function loadData(){
+  var res = await fetch("/api/admin/all", {cache:"no-store"});
+  if(res.status===401){ location.href="/admin-login.html"; return; }
+  state.data = await res.json();
   render();
-});
+}
 
-document.getElementById('approved-list').addEventListener('click', async (e) => {
-  const btn = e.target.closest('.action-btn');
-  if (!btn) return;
-  const id = btn.dataset.id;
-  const action = btn.dataset.action;
-
-  const item = DATA.approved.find((p) => p.id === id);
-  if (!item) return;
-
-  if (action === 'mark-paid') {
-    btn.disabled = true;
-    const result = await apiPost('/api/admin/mark-paid', { id });
-    if (result && result.ok) showToast(result.item.orgName + ' has paid and is now live in the app directory.');
-    render();
-  } else if (action === 'resend') {
-    sendActivationEmail(item);
-    showToast('Activation email re-sent to ' + item.contactEmail);
-  }
-});
-
-document.getElementById('logout-btn').addEventListener('click', () => {
-  window.location.href = '/auth/logout';
-});
-
-document.querySelectorAll('.tab').forEach((tabBtn) => {
-  tabBtn.addEventListener('click', () => {
-    document.querySelectorAll('.tab').forEach((t) => t.classList.remove('active'));
-    tabBtn.classList.add('active');
-    const target = tabBtn.dataset.tab;
-    document.getElementById('pending-list').classList.toggle('hidden', target !== 'pending');
-    document.getElementById('approved-list').classList.toggle('hidden', target !== 'approved');
-    document.getElementById('activated-list').classList.toggle('hidden', target !== 'activated');
+function render(){
+  document.getElementById("sec-title").textContent = state.type==="ep" ? "Enrichment Partners" : "HOMs Box Partners";
+  document.getElementById("sec-intro").textContent = INTROS[state.type];
+  var buckets = state.data[state.type] || {};
+  var tabs = document.getElementById("stage-tabs");
+  tabs.innerHTML = STAGES.map(function(s){
+    var n = (buckets[s]||[]).length;
+    return "<button class=\"stage-tab" + (s===state.stage?" active":"") + "\" data-stage=\"" + s + "\">" + STAGE_LABELS[s] + " (" + n + ")</button>";
+  }).join("");
+  Array.prototype.forEach.call(tabs.querySelectorAll(".stage-tab"), function(b){
+    b.onclick = function(){ state.stage = b.getAttribute("data-stage"); render(); };
   });
-});
+  var items = buckets[state.stage] || [];
+  var area = document.getElementById("list-area");
+  if(!items.length){
+    area.innerHTML = "<div class=\"empty\">Nothing in " + STAGE_LABELS[state.stage] + " right now.</div>";
+    return;
+  }
+  area.innerHTML = "<div class=\"cards\">" + items.map(function(it,i){
+    var title = state.type==="ep" ? (it.orgName||"Untitled") : (it.title||"Untitled");
+    var sub = state.type==="ep"
+      ? [(it.city?it.city:""),(it.state?it.state:"")].filter(Boolean).join(", ") || (it.isNationwide?"Nationwide":"")
+      : [(it.subject||""),(it.subTopic||"")].filter(Boolean).join(" / ");
+    var who = state.type==="ep" ? (it.contactName||"") : (it.businessName||it.contactName||"");
+    return "<div class=\"card\" data-idx=\"" + i + "\">" +
+      "<h3>" + esc(title) + "</h3>" +
+      "<div class=\"sub\">" + esc(sub) + "</div>" +
+      "<div class=\"desc\">" + esc(it.description||"") + "</div>" +
+      "<div class=\"meta\"><span>" + esc(who) + "</span><span class=\"pill pill-" + state.stage + "\">" + STAGE_LABELS[state.stage] + "</span></div>" +
+      "</div>";
+  }).join("") + "</div>";
+  Array.prototype.forEach.call(area.querySelectorAll(".card"), function(c){
+    c.onclick = function(){ openModal(parseInt(c.getAttribute("data-idx"),10)); };
+  });
+}
 
-render();
+function fieldHTML(f, val){
+  var v = val==null ? "" : val;
+  if(f.t==="list" && Object.prototype.toString.call(v)==="[object Array]") v = v.join(", ");
+  var inner;
+  if(f.t==="textarea"){ inner = "<textarea data-k=\"" + f.k + "\">" + esc(v) + "</textarea>"; }
+  else if(f.t==="select"){
+    inner = "<select data-k=\"" + f.k + "\"><option value=\"\">-</option>" + f.opts.map(function(o){
+      return "<option value=\"" + esc(o) + "\"" + (String(v)===String(o)?" selected":"") + ">" + esc(o) + "</option>";
+    }).join("") + "</select>";
+  }
+  else { inner = "<input type=\"text\" data-k=\"" + f.k + "\" data-list=\"" + (f.t==="list"?"1":"") + "\" value=\"" + esc(v) + "\"/>"; }
+  return "<div class=\"fld\"><label>" + esc(f.l) + "</label>" + inner + "</div>";
+}
+
+function renderFields(fields, item){
+  var out = "", i = 0;
+  while(i < fields.length){
+    var f = fields[i];
+    if(f.half && fields[i+1] && fields[i+1].half){
+      out += "<div class=\"fld-row\">" + fieldHTML(f, item[f.k]) + fieldHTML(fields[i+1], item[fields[i+1].k]) + "</div>";
+      i += 2;
+    } else { out += fieldHTML(f, item[f.k]); i += 1; }
+  }
+  return out;
+}
+
+function openModal(idx){
+  var items = state.data[state.type][state.stage];
+  var item = items[idx];
+  state.current = {idx:idx, id:item.id};
+  document.getElementById("modal-title").textContent = state.type==="ep" ? (item.orgName||"Details") : (item.title||"Details");
+  var fields = state.type==="ep" ? EP_FIELDS : RP_FIELDS;
+  var contact = state.type==="ep" ? EP_CONTACT : RP_CONTACT;
+  var html = renderFields(fields, item);
+  if(state.type==="rp"){
+    html += "<div class=\"fld\"><label>Resource file</label><div class=\"file-box\">" +
+      (item.resourceFileName
+        ? ("<a href=\"/partner-logos/" + esc(item.resourceFileKey||"") + "\" target=\"_blank\" rel=\"noopener\">" + esc(item.resourceFileName) + "</a>")
+        : "No file uploaded yet.<br/>Only the sample link is on file.") +
+      "</div></div>";
+  }
+  html += "<div class=\"section-lbl\">Creator contact</div>";
+  html += "<div class=\"private-note\">Creator contact - not shown publicly</div>";
+  html += renderFields(contact, item);
+  html += "<div class=\"section-lbl\">Status</div>";
+  var when = state.stage==="activated" ? item.activatedAt : (state.stage==="approved" ? item.approvedAt : item.submittedAt);
+  var label = state.stage==="activated" ? "live since " : (state.stage==="approved" ? "approved " : "submitted ");
+  html += "<div class=\"status-now\">Currently <strong>" + STAGE_LABELS[state.stage] + "</strong> &middot; " + label + fmtDate(when) + "</div>";
+  if(state.stage==="activated"){
+    html += "<div class=\"status-box\">Billing: " + esc(item.billingStatus||"active") + " &middot; Submitted " + fmtDate(item.submittedAt) + "</div>";
+  }
+  var moves = STAGES.filter(function(s){ return s!==state.stage; });
+  html += "<div class=\"moves\"><span>Move to:</span>" + moves.map(function(s){
+    return "<button class=\"move-btn" + (s==="declined"?" danger":"") + "\" onclick=\"moveItem('" + s + "')\">" + STAGE_LABELS[s] + "</button>";
+  }).join("") + "</div>";
+  document.getElementById("modal-body").innerHTML = html;
+  document.getElementById("overlay").classList.add("open");
+}
+
+function closeModal(){ document.getElementById("overlay").classList.remove("open"); state.current=null; }
+
+function collectFields(){
+  var out = {};
+  Array.prototype.forEach.call(document.querySelectorAll("#modal-body [data-k]"), function(el){
+    var k = el.getAttribute("data-k");
+    var v = el.value;
+    if(el.getAttribute("data-list")==="1"){
+      out[k] = v.split(",").map(function(x){return x.trim();}).filter(Boolean);
+    } else { out[k] = v; }
+  });
+  return out;
+}
+
+async function saveItem(){
+  if(!state.current) return;
+  var res = await fetch("/api/admin/save-item", {
+    method:"POST", headers:{"content-type":"application/json"},
+    body: JSON.stringify({type:state.type, stage:state.stage, id:state.current.id, fields:collectFields()})
+  });
+  if(!res.ok){ toast("Could not save - please try again."); return; }
+  closeModal(); await loadData(); toast("Changes saved.");
+}
+
+async function moveItem(to){
+  if(!state.current) return;
+  var res = await fetch("/api/admin/move", {
+    method:"POST", headers:{"content-type":"application/json"},
+    body: JSON.stringify({type:state.type, id:state.current.id, from:state.stage, to:to})
+  });
+  if(!res.ok){ toast("Could not move - please try again."); return; }
+  closeModal(); await loadData(); toast("Moved to " + STAGE_LABELS[to] + ".");
+}
+
+Array.prototype.forEach.call(document.querySelectorAll(".type-btn"), function(b){
+  b.onclick = function(){
+    Array.prototype.forEach.call(document.querySelectorAll(".type-btn"), function(x){x.classList.remove("active");});
+    b.classList.add("active");
+    state.type = b.getAttribute("data-type"); state.stage = "pending"; render();
+  };
+});
+document.getElementById("overlay").onclick = function(e){ if(e.target.id==="overlay") closeModal(); };
+loadData();
 </script>
-<footer><div class="wrap"><div class="foot-top"><div class="foot-logo"><div class="logo-word"><span style="color:#38BDF8">H</span><span style="color:#9B8AFB">O</span><span style="color:#63C97C">M</span><span style="color:#9B8AFB">s</span></div><div class="logo-sub">HOMESCHOOL</div><p class="foot-tag">Frederick, MD, USA<br/><a href="tel:+12405753007">(240) 575-3007</a><br/><a href="mailto:helperofmoms@gmail.com">helperofmoms@gmail.com</a><br/><a href="https://calendar.app.google/z4BnCS9aK1Xyihw97" target="_blank" rel="noopener">Schedule a Meeting</a></p><div aria-label="HOMs social media" class="social-icons"><a aria-label="Facebook" href="https://www.facebook.com/profile.php?id=61554172673611" rel="noopener" target="_blank" title="Facebook"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M14 8h3V4h-3c-3 0-5 2-5 5v2H6v4h3v7h4v-7h3l1-4h-4V9c0-.7.3-1 1-1z"></path></svg></a><a aria-label="Instagram" href="https://www.instagram.com/homshomeschool/" rel="noopener" target="_blank" title="Instagram"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 3a2 2 0 0 0-2 2v10c0 1.1.9 2 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7zm5 3a4 4 0 1 1 0 8 4 4 0 0 1 0-8zm0 2.2a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6zM17.5 6.5a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" fill-rule="evenodd"></path></svg></a><a aria-label="TikTok" href="https://www.tiktok.com/@jasmynajlounyhoms" rel="noopener" target="_blank" title="TikTok"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M14 3h3c.4 2.1 1.6 3.4 4 3.8v3a9 9 0 0 1-4-1.4v7.1a6 6 0 1 1-6-6c.4 0 .8 0 1 .1v3.2a3 3 0 1 0 2 2.8V3z"></path></svg></a><a aria-label="YouTube" href="https://www.youtube.com/@HOMsHomeschool" rel="noopener" target="_blank" title="YouTube"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M22 8.2a3 3 0 0 0-2.1-2.1C18 5.6 12 5.6 12 5.6s-6 0-7.9.5A3 3 0 0 0 2 8.2 31 31 0 0 0 1.5 12c0 1.3.1 2.6.5 3.8a3 3 0 0 0 2.1 2.1c1.9.5 7.9.5 7.9.5s6 0 7.9-.5a3 3 0 0 0 2.1-2.1c.4-1.2.5-2.5.5-3.8s-.1-2.6-.5-3.8zM10 15.5v-7l6 3.5-6 3.5z"></path></svg></a><a aria-label="LinkedIn" href="https://www.linkedin.com/in/homshomeschool/" rel="noopener" target="_blank" title="LinkedIn"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M5 3.5A2.5 2.5 0 1 1 5 8a2.5 2.5 0 0 1 0-5zM3 9h4v12H3V9zm6 0h4v1.7c.9-1.3 2.2-2.1 4-2.1 3.2 0 4 2.1 4 5.2V21h-4v-6.4c0-1.5 0-3-2-3s-2.3 1.5-2.3 2.9V21H9V9z"></path></svg></a></div></div><div class="foot-links"><div class="foot-col"><h4>PRODUCT</h4><a href="#features">Features</a><a href="#how-it-works">How It Works</a><a href="#pricing">Pricing</a><a href="enrichment-partners.html">Enrichment Partners</a></div><div class="foot-col"><h4>GET STARTED</h4><a href="https://app.helperofmoms.com" rel="noopener" target="_blank">Log In / Sign Up</a><a href="https://admin.homsapp.com/admin-pending-partners.html" rel="noopener">Admin</a><a href="https://admin.homsapp.com/admin-login.html?tab=partner" rel="noopener">Partner</a></div><div class="foot-col"><h4>LEGAL</h4><a href="https://homsapp-website.helperofmoms.workers.dev/terms-and-conditions.pdf" rel="noopener" target="_blank">Terms &amp; Conditions</a><a href="https://homsapp-website.helperofmoms.workers.dev/privacy-policy.pdf" rel="noopener" target="_blank">Privacy Policy</a><a href="https://homsapp-website.helperofmoms.workers.dev/refund-and-cancellation-policy.pdf" rel="noopener" target="_blank">Refund &amp; Cancellation Policy</a><a href="https://homsapp-website.helperofmoms.workers.dev/enrichment-partner-agreement.pdf" rel="noopener" target="_blank">Enrichment Partner Agreement</a></div></div></div><div class="foot-bottom"><p>© 2026 HOMs Homeschool. All rights reserved.</p><div class="app-store-note"><svg fill="none" height="16" viewbox="0 0 24 24" width="16"><path d="M16.5 3c.1 1.1-.3 2.2-1 3-.8.9-2 1.6-3.2 1.5-.2-1.1.3-2.3 1-3C14.1 3.6 15.4 3 16.5 3Z" fill="#B8B4DE"></path><path d="M20.5 17.3c-.5 1.2-.8 1.7-1.5 2.7-1 1.4-2.3 3.2-4 3.2-1.5 0-1.9-1-3.9-1s-2.5 1-4 1c-1.7 0-3-1.6-4-3-2.5-3.6-2.8-7.9-1.2-10.2 1.1-1.6 2.9-2.6 4.5-2.6 1.7 0 2.7 1.1 4 1.1 1.3 0 2.1-1.1 4-1.1 1.5 0 3 .8 4.1 2.2-3.6 2-3 7.2 2 7.7Z" fill="#B8B4DE"></path></svg><svg fill="none" height="16" viewbox="0 0 24 24" width="16"><path d="M4 3.5c-.3.3-.5.8-.5 1.3v14.4c0 .5.2 1 .5 1.3l.1.1L13 12 4.1 3.4l-.1.1Z" fill="#B8B4DE"></path><path d="M16.1 15.1 13 12l3.1-3.1 3.6 2.1c.9.5.9 1.5 0 2l-3.6 2.1Z" fill="#B8B4DE"></path><path d="M4.1 3.4 13 12l3.1-3.1-11-6.4c-.4-.2-.7-.1-1 .2Z" fill="#B8B4DE"></path><path d="M4.1 20.6 13 12l3.1 3.1-11 6.4c-.4.2-.7.1-1-.2Z" fill="#B8B4DE"></path></svg> Coming soon to the Apple Store and Google Play </div></div></div></footer></body></html>
+</body></html>
