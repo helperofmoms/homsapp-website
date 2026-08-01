@@ -1,0 +1,273 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Become a HOMs Box Partner - HOMs Homeschool</title>
+<meta content="Share your curriculum, printables, videos, or planning resources with homeschool families through the HOMs Box." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+:root{ --blue:#0EA5E9; --purple:#6C5CE7; --purple-deep:#4F3DC6; --green:#43B05C; --lavender:#EEF0FD; --lavender-deep:#E2E5FB; --ink:#241F45; --muted:#5B5876; --white:#FFFFFF; --radius-lg:28px; --shadow:0 20px 40px -18px rgba(76,63,190,0.25); }
+*{box-sizing:border-box;} html{scroll-behavior:smooth;}
+body{ margin:0; font-family:'Poppins',sans-serif; color:var(--ink); background:var(--white); -webkit-font-smoothing:antialiased; }
+h1,h2,h3{ font-family:'Poppins',sans-serif; font-weight:700; margin:0; line-height:1.15; }
+p{margin:0;color:var(--muted);line-height:1.6;}
+a{text-decoration:none;} img,svg{display:block;}
+.wrap{max-width:760px;margin:0 auto;padding:0 24px;}
+footer .wrap{max-width:1140px;}
+.btn{ display:inline-flex; align-items:center; justify-content:center; gap:8px; font-family:'Poppins',sans-serif; font-weight:700; font-size:16px; padding:16px 30px; border-radius:999px; cursor:pointer; border:none; transition:transform .15s ease, box-shadow .15s ease; }
+.btn:hover{transform:translateY(-2px);}
+.btn-primary{ background:linear-gradient(135deg,var(--blue),var(--purple)); color:#fff; box-shadow:0 14px 28px -10px rgba(108,92,231,0.55); }
+.btn-cta-green{ background:linear-gradient(135deg,var(--blue),var(--green)); color:#fff; box-shadow:0 14px 28px -10px rgba(67,176,92,0.5); width:100%; padding:17px 30px; font-size:16.5px; }
+.btn-cta-green:disabled{opacity:.6;cursor:not-allowed;transform:none;}
+header{ position:sticky;top:0;z-index:50; background:rgba(255,255,255,0.9); backdrop-filter:blur(8px); border-bottom:1px solid #F0EFFB; }
+.nav{ display:flex;align-items:center;justify-content:space-between; padding:16px 24px; max-width:1140px;margin:0 auto; }
+.logo{display:flex;align-items:center;gap:10px;}
+.logo-cube{width:34px;height:34px;}
+.logo-text{display:flex;flex-direction:column;line-height:1;}
+.logo-word{font-family:'Poppins',sans-serif;font-weight:800;font-size:22px;letter-spacing:0.5px;}
+.logo-sub{font-family:'Poppins',sans-serif;font-size:9px;letter-spacing:2.5px;color:var(--blue);font-weight:700;margin-top:1px;}
+.back-link{color:var(--purple-deep);font-weight:600;font-size:14.5px;}
+.page-hero{ background:radial-gradient(circle at 15% 15%, #F4F1FE 0%, var(--lavender) 45%, var(--lavender) 100%); padding:50px 0 38px; text-align:center; }
+.page-hero .eyebrow{ font-size:12.5px;font-weight:800;letter-spacing:1.5px;color:var(--green); text-transform:uppercase;margin-bottom:12px;display:block; }
+.page-hero h1{font-size:32px;color:var(--ink);margin-bottom:12px;}
+.page-hero p{font-size:15.5px;max-width:520px;margin:0 auto;}
+.form-section{padding:44px 0 90px;}
+.form-card{background:#fff;border:1px solid #F0EFFB;border-radius:var(--radius-lg);box-shadow:var(--shadow);padding:36px;}
+.form-group{margin-bottom:22px;position:relative;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.form-row.three{grid-template-columns:1.4fr 0.7fr 1.2fr;}
+label{display:block;font-weight:700;font-size:13.5px;color:var(--ink);margin-bottom:7px;}
+label .req{color:#D6395B;}
+label .opt{color:var(--muted);font-weight:500;font-size:12px;}
+input[type=text],input[type=email],input[type=tel],input[type=url],select,textarea{
+  width:100%;font-family:'Poppins',sans-serif;font-size:14.5px;color:var(--ink);
+  padding:13px 14px;border:1.5px solid #E2E5FB;border-radius:12px;background:#FAFAFF;
+  transition:border-color .15s ease;
+}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--purple);background:#fff;}
+textarea{resize:vertical;min-height:90px;}
+.char-count{font-size:12px;color:var(--muted);text-align:right;margin-top:5px;}
+.file-drop{
+  border:2px dashed #D9DDF7;border-radius:14px;padding:22px;text-align:center;cursor:pointer;
+  background:#FAFAFF;transition:border-color .15s ease;position:relative;
+}
+.file-drop:hover{border-color:var(--purple);}
+.file-drop input{position:absolute;inset:0;opacity:0;cursor:pointer;}
+.file-drop p{font-size:13.5px;}
+.logo-preview{width:64px;height:64px;border-radius:12px;object-fit:contain;border:1px solid #E2E5FB;background:#fff;margin:0 auto 10px;padding:6px;display:none;}
+.section-divider{border:none;border-top:1px solid #F0EFFB;margin:30px 0;}
+.section-label{font-size:12.5px;font-weight:800;letter-spacing:1px;color:var(--purple-deep);text-transform:uppercase;margin-bottom:16px;display:block;}
+.success-card{display:none;text-align:center;padding:20px 10px 6px;}
+.success-icon{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--green));display:flex;align-items:center;justify-content:center;margin:0 auto 18px;}
+.success-card h2{font-size:24px;margin-bottom:10px;}
+.success-card p{font-size:15px;max-width:420px;margin:0 auto;}
+.pricing-card{display:none;background:#fff;border:1px solid #F0EFFB;border-radius:var(--radius-lg);box-shadow:var(--shadow);padding:32px 36px;margin-top:20px;text-align:center;}
+.pricing-badge{display:inline-block;font-size:12px;font-weight:800;letter-spacing:1px;color:var(--purple-deep);background:var(--lavender);padding:6px 14px;border-radius:999px;margin-bottom:14px;text-transform:uppercase;}
+.pricing-amount{font-family:'Poppins',sans-serif;font-weight:800;font-size:40px;color:var(--ink);}
+.pricing-amount span{font-size:16px;font-weight:600;color:var(--muted);}
+.pricing-sub{font-size:13.5px;margin-top:4px;margin-bottom:22px;}
+.pricing-benefits{list-style:none;margin:0;padding:0;text-align:left;display:flex;flex-direction:column;gap:14px;}
+.pricing-benefits li{display:flex;align-items:flex-start;gap:10px;font-size:14.5px;color:var(--ink);font-weight:500;line-height:1.5;}
+.pricing-benefits li::before{content:"";flex-shrink:0;width:20px;height:20px;margin-top:2px;background:linear-gradient(135deg,var(--blue),var(--green));border-radius:50%;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M20 6L9 17l-5-5' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;background-size:11px;}
+@media (max-width:640px){.pricing-card{padding:26px 22px;}}
+footer{background:var(--ink);padding:52px 0 28px;} .foot-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:32px;margin-bottom:36px;} .foot-logo .logo-word{color:#fff;} .foot-logo .logo-sub{color:#8FE0FF;} .foot-tag{color:#B8B4DE;font-size:14px;max-width:280px;margin-top:10px;line-height:1.8;} .foot-tag a{color:#B8B4DE;} .foot-tag a:hover{color:#fff;} .foot-links{display:flex;gap:56px;flex-wrap:wrap;} .foot-col h4{color:#fff;font-size:13px;letter-spacing:0.5px;margin-bottom:14px;font-family:'Poppins',sans-serif;font-weight:700;} .foot-col a{display:block;color:#B8B4DE;font-size:14px;margin-bottom:10px;} .foot-col a:hover{color:#fff;} .foot-bottom{ border-top:1px solid rgba(255,255,255,0.1); padding-top:22px; display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px; } .foot-bottom p{color:#8B87AB;font-size:12.5px;} .app-store-note{display:flex;align-items:center;gap:8px;color:#B8B4DE;font-size:12.5px;font-weight:600;} .social-icons{ display:flex; align-items:center; gap:10px; margin-top:18px; } .social-icons a{ width:38px; height:38px; border-radius:50%; display:grid; place-items:center; color:#fff; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.16); transition:transform .18s ease,background .18s ease,border-color .18s ease; } .social-icons a:hover{ transform:translateY(-3px); background:var(--purple); border-color:transparent; } .social-icons svg{ width:18px; height:18px; fill:currentColor; } .hero-photo{width:100%;height:auto;display:block;border-radius:26px;box-shadow:var(--shadow);object-fit:cover}.fc{padding:0;min-height:390px;perspective:1200px;cursor:pointer;background:transparent;border:0}.fc:hover{transform:none;box-shadow:none}.fi{position:relative;min-height:390px;transform-style:preserve-3d;transition:.65s}.fc.on .fi{transform:rotateY(180deg)}.ff,.fb{position:absolute;inset:0;border:1px solid #f0effb;border-radius:var(--radius-lg);background:#fff;backface-visibility:hidden;overflow:hidden}.ff{padding:34px 28px}.fb{transform:rotateY(180deg);display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(145deg,#f8f6ff,#eef9f4);padding:15px}.phone-shot{display:block;width:100%;height:auto;max-width:150px;margin:0 auto;filter:drop-shadow(0 16px 28px rgba(0,0,0,.28));}.how-grid .phone-shot{max-width:220px;}.tap,.fb>span{font-size:10px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;color:var(--purple)}.tap{display:block;margin-top:16px}.fb>span{margin-top:7px;color:var(--muted)}@media(max-width:900px){.fb svg{height:420px}}
+
+/* multi-select checkbox dropdown */
+.ms-dropdown{position:relative;}
+.ms-toggle{width:100%;text-align:left;font-family:'Poppins',sans-serif;font-size:14.5px;color:var(--ink);padding:13px 14px;border:1.5px solid #E2E5FB;border-radius:12px;background:#FAFAFF;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;transition:border-color .15s ease;}
+.ms-toggle .ms-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.ms-toggle .ms-label.placeholder{color:#9490AE;}
+.ms-toggle .ms-chevron{flex-shrink:0;color:#9490AE;font-size:11px;transition:transform .15s ease;}
+.ms-dropdown.open .ms-toggle{border-color:var(--purple);background:#fff;}
+.ms-dropdown.open .ms-chevron{transform:rotate(180deg);}
+.ms-dropdown.invalid .ms-toggle{border-color:#D6395B;}
+.ms-panel{position:absolute;top:calc(100% + 6px);left:0;right:0;background:#fff;border:1.5px solid #E2E5FB;border-radius:14px;box-shadow:0 16px 32px -12px rgba(76,63,190,0.3);padding:8px;max-height:230px;overflow-y:auto;z-index:20;display:none;}
+.ms-dropdown.open .ms-panel{display:block;}
+.ms-option{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:500;padding:9px 10px;border-radius:8px;cursor:pointer;}
+.ms-option:hover{background:var(--lavender);}
+.ms-option input{width:16px;height:16px;accent-color:var(--purple);cursor:pointer;flex-shrink:0;}
+.field-error{display:none;font-size:12px;color:#D6395B;font-weight:600;margin-top:6px;}
+.field-error.show{display:block;}
+.hidden-field{display:none !important;}
+
+/* toggles (nationwide + grade/age) */
+.toggle-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.toggle-switch{position:relative;display:inline-block;width:42px;height:24px;flex-shrink:0;}
+.toggle-switch input{opacity:0;width:0;height:0;}
+.toggle-slider{position:absolute;cursor:pointer;inset:0;background:#D9DDF7;border-radius:999px;transition:.15s ease;}
+.toggle-slider::before{content:"";position:absolute;height:18px;width:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.15s ease;box-shadow:0 2px 4px rgba(0,0,0,0.2);}
+.toggle-switch input:checked + .toggle-slider{background:linear-gradient(135deg,var(--blue),var(--green));}
+.toggle-switch input:checked + .toggle-slider::before{transform:translateX(18px);}
+.toggle-label{font-size:13.5px;font-weight:600;color:var(--muted);}
+.nationwide-badge{display:none;align-items:center;gap:6px;font-size:13.5px;font-weight:700;color:var(--green);background:#EAF7EE;padding:13px 14px;border-radius:12px;margin-top:2px;}
+.nationwide-badge.show{display:flex;}
+.sub-fields{margin-top:2px;}
+.sub-fields .form-group:last-child{margin-bottom:0;}
+
+.agreement-check{display:flex;align-items:flex-start;gap:10px;font-weight:500;cursor:pointer;}
+.agreement-check input{width:18px;height:18px;margin-top:2px;accent-color:var(--purple);cursor:pointer;flex-shrink:0;}
+.agreement-check span{font-size:13.5px;line-height:1.6;color:var(--muted);font-weight:500;}
+.agreement-check a{color:var(--purple-deep);font-weight:700;text-decoration:underline;}
+
+@media (max-width:640px){ .form-row,.form-row.three{grid-template-columns:1fr;} .form-card{padding:26px 22px;} }
+</style>
+</head><body>
+<header><div class="nav"><a href="https://homsapp.com/" aria-label="HOMs Homeschool home" style="display:flex;align-items:center;gap:10px;"><svg class="logo-cube" viewbox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><polygon fill="#0EA5E9" points="50,4 90,26 50,48 10,26"></polygon><polygon fill="#43B05C" points="10,26 50,48 50,96 10,74"></polygon><polygon fill="#8B7EF0" points="90,26 50,48 50,96 90,74"></polygon></svg><div class="logo-text"><div class="logo-word"><span style="color:var(--blue)">H</span><span style="color:var(--purple-deep)">O</span><span style="color:var(--green)">M</span><span style="color:var(--purple)">s</span></div><div class="logo-sub">HOMESCHOOL</div></div></a><a class="back-link" href="enrichment-partners.html">&larr; Back to Enrichment Partners</a></div></header>
+<section class="page-hero"><div class="wrap"><span class="eyebrow">HOMs Box Partner Program</span>
+<h1>Share Your Resource</h1>
+<p>Have curriculum, printables, videos, planning tools, or parenting guidance that would help homeschool families? Submit it below. Every resource is reviewed by the HOMs team before it appears in the HOMs Box.</p>
+</div></section>
+
+<section class="form-section"><div class="wrap">
+<form class="form-card" id="resource-form">
+<span class="section-label">Resource Details</span>
+
+<div class="form-group"><label for="title">Title <span class="req">*</span></label>
+<input type="text" id="title" placeholder="e.g. Seed to Sprout Observation Journal" required></div>
+
+<div class="form-row"><div class="form-group"><label for="resourceType">Resource type <span class="req">*</span></label>
+<select id="resourceType" required><option value="">Select...</option><option value="Printable">Printable</option><option value="Worksheet">Worksheet</option><option value="Workbook">Workbook</option><option value="Curriculum">Curriculum</option><option value="Unit Study">Unit Study</option><option value="Lesson Plan">Lesson Plan</option><option value="Project">Project</option><option value="Activity">Activity</option><option value="Game">Game</option><option value="Video">Video</option><option value="Audio">Audio</option><option value="Planner">Planner</option><option value="Guide">Guide</option><option value="Parenting Guidance">Parenting Guidance</option></select></div>
+<div class="form-group"><label for="workingStyle">Working style <span class="opt">(optional)</span></label>
+<select id="workingStyle"><option value="">Select...</option><option value="Independent">Independent</option><option value="Parent-led">Parent-led</option><option value="One-on-one">One-on-one</option><option value="Group / Co-op">Group / Co-op</option><option value="Hybrid">Hybrid</option></select></div></div>
+
+<div class="form-row"><div class="form-group"><label for="subject">Subject <span class="req">*</span></label>
+<select id="subject" required><option value="">Select...</option><option value="Art">Art</option><option value="Faith Studies">Faith Studies</option><option value="Foreign Language">Foreign Language</option><option value="Health &amp; PE">Health &amp; PE</option><option value="Language Arts">Language Arts</option><option value="Life Skills">Life Skills</option><option value="Mathematics">Mathematics</option><option value="Music &amp; Theatre Arts">Music &amp; Theatre Arts</option><option value="Science">Science</option><option value="Social Studies / History">Social Studies / History</option><option value="STEM / STEAM">STEM / STEAM</option></select></div>
+<div class="form-group"><label for="subTopic">Sub-topic <span class="opt">(optional)</span></label>
+<input type="text" id="subTopic" placeholder="e.g. Botany"></div></div>
+
+<div class="form-group"><label>Grade range <span class="opt">(optional)</span></label>
+<div class="form-row"><select id="fromGrade"><option value="">Select...</option><option value="Pre-K">Pre-K</option><option value="K">K</option><option value="1st">1st</option><option value="2nd">2nd</option><option value="3rd">3rd</option><option value="4th">4th</option><option value="5th">5th</option><option value="6th">6th</option><option value="7th">7th</option><option value="8th">8th</option><option value="9th">9th</option><option value="10th">10th</option><option value="11th">11th</option><option value="12th">12th</option></select>
+<select id="toGrade"><option value="">Select...</option><option value="Pre-K">Pre-K</option><option value="K">K</option><option value="1st">1st</option><option value="2nd">2nd</option><option value="3rd">3rd</option><option value="4th">4th</option><option value="5th">5th</option><option value="6th">6th</option><option value="7th">7th</option><option value="8th">8th</option><option value="9th">9th</option><option value="10th">10th</option><option value="11th">11th</option><option value="12th">12th</option></select></div></div>
+
+<div class="form-group"><label>Age range <span class="opt">(optional)</span></label>
+<div class="form-row"><select id="fromAge"><option value="">Select...</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option></select>
+<select id="toAge"><option value="">Select...</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option></select></div></div>
+
+<div class="form-group"><label for="description">Description <span class="req">*</span></label>
+<textarea id="description" maxlength="400" placeholder="What is it, who is it for, and how would a family use it?" required></textarea>
+<div class="char-count"><span id="desc-count">0</span>/400</div></div>
+
+<div class="form-group"><label for="sampleLink">Sample link <span class="req">*</span></label>
+<input type="url" id="sampleLink" placeholder="https://" required>
+<p class="field-error" id="link-error">Please add a link where we can preview your resource.</p></div>
+
+<div class="form-group"><label>Resource file <span class="opt">(optional - PDF or image, up to 5MB)</span></label>
+<div class="file-drop"><p id="file-drop-text">Tap to upload your resource file</p>
+<input type="file" id="resourceFile" accept=".pdf,image/*"></div>
+<p class="field-error" id="file-error">That file is larger than 5MB. Please upload a smaller file or share it with the sample link instead.</p></div>
+
+<hr class="section-divider">
+<span class="section-label">Creator Contact</span>
+<p style="font-size:13px;margin-bottom:16px;">This information is for HOMs only and is never shown publicly.</p>
+
+<div class="form-group"><label for="businessName">Business name <span class="opt">(or brand name)</span></label>
+<input type="text" id="businessName" placeholder="e.g. Little Botanist"></div>
+
+<div class="form-row"><div class="form-group"><label for="contactName">Contact name <span class="req">*</span></label>
+<input type="text" id="contactName" required></div>
+<div class="form-group"><label for="contactEmail">Contact email <span class="req">*</span></label>
+<input type="email" id="contactEmail" required></div></div>
+
+<div class="form-group"><label for="contactPhone">Contact phone <span class="opt">(optional)</span></label>
+<input type="tel" id="contactPhone" placeholder="(240) 555-0100"></div>
+
+<hr class="section-divider">
+<span class="section-label">Partner Agreement</span>
+<div class="form-group"><label class="agreement-check">
+<input type="checkbox" id="agreementCheck" required>
+<span>I have read and agree to the <a href="https://homsapp-website.helperofmoms.workers.dev/enrichment-partner-agreement.pdf" target="_blank" rel="noopener">HOMs Partner Agreement</a>. I confirm I own or have the right to share this resource, and I understand that if my submission is approved, this constitutes my digital signature on that agreement, which also incorporates the HOMs <a href="https://homsapp-website.helperofmoms.workers.dev/terms-and-conditions.pdf" target="_blank" rel="noopener">Terms &amp; Conditions</a> and <a href="https://homsapp-website.helperofmoms.workers.dev/privacy-policy.pdf" target="_blank" rel="noopener">Privacy Policy</a> by reference. <span class="req">*</span></span>
+</label><p class="field-error" id="agreement-error">You must agree to the Partner Agreement before submitting.</p></div>
+
+<button type="submit" class="btn btn-cta-green">Submit for Review</button>
+</form>
+
+<div class="form-card success-card" id="success-card">
+    <div class="success-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <h2>Thanks for submitting your application!</h2>
+    <p>If you were approved, you'll be emailed to start subscribing with us!</p>
+  </div>
+
+  <div class="pricing-card" id="pricing-card">
+    <span class="pricing-badge">Enrichment Partner Membership</span>
+    <div class="pricing-amount">$5<span>/mo</span></div>
+    <p class="pricing-sub">Billed monthly after approval &middot; cancel anytime</p>
+    <ul class="pricing-benefits">
+      <li>Featured in the HOMs Enrichment Partners directory, seen by homeschool families near you</li>
+      <li>A backlink to your program from inside the HOMs app's Enrichment Finder feature</li>
+      <li>The reputability boost of being a HOMs-vetted, homeschool-friendly program</li>
+    </ul>
+  </div>
+
+</div></section>
+<footer><div class="wrap"><div class="foot-top"><div class="foot-logo"><div class="logo-word"><span style="color:#38BDF8">H</span><span style="color:#9B8AFB">O</span><span style="color:#63C97C">M</span><span style="color:#9B8AFB">s</span></div><div class="logo-sub">HOMESCHOOL</div><p class="foot-tag">Frederick, MD, USA<br/><a href="tel:+12405753007">(240) 575-3007</a><br/><a href="mailto:helperofmoms@gmail.com">helperofmoms@gmail.com</a><br/><a href="https://calendar.app.google/z4BnCS9aK1Xyihw97" target="_blank" rel="noopener">Schedule a Meeting</a></p><div aria-label="HOMs social media" class="social-icons"><a aria-label="Facebook" href="https://www.facebook.com/profile.php?id=61554172673611" rel="noopener" target="_blank" title="Facebook"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M14 8h3V4h-3c-3 0-5 2-5 5v2H6v4h3v7h4v-7h3l1-4h-4V9c0-.7.3-1 1-1z"></path></svg></a><a aria-label="Instagram" href="https://www.instagram.com/homshomeschool/" rel="noopener" target="_blank" title="Instagram"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 3a2 2 0 0 0-2 2v10c0 1.1.9 2 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7zm5 3a4 4 0 1 1 0 8 4 4 0 0 1 0-8zm0 2.2a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6zM17.5 6.5a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" fill-rule="evenodd"></path></svg></a><a aria-label="TikTok" href="https://www.tiktok.com/@jasmynajlounyhoms" rel="noopener" target="_blank" title="TikTok"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M14 3h3c.4 2.1 1.6 3.4 4 3.8v3a9 9 0 0 1-4-1.4v7.1a6 6 0 1 1-6-6c.4 0 .8 0 1 .1v3.2a3 3 0 1 0 2 2.8V3z"></path></svg></a><a aria-label="YouTube" href="https://www.youtube.com/@HOMsHomeschool" rel="noopener" target="_blank" title="YouTube"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M22 8.2a3 3 0 0 0-2.1-2.1C18 5.6 12 5.6 12 5.6s-6 0-7.9.5A3 3 0 0 0 2 8.2 31 31 0 0 0 1.5 12c0 1.3.1 2.6.5 3.8a3 3 0 0 0 2.1 2.1c1.9.5 7.9.5 7.9.5s6 0 7.9-.5a3 3 0 0 0 2.1-2.1c.4-1.2.5-2.5.5-3.8s-.1-2.6-.5-3.8zM10 15.5v-7l6 3.5-6 3.5z"></path></svg></a><a aria-label="LinkedIn" href="https://www.linkedin.com/in/homshomeschool/" rel="noopener" target="_blank" title="LinkedIn"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M5 3.5A2.5 2.5 0 1 1 5 8a2.5 2.5 0 0 1 0-5zM3 9h4v12H3V9zm6 0h4v1.7c.9-1.3 2.2-2.1 4-2.1 3.2 0 4 2.1 4 5.2V21h-4v-6.4c0-1.5 0-3-2-3s-2.3 1.5-2.3 2.9V21H9V9z"></path></svg></a></div></div><div class="foot-links"><div class="foot-col"><h4>PRODUCT</h4><a href="#features">Features</a><a href="#how-it-works">How It Works</a><a href="#pricing">Pricing</a><a href="enrichment-partners.html">Enrichment Partners</a></div><div class="foot-col"><h4>GET STARTED</h4><a href="https://app.helperofmoms.com" rel="noopener" target="_blank">Log In / Sign Up</a><a href="https://admin.homsapp.com/admin-pending-partners.html" rel="noopener">Admin</a><a href="https://admin.homsapp.com/admin-login.html?tab=partner" rel="noopener">Partner</a></div><div class="foot-col"><h4>LEGAL</h4><a href="https://homsapp-website.helperofmoms.workers.dev/terms-and-conditions.pdf" rel="noopener" target="_blank">Terms &amp; Conditions</a><a href="https://homsapp-website.helperofmoms.workers.dev/privacy-policy.pdf" rel="noopener" target="_blank">Privacy Policy</a><a href="https://homsapp-website.helperofmoms.workers.dev/refund-and-cancellation-policy.pdf" rel="noopener" target="_blank">Refund &amp; Cancellation Policy</a><a href="https://homsapp-website.helperofmoms.workers.dev/enrichment-partner-agreement.pdf" rel="noopener" target="_blank">Enrichment Partner Agreement</a></div></div></div><div class="foot-bottom"><p>© 2026 HOMs Homeschool. All rights reserved.</p><div class="app-store-note"><svg fill="none" height="16" viewbox="0 0 24 24" width="16"><path d="M16.5 3c.1 1.1-.3 2.2-1 3-.8.9-2 1.6-3.2 1.5-.2-1.1.3-2.3 1-3C14.1 3.6 15.4 3 16.5 3Z" fill="#B8B4DE"></path><path d="M20.5 17.3c-.5 1.2-.8 1.7-1.5 2.7-1 1.4-2.3 3.2-4 3.2-1.5 0-1.9-1-3.9-1s-2.5 1-4 1c-1.7 0-3-1.6-4-3-2.5-3.6-2.8-7.9-1.2-10.2 1.1-1.6 2.9-2.6 4.5-2.6 1.7 0 2.7 1.1 4 1.1 1.3 0 2.1-1.1 4-1.1 1.5 0 3 .8 4.1 2.2-3.6 2-3 7.2 2 7.7Z" fill="#B8B4DE"></path></svg><svg fill="none" height="16" viewbox="0 0 24 24" width="16"><path d="M4 3.5c-.3.3-.5.8-.5 1.3v14.4c0 .5.2 1 .5 1.3l.1.1L13 12 4.1 3.4l-.1.1Z" fill="#B8B4DE"></path><path d="M16.1 15.1 13 12l3.1-3.1 3.6 2.1c.9.5.9 1.5 0 2l-3.6 2.1Z" fill="#B8B4DE"></path><path d="M4.1 3.4 13 12l3.1-3.1-11-6.4c-.4-.2-.7-.1-1 .2Z" fill="#B8B4DE"></path><path d="M4.1 20.6 13 12l3.1 3.1-11 6.4c-.4.2-.7.1-1-.2Z" fill="#B8B4DE"></path></svg> Coming soon to the Apple Store and Google Play </div></div></div></footer>
+<script>
+var form = document.getElementById("resource-form");
+var successCard = document.getElementById("success-card");
+var descField = document.getElementById("description");
+var descCount = document.getElementById("desc-count");
+var fileInput = document.getElementById("resourceFile");
+var fileDropText = document.getElementById("file-drop-text");
+var fileError = document.getElementById("file-error");
+var MAX_BYTES = 5 * 1024 * 1024;
+var fileDataUrl = "";
+var fileName = "";
+
+descField.addEventListener("input", function(){ descCount.textContent = descField.value.length; });
+
+fileInput.addEventListener("change", function(){
+  var f = fileInput.files[0];
+  fileError.classList.remove("show");
+  fileDataUrl = ""; fileName = "";
+  if(!f) { fileDropText.textContent = "Tap to upload your resource file"; return; }
+  if(f.size > MAX_BYTES){ fileError.classList.add("show"); fileInput.value = ""; fileDropText.textContent = "Tap to upload your resource file"; return; }
+  var reader = new FileReader();
+  reader.onload = function(e){ fileDataUrl = e.target.result; fileName = f.name; fileDropText.textContent = f.name; };
+  reader.readAsDataURL(f);
+});
+
+function val(id){ var el = document.getElementById(id); return el ? el.value.trim() : ""; }
+
+form.addEventListener("submit", async function(e){
+  e.preventDefault();
+  var agreed = document.getElementById("agreementCheck").checked;
+  document.getElementById("agreement-error").classList.toggle("show", !agreed);
+  if(!agreed || !form.checkValidity()){ form.reportValidity(); return; }
+
+  var submission = {
+    title: val("title"),
+    resourceType: val("resourceType"),
+    workingStyle: val("workingStyle"),
+    subject: val("subject"),
+    subTopic: val("subTopic"),
+    fromGrade: val("fromGrade"),
+    toGrade: val("toGrade"),
+    fromAge: val("fromAge"),
+    toAge: val("toAge"),
+    description: val("description"),
+    sampleLink: val("sampleLink"),
+    businessName: val("businessName"),
+    contactName: val("contactName"),
+    contactEmail: val("contactEmail"),
+    contactPhone: val("contactPhone"),
+    agreedAt: new Date().toISOString()
+  };
+  if(fileDataUrl && fileName){ submission.fileDataUrl = fileDataUrl; submission.resourceFileName = fileName; }
+
+  var btn = form.querySelector("button[type=submit]");
+  btn.disabled = true; btn.textContent = "Submitting...";
+  try {
+    var res = await fetch("/api/submit-resource", {
+      method: "POST", headers: {"content-type":"application/json"},
+      body: JSON.stringify(submission)
+    });
+    if(!res.ok) throw new Error("Submission failed (" + res.status + ")");
+    form.style.display = "none";
+    successCard.style.display = "block";
+    document.getElementById("pricing-card").style.display = "block";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } catch(err){
+    btn.disabled = false; btn.textContent = "Submit for Review";
+    alert("Something went wrong submitting your resource. Please try again in a moment, or email helperofmoms@gmail.com directly.");
+  }
+});
+</script>
+</body></html>
