@@ -207,6 +207,19 @@ export default {
         submission.partnerType = 'rp';
         submission.status = 'pending';
         submission.submittedAt = submission.submittedAt || new Date().toISOString();
+        if (submission.fileDataUrl && submission.resourceFileName) {
+          const m = /^data:([^;]+);base64,(.*)$/.exec(submission.fileDataUrl);
+          if (m) {
+            const bin = atob(m[2]);
+            const bytes = new Uint8Array(bin.length);
+            for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+            const safeName = submission.resourceFileName.replace(/[^A-Za-z0-9._-]/g, '_');
+            const fileKey = 'resource_' + submission.id + '_' + safeName;
+            await env.LOGOS_KV.put(fileKey, bytes.buffer, { metadata: { contentType: m[1] } });
+            submission.resourceFileKey = fileKey;
+          }
+        }
+        delete submission.fileDataUrl;
         const list = await getList(env, listKey('rp', 'pending'));
         list.push(submission);
         await setList(env, listKey('rp', 'pending'), list);
