@@ -21,6 +21,17 @@ function listKey(type, stage) {
   return type + '_' + stage;
 }
 
+function addBusinessDays(startDate, n) {
+  const date = new Date(startDate);
+  let added = 0;
+  while (added < n) {
+    date.setDate(date.getDate() + 1);
+    const day = date.getDay();
+    if (day !== 0 && day !== 6) added++;
+  }
+  return date;
+}
+
 function validTypeStage(type, stage) {
   return PARTNER_TYPES.indexOf(type) !== -1 && STAGES.indexOf(stage) !== -1;
 }
@@ -199,6 +210,71 @@ export default {
           'homs_admin_session=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0'
         );
         return new Response(null, { status: 302, headers });
+      }
+
+      if (url.pathname === '/api/partner/feedback' && request.method === 'POST') {
+        const b = await request.json();
+        const entry = {
+          id: 'fb_' + Date.now(),
+          sentiment: b.sentiment || '',
+          topic: b.topic || '',
+          note: b.note || '',
+          partnerType: b.partnerType || '',
+          partnerName: b.partnerName || '',
+          status: 'new',
+          submittedAt: new Date().toISOString()
+        };
+        if (!entry.sentiment && !entry.note) return json({ error: 'empty feedback' }, 400);
+        const list = await getList(env, 'inbox_feedback');
+        list.push(entry);
+        await setList(env, 'inbox_feedback', list);
+        return json({ ok: true, id: entry.id });
+      }
+
+      if (url.pathname === '/api/partner/support' && request.method === 'POST') {
+        const b = await request.json();
+        if (!b.topic || !b.summary || !b.details) return json({ error: 'missing required fields' }, 400);
+        const now = new Date();
+        const entry = {
+          id: 'tk_' + Date.now(),
+          topic: b.topic,
+          summary: b.summary,
+          details: b.details,
+          grantAccess: !!b.grantAccess,
+          accessExpiresAt: b.grantAccess ? addBusinessDays(now, 7).toISOString() : null,
+          accessLog: [],
+          appVersion: b.appVersion || '',
+          device: b.device || '',
+          partnerType: b.partnerType || '',
+          partnerName: b.partnerName || '',
+          contactEmail: b.contactEmail || '',
+          status: 'open',
+          submittedAt: now.toISOString()
+        };
+        const list = await getList(env, 'inbox_support');
+        list.push(entry);
+        await setList(env, 'inbox_support', list);
+        return json({ ok: true, id: entry.id });
+      }
+
+      if (url.pathname === '/api/admin/inbox' && request.method === 'GET') {
+        if (!await isAdmin(request, env)) return json({ error: 'unauthorized' }, 401);
+        const feedback = await getList(env, 'inbox_feedback');
+        const support = await getList(env, 'inbox_support');
+        return json({ feedback, support });
+      }
+
+      if (url.pathname === '/api/admin/inbox-update' && request.method === 'POST') {
+        const b = await request.json();
+        if (!await isAdmin(request, env, b)) return json({ error: 'unauthorized' }, 401);
+        const key = b.kind === 'support' ? 'inbox_support' : 'inbox_feedback';
+        const list = await getList(env, key);
+        const idx = list.findIndex((x) => x.id === b.id);
+        if (idx === -1) return json({ error: 'not found' }, 404);
+        if (b.remove) list.splice(idx, 1);
+        else if (b.status) list[idx].status = b.status;
+        await setList(env, key, list);
+        return json({ ok: true });
       }
 
       if (url.pathname === '/api/public/resources' && request.method === 'GET') {
