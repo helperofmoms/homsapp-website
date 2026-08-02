@@ -36,6 +36,33 @@ h1,h2,h3,h4{margin:0;font-weight:700;line-height:1.25;} p{margin:0;color:var(--m
 .btn-ghost{background:#F2F1FB;color:var(--ink);} .btn-ghost:hover{background:#E4E1F7;}
 .btn-green{background:linear-gradient(135deg,var(--blue),var(--green));color:#fff;}
 .note{background:#F4F3FC;border-radius:11px;padding:13px 15px;font-size:13px;color:var(--muted);line-height:1.6;margin-top:16px;}
+.edit-ov{position:fixed;inset:0;background:rgba(36,31,69,0.55);display:none;align-items:flex-start;justify-content:center;padding:28px 16px;z-index:160;overflow-y:auto;}
+.edit-ov.open{display:flex;}
+.edit-modal{background:#fff;border-radius:var(--radius);max-width:620px;width:100%;box-shadow:0 30px 60px -20px rgba(36,31,69,0.5);}
+.edit-head{padding:22px 26px;border-bottom:1px solid #EFEDFA;display:flex;align-items:center;gap:12px;}
+.edit-head h3{font-size:18px;flex:1;}
+.edit-body{padding:24px 26px;}
+.edit-foot{padding:18px 26px;border-top:1px solid #EFEDFA;display:flex;justify-content:flex-end;gap:11px;flex-wrap:wrap;}
+.sec-lbl{font-size:12px;font-weight:800;letter-spacing:1px;color:var(--purple-deep);text-transform:uppercase;margin:24px 0 14px;padding-top:18px;border-top:1px solid #EFEDFA;}
+.sec-lbl:first-child{margin-top:0;padding-top:0;border-top:none;}
+.req{color:#D6395B;} .opt{color:var(--muted);font-weight:500;font-size:12px;}
+.ms{position:relative;}
+.ms-toggle{width:100%;text-align:left;font-family:Poppins,sans-serif;font-size:14px;color:var(--ink);padding:11px 13px;border:1.5px solid #E2E5FB;border-radius:11px;background:#FAFAFF;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.ms-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.ms-label.placeholder{color:#9490AE;}
+.ms-chev{flex-shrink:0;color:#9490AE;font-size:11px;transition:transform .15s;}
+.ms.open .ms-toggle{border-color:var(--purple);background:#fff;} .ms.open .ms-chev{transform:rotate(180deg);}
+.ms.invalid .ms-toggle{border-color:#D6395B;}
+.ms-panel{position:absolute;top:calc(100% + 6px);left:0;right:0;background:#fff;border:1.5px solid #E2E5FB;border-radius:13px;box-shadow:0 16px 32px -12px rgba(76,63,190,0.3);padding:8px;max-height:220px;overflow-y:auto;z-index:20;display:none;}
+.ms.open .ms-panel{display:block;}
+.ms-opt{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:500;padding:8px 10px;border-radius:8px;cursor:pointer;}
+.ms-opt:hover{background:var(--lavender);}
+.ms-opt input{width:16px;height:16px;accent-color:var(--purple);cursor:pointer;flex-shrink:0;}
+.f-err{display:none;font-size:12px;color:#D6395B;font-weight:600;margin-top:6px;}
+.f-err.show{display:block;}
+.cur-file{border:1px solid #E7E9F3;border-radius:11px;padding:13px 15px;background:#FAFAFF;font-size:13px;color:var(--muted);line-height:1.6;}
+.cur-file strong{color:var(--ink);}
+.review-note{background:#FFF8EC;border-radius:11px;padding:13px 15px;font-size:13px;color:var(--amber);font-weight:600;line-height:1.6;margin-top:18px;}
 .res-acc{border:1px solid #ECEAF9;border-radius:15px;margin-bottom:12px;overflow:hidden;background:#fff;}
 .res-sum{display:flex;align-items:center;gap:13px;padding:17px 19px;cursor:pointer;user-select:none;}
 .res-sum:hover{background:#FAFAFF;}
@@ -212,6 +239,11 @@ footer{background:var(--ink);padding:52px 0 28px;} .foot-top{display:flex;justif
 <input type="text" id="del-input" placeholder="delete" autocomplete="off"/>
 <div class="confirm-actions"><button class="btn btn-ghost" onclick="closeDelete()">Cancel</button>
 <button class="btn btn-danger" id="del-confirm" disabled onclick="confirmDelete()">Delete my account</button></div>
+</div></div>
+<div class="edit-ov" id="edit-ov"><div class="edit-modal">
+<div class="edit-head"><h3 id="edit-title">Edit resource</h3><button class="close-x-e" onclick="closeEdit()" style="border:none;background:#F2F1FB;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:17px;color:#5B5876;">&times;</button></div>
+<div class="edit-body" id="edit-body"></div>
+<div class="edit-foot"><button class="btn btn-ghost" onclick="closeEdit()">Cancel</button><button class="btn btn-primary" onclick="saveEdit()">Save changes</button></div>
 </div></div>
 <div class="toast" id="toast"></div>
 <script>
@@ -399,7 +431,127 @@ function turnPage(e, i, dir){
 }
 
 function saveListing(){ toast("Saved - your update has been sent to HOMs for review."); }
-function editResource(e, i){ e.stopPropagation(); toast("In the live version this opens " + DEMO.rp.resources[i].title + " for editing."); }
+var RESOURCE_TYPES = ["Printable","Worksheet","Workbook","Curriculum","Unit Study","Lesson Plan","Project","Activity","Game","Video","Audio","Planner","Guide","Parenting Guidance"];
+var WORKING_STYLES = ["Independent","Parent-led","One-on-one","Group / Co-op","Hybrid"];
+var GRADES = ["Pre-K","K","1st","2nd","3rd","4th","5th","6th","7th","8th","9th","10th","11th","12th"];
+var AGES = ["3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18"];
+var editingIndex = null;
+
+function selOpts(list, val){
+  return "<option value=\"\">Select...</option>" + list.map(function(o){
+    return "<option" + (String(o) === String(val || "") ? " selected" : "") + ">" + esc(o) + "</option>";
+  }).join("");
+}
+function msBlock(id, placeholder, list, chosen){
+  var sel = [].concat(chosen || []);
+  return "<div class=\"ms\" id=\"" + id + "\">" +
+    "<button type=\"button\" class=\"ms-toggle\"><span class=\"ms-label placeholder\">" + placeholder + "</span><span class=\"ms-chev\">&#9662;</span></button>" +
+    "<div class=\"ms-panel\">" + list.map(function(o){
+      return "<label class=\"ms-opt\"><input type=\"checkbox\" value=\"" + esc(o) + "\"" + (sel.indexOf(o) !== -1 ? " checked" : "") + "> " + esc(o) + "</label>";
+    }).join("") + "</div></div>";
+}
+function initMS(id, placeholder){
+  var d = document.getElementById(id);
+  var toggle = d.querySelector(".ms-toggle");
+  var label = d.querySelector(".ms-label");
+  var boxes = d.querySelectorAll("input[type=checkbox]");
+  function upd(){
+    var on = Array.prototype.filter.call(boxes, function(c){ return c.checked; }).map(function(c){ return c.value; });
+    if(!on.length){ label.textContent = placeholder; label.classList.add("placeholder"); }
+    else if(on.length <= 2){ label.textContent = on.join(", "); label.classList.remove("placeholder"); }
+    else { label.textContent = on[0] + ", " + on[1] + " +" + (on.length - 2) + " more"; label.classList.remove("placeholder"); }
+  }
+  toggle.onclick = function(ev){
+    ev.stopPropagation();
+    Array.prototype.forEach.call(document.querySelectorAll(".ms.open"), function(x){ if(x !== d) x.classList.remove("open"); });
+    d.classList.toggle("open");
+  };
+  d.querySelector(".ms-panel").onclick = function(ev){ ev.stopPropagation(); };
+  Array.prototype.forEach.call(boxes, function(c){ c.onchange = function(){ upd(); d.classList.remove("invalid"); }; });
+  upd();
+}
+function msValues(id){
+  return Array.prototype.map.call(document.querySelectorAll("#" + id + " input[type=checkbox]:checked"), function(c){ return c.value; });
+}
+
+function editResource(e, i){
+  e.stopPropagation();
+  editingIndex = i;
+  var r = DEMO.rp.resources[i];
+  var d = DEMO.rp;
+  document.getElementById("edit-title").textContent = "Edit: " + r.title;
+  var fileBlock = r.fileName
+    ? ("<div class=\"cur-file\">Current file: <strong>" + esc(r.fileName) + "</strong>" + (r.pages ? (" &middot; " + r.pages + " pages") : "") + (r.duration ? (" &middot; " + esc(r.duration)) : "") + "<br/>Uploading a new file replaces this one.</div>")
+    : "<div class=\"cur-file\">No file uploaded &mdash; only the sample link is on file.</div>";
+  document.getElementById("edit-body").innerHTML =
+    "<div class=\"sec-lbl\">Resource details</div>" +
+    "<div class=\"fld\"><label>Title <span class=\"req\">*</span></label><input type=\"text\" id=\"e-title\" value=\"" + esc(r.title || "") + "\"/></div>" +
+    "<div class=\"fld-row\">" +
+      "<div class=\"fld\"><label>Resource type <span class=\"req\">*</span></label>" + msBlock("e-types", "Select one or more types", RESOURCE_TYPES, r.resourceType) + "<p class=\"f-err\" id=\"e-types-err\">Please select at least one resource type.</p></div>" +
+      "<div class=\"fld\"><label>Working style <span class=\"opt\">(optional)</span></label><select id=\"e-style\">" + selOpts(WORKING_STYLES, r.workingStyle) + "</select></div>" +
+    "</div>" +
+    "<div class=\"fld-row\">" +
+      "<div class=\"fld\"><label>Subject <span class=\"req\">*</span></label>" + msBlock("e-subjects", "Select one or more subjects", SUBJECTS, r.subject) + "<p class=\"f-err\" id=\"e-subjects-err\">Please select at least one subject.</p></div>" +
+      "<div class=\"fld\"><label>Sub-topic <span class=\"opt\">(optional)</span></label><input type=\"text\" id=\"e-subtopic\" value=\"" + esc(r.subTopic || "") + "\"/></div>" +
+    "</div>" +
+    "<div class=\"fld\"><label>Grade range <span class=\"opt\">(optional)</span></label><div class=\"fld-row\">" +
+      "<select id=\"e-fromGrade\">" + selOpts(GRADES, r.fromGrade) + "</select><select id=\"e-toGrade\">" + selOpts(GRADES, r.toGrade) + "</select></div></div>" +
+    "<div class=\"fld\"><label>Age range <span class=\"opt\">(optional)</span></label><div class=\"fld-row\">" +
+      "<select id=\"e-fromAge\">" + selOpts(AGES, r.fromAge) + "</select><select id=\"e-toAge\">" + selOpts(AGES, r.toAge) + "</select></div></div>" +
+    "<div class=\"fld\"><label>Description <span class=\"req\">*</span></label><textarea id=\"e-desc\" maxlength=\"400\">" + esc(r.description || "") + "</textarea></div>" +
+    "<div class=\"fld\"><label>Sample link <span class=\"req\">*</span></label><input type=\"url\" id=\"e-link\" value=\"" + esc(r.sampleLink || "") + "\"/></div>" +
+    "<div class=\"fld\"><label>Resource file</label>" + fileBlock +
+      "<div style=\"margin-top:10px;\"><input type=\"file\" id=\"e-file\" accept=\".pdf,image/*,video/*\"/></div></div>" +
+    "<div class=\"sec-lbl\">Creator contact</div>" +
+    "<div class=\"fld\"><label>Business name <span class=\"opt\">(or brand name)</span></label><input type=\"text\" id=\"e-biz\" value=\"" + esc(d.businessName || "") + "\"/></div>" +
+    "<div class=\"fld-row\">" +
+      "<div class=\"fld\"><label>Contact name</label><input type=\"text\" id=\"e-cname\" value=\"" + esc(d.contactName || "") + "\"/></div>" +
+      "<div class=\"fld\"><label>Contact email</label><input type=\"email\" id=\"e-cemail\" value=\"" + esc(d.contactEmail || "") + "\"/></div>" +
+    "</div>" +
+    "<div class=\"fld\"><label>Contact phone <span class=\"opt\">(optional)</span></label><input type=\"tel\" id=\"e-cphone\" value=\"" + esc(d.contactPhone || "") + "\"/></div>" +
+    "<div class=\"review-note\">Saving sends this resource back to the HOMs team for a quick review. Your current version stays live until the update is approved.</div>";
+  initMS("e-types", "Select one or more types");
+  initMS("e-subjects", "Select one or more subjects");
+  document.getElementById("edit-ov").classList.add("open");
+}
+
+function closeEdit(){ document.getElementById("edit-ov").classList.remove("open"); editingIndex = null; }
+document.getElementById("edit-ov").onclick = function(e){ if(e.target.id === "edit-ov") closeEdit(); };
+
+function saveEdit(){
+  if(editingIndex === null) return;
+  var types = msValues("e-types");
+  var subs = msValues("e-subjects");
+  var title = document.getElementById("e-title").value.trim();
+  var desc = document.getElementById("e-desc").value.trim();
+  var link = document.getElementById("e-link").value.trim();
+  var ok = true;
+  document.getElementById("e-types-err").classList.toggle("show", types.length === 0);
+  document.getElementById("e-types").classList.toggle("invalid", types.length === 0);
+  if(!types.length) ok = false;
+  document.getElementById("e-subjects-err").classList.toggle("show", subs.length === 0);
+  document.getElementById("e-subjects").classList.toggle("invalid", subs.length === 0);
+  if(!subs.length) ok = false;
+  if(!title || !desc || !link){ ok = false; toast("Title, description and sample link are all required."); }
+  if(!ok) return;
+  var r = DEMO.rp.resources[editingIndex];
+  r.title = title; r.resourceType = types; r.subject = subs;
+  r.workingStyle = document.getElementById("e-style").value;
+  r.subTopic = document.getElementById("e-subtopic").value.trim();
+  r.fromGrade = document.getElementById("e-fromGrade").value;
+  r.toGrade = document.getElementById("e-toGrade").value;
+  r.fromAge = document.getElementById("e-fromAge").value;
+  r.toAge = document.getElementById("e-toAge").value;
+  r.description = desc; r.sampleLink = link;
+  r.updatedAt = new Date().toISOString().slice(0,10);
+  if(r.status === "activated") r.status = "updated";
+  DEMO.rp.businessName = document.getElementById("e-biz").value.trim();
+  DEMO.rp.contactName = document.getElementById("e-cname").value.trim();
+  DEMO.rp.contactEmail = document.getElementById("e-cemail").value.trim();
+  DEMO.rp.contactPhone = document.getElementById("e-cphone").value.trim();
+  closeEdit(); render();
+  toast("Saved - sent to HOMs for review.");
+}
 function managePlan(){ toast("This will open your secure Stripe billing portal once Stripe is connected."); }
 
 Array.prototype.forEach.call(document.querySelectorAll(".demo-btn"), function(b){
@@ -493,6 +645,7 @@ function closeDelete(){ document.getElementById("del-ov").classList.remove("open
 document.getElementById("del-input").addEventListener("input", function(e){
   document.getElementById("del-confirm").disabled = e.target.value.trim().toLowerCase() !== "delete";
 });
+document.addEventListener("click", function(){ Array.prototype.forEach.call(document.querySelectorAll(".ms.open"), function(x){ x.classList.remove("open"); }); });
 document.getElementById("del-ov").onclick = function(e){ if(e.target.id === "del-ov") closeDelete(); };
 function confirmDelete(){
   closeDelete();
