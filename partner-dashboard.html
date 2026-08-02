@@ -68,6 +68,9 @@ h1,h2,h3,h4{margin:0;font-weight:700;line-height:1.25;} p{margin:0;color:var(--m
 .page-mock .ln.t{height:11px;width:62%;background:#DCD9F2;margin-bottom:5px;}
 .page-mock .ln.s{width:80%;} .page-mock .ln.q{width:45%;}
 .page-mock .pnum{margin-top:auto;font-size:10.5px;font-weight:700;color:#9490AE;text-align:center;}
+.video-mock{width:340px;max-width:88%;aspect-ratio:16/9;background:linear-gradient(140deg,#2B2550,#4F3DC6);border-radius:11px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px;box-shadow:0 14px 30px -16px rgba(36,31,69,0.6);}
+.vm-play{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,0.22);border:2px solid rgba(255,255,255,0.5);display:grid;place-items:center;padding-left:4px;}
+.vm-meta{color:rgba(255,255,255,0.92);font-size:12.5px;font-weight:600;}
 .no-file{padding:26px;text-align:center;font-size:13.5px;color:var(--muted);line-height:1.6;}
 .no-file a{color:var(--purple-deep);font-weight:700;}
 .btn-edit{background:#F2F1FB;color:var(--ink);border:none;font-family:Poppins,sans-serif;font-weight:700;font-size:12.5px;padding:9px 17px;border-radius:9px;cursor:pointer;flex:0 0 auto;}
@@ -236,7 +239,9 @@ var DEMO = {
     resources: [
       { title: "Seed to Sprout Observation Journal", subject: ["Science"], subTopic: "Botany", resourceType: ["Project"], workingStyle: "Independent", fromGrade: "K", toGrade: "4th", status: "activated", uploadedAt: "2026-07-14", updatedAt: "2026-07-14", fileName: "seed-to-sprout-journal.pdf", fileType: "pdf", pages: 12, sampleLink: "https://littlebotanist.example/seed-to-sprout", description: "A four-week guided journal for germinating beans, with daily drawing prompts and measurement charts." },
       { title: "Backyard Bird Count Pack", subject: ["Science"], subTopic: "Zoology", resourceType: ["Printable"], workingStyle: "Parent-led", fromGrade: "1st", toGrade: "6th", status: "updated", uploadedAt: "2026-06-02", updatedAt: "2026-07-22", fileName: "bird-count-pack.pdf", fileType: "pdf", pages: 5, sampleLink: "https://littlebotanist.example/bird-count", description: "Printable tally sheets and identification cards for a week-long backyard bird survey." },
-      { title: "Pollinator Garden Unit Study", subject: ["Science","STEM / STEAM"], subTopic: "Ecology", resourceType: ["Unit Study"], workingStyle: "Group / Co-op", fromGrade: "3rd", toGrade: "8th", status: "pending", uploadedAt: "2026-07-28", updatedAt: "2026-07-28", fileName: "", fileType: "link", pages: 0, sampleLink: "https://littlebotanist.example/pollinator-unit", description: "A six-lesson unit study on pollinators, with planting plans and a final project." }
+      { title: "Pollinator Garden Unit Study", subject: ["Science","STEM / STEAM"], subTopic: "Ecology", resourceType: ["Unit Study"], workingStyle: "Group / Co-op", fromGrade: "3rd", toGrade: "8th", status: "pending", uploadedAt: "2026-07-28", updatedAt: "2026-07-28", fileName: "", fileType: "link", pages: 0, sampleLink: "https://littlebotanist.example/pollinator-unit", description: "A six-lesson unit study on pollinators, with planting plans and a final project." },
+      { title: "Seed Anatomy Walkthrough", subject: ["Science"], subTopic: "Botany", resourceType: ["Video"], workingStyle: "Independent", fromGrade: "2nd", toGrade: "7th", status: "activated", uploadedAt: "2026-05-19", updatedAt: "2026-05-19", fileName: "seed-anatomy-walkthrough.mp4", fileType: "video", duration: "8:42", pages: 0, sampleLink: "https://littlebotanist.example/seed-anatomy", description: "An eight-minute narrated dissection of a soaked bean seed, naming each part as it is separated so learners can follow along at the table." },
+      { title: "Leaf Shape Field Guide", subject: ["Science"], subTopic: "Botany", resourceType: ["Printable","Guide"], workingStyle: "Parent-led", fromGrade: "K", toGrade: "5th", status: "declined", uploadedAt: "2026-04-03", updatedAt: "2026-04-11", fileName: "leaf-shape-guide.pdf", fileType: "pdf", pages: 3, sampleLink: "https://littlebotanist.example/leaf-guide", description: "A three-page identification guide covering the twelve most common backyard leaf shapes, with a matching scavenger hunt." }
     ]
   }
 };
@@ -352,6 +357,8 @@ function previewHTML(r, i){
     body = "<div class=\"preview-stage\"><iframe id=\"frame-" + i + "\" src=\"" + esc(src) + "#page=1\" title=\"preview\"></iframe></div>";
   } else if(r.fileType === "video" && src){
     body = "<div class=\"preview-stage\"><video controls src=\"" + esc(src) + "\"></video></div>";
+  } else if(r.fileType === "video"){
+    body = "<div class=\"preview-stage\">" + videoMock(r) + "</div>";
   } else if(r.fileType === "pdf"){
     body = "<div class=\"preview-stage\">" + pageMock(i, 1) + "</div>";
   } else {
@@ -359,6 +366,13 @@ function previewHTML(r, i){
       (r.sampleLink ? "<a href=\"" + esc(r.sampleLink) + "\" target=\"_blank\" rel=\"noopener\">Open sample link</a>" : "") + "</div>";
   }
   return "<div class=\"preview-wrap\">" + head + body + "</div>";
+}
+
+function videoMock(r){
+  return "<div class=\"video-mock\">" +
+    "<div class=\"vm-play\"><svg width=\"26\" height=\"26\" viewBox=\"0 0 24 24\" fill=\"#fff\"><path d=\"M8 5v14l11-7z\"/></svg></div>" +
+    "<div class=\"vm-meta\">" + esc(r.fileName || "video") + (r.duration ? "  &middot;  " + esc(r.duration) : "") + "</div>" +
+  "</div>";
 }
 
 function pageMock(i, n){
