@@ -212,6 +212,26 @@ export default {
         return new Response(null, { status: 302, headers });
       }
 
+      if (url.pathname === '/api/partner/social-request' && request.method === 'POST') {
+        const b = await request.json();
+        if (!b.message) return json({ error: 'nothing to post' }, 400);
+        const entry = {
+          id: 'sp_' + Date.now(),
+          message: b.message,
+          link: b.link || '',
+          platforms: Array.isArray(b.platforms) ? b.platforms : [],
+          postAfter: b.postAfter || '',
+          partnerType: b.partnerType || '',
+          partnerName: b.partnerName || '',
+          status: 'requested',
+          submittedAt: new Date().toISOString()
+        };
+        const list = await getList(env, 'inbox_social');
+        list.push(entry);
+        await setList(env, 'inbox_social', list);
+        return json({ ok: true, id: entry.id });
+      }
+
       if (url.pathname === '/api/partner/feedback' && request.method === 'POST') {
         const b = await request.json();
         const entry = {
@@ -261,13 +281,14 @@ export default {
         if (!await isAdmin(request, env)) return json({ error: 'unauthorized' }, 401);
         const feedback = await getList(env, 'inbox_feedback');
         const support = await getList(env, 'inbox_support');
-        return json({ feedback, support });
+        const social = await getList(env, 'inbox_social');
+        return json({ feedback, support, social });
       }
 
       if (url.pathname === '/api/admin/inbox-update' && request.method === 'POST') {
         const b = await request.json();
         if (!await isAdmin(request, env, b)) return json({ error: 'unauthorized' }, 401);
-        const key = b.kind === 'support' ? 'inbox_support' : 'inbox_feedback';
+        const key = b.kind === 'support' ? 'inbox_support' : (b.kind === 'social' ? 'inbox_social' : 'inbox_feedback');
         const list = await getList(env, key);
         const idx = list.findIndex((x) => x.id === b.id);
         if (idx === -1) return json({ error: 'not found' }, 404);
