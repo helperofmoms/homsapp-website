@@ -36,6 +36,42 @@ h1,h2,h3,h4{margin:0;font-weight:700;line-height:1.25;} p{margin:0;color:var(--m
 .btn-ghost{background:#F2F1FB;color:var(--ink);} .btn-ghost:hover{background:#E4E1F7;}
 .btn-green{background:linear-gradient(135deg,var(--blue),var(--green));color:#fff;}
 .note{background:#F4F3FC;border-radius:11px;padding:13px 15px;font-size:13px;color:var(--muted);line-height:1.6;margin-top:16px;}
+.res-acc{border:1px solid #ECEAF9;border-radius:15px;margin-bottom:12px;overflow:hidden;background:#fff;}
+.res-sum{display:flex;align-items:center;gap:13px;padding:17px 19px;cursor:pointer;user-select:none;}
+.res-sum:hover{background:#FAFAFF;}
+.res-sum h4{font-size:15.5px;margin:0;flex:1;min-width:0;}
+.res-chev{color:#9490AE;font-size:19px;line-height:1;transition:transform .18s ease;flex:0 0 auto;}
+.res-acc.open .res-chev{transform:rotate(90deg);}
+.res-panel{display:none;border-top:1px solid #EFEDFA;padding:19px;}
+.res-acc.open .res-panel{display:block;}
+.res-panel-top{display:flex;align-items:flex-start;gap:14px;margin-bottom:14px;flex-wrap:wrap;}
+.res-panel-top .info{flex:1;min-width:220px;}
+.res-tags{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:9px;}
+.res-tag{font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;padding:3px 9px;border-radius:999px;background:rgba(28,155,240,0.10);color:#1C9BF0;}
+.res-tag.b{background:rgba(123,101,217,0.10);color:#7B65D9;}
+.res-tag.c{background:rgba(58,166,84,0.12);color:#3AA654;}
+.res-desc{font-size:13.5px;color:var(--muted);line-height:1.6;margin-bottom:10px;}
+.res-dates{font-size:12.5px;color:var(--muted);}
+.res-dates strong{color:var(--ink);font-weight:600;}
+.preview-wrap{border:1px solid #E7E9F3;border-radius:13px;background:#FAFAFF;overflow:hidden;}
+.preview-bar{display:flex;align-items:center;gap:10px;padding:10px 13px;border-bottom:1px solid #EFEDFA;background:#fff;}
+.preview-bar .pname{flex:1;min-width:0;font-size:12.5px;font-weight:700;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.pg-nav{display:flex;align-items:center;gap:7px;}
+.pg-btn{border:1px solid #E2E5FB;background:#fff;width:29px;height:29px;border-radius:8px;cursor:pointer;color:var(--ink);font-size:14px;line-height:1;}
+.pg-btn:hover:not([disabled]){border-color:var(--purple);color:var(--purple-deep);}
+.pg-btn[disabled]{opacity:.35;cursor:not-allowed;}
+.pg-count{font-size:12px;font-weight:700;color:var(--muted);min-width:74px;text-align:center;}
+.preview-stage{height:330px;display:grid;place-items:center;background:#F4F3FC;}
+.preview-stage iframe,.preview-stage video{width:100%;height:100%;border:0;display:block;}
+.page-mock{width:210px;height:272px;background:#fff;border:1px solid #E2E5FB;border-radius:7px;box-shadow:0 10px 26px -14px rgba(76,63,190,0.45);padding:20px;display:flex;flex-direction:column;gap:8px;}
+.page-mock .ln{height:7px;border-radius:4px;background:#EDEBF8;}
+.page-mock .ln.t{height:11px;width:62%;background:#DCD9F2;margin-bottom:5px;}
+.page-mock .ln.s{width:80%;} .page-mock .ln.q{width:45%;}
+.page-mock .pnum{margin-top:auto;font-size:10.5px;font-weight:700;color:#9490AE;text-align:center;}
+.no-file{padding:26px;text-align:center;font-size:13.5px;color:var(--muted);line-height:1.6;}
+.no-file a{color:var(--purple-deep);font-weight:700;}
+.btn-edit{background:#F2F1FB;color:var(--ink);border:none;font-family:Poppins,sans-serif;font-weight:700;font-size:12.5px;padding:9px 17px;border-radius:9px;cursor:pointer;flex:0 0 auto;}
+.btn-edit:hover{background:#E4E1F7;}
 .res-item{border:1px solid #ECEAF9;border-radius:14px;padding:17px;margin-bottom:13px;display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;}
 .res-item h4{font-size:15px;margin-bottom:4px;} .res-meta{font-size:12.5px;color:var(--muted);margin-top:4px;}
 .res-body{flex:1;min-width:200px;} .res-actions{display:flex;gap:8px;flex-wrap:wrap;}
@@ -102,8 +138,8 @@ footer{background:var(--ink);padding:52px 0 28px;} .foot-top{display:flex;justif
 </div>
 
 <div class="sec hidden" id="resources-sec">
-<div class="sec-head"><h2>Your Resources</h2></div>
-<p class="sec-desc">Everything you have shared with the HOMs Box. Only resources marked Activated are live for families.</p>
+<div class="sec-head"><h2 id="res-owner">Your Resources</h2></div>
+<p class="sec-desc">Everything you have shared with the HOMs Box. Tap any resource to preview it. Only resources marked Live are visible to families.</p>
 <div id="res-list"></div>
 <a class="btn btn-green" href="become-a-resource-partner.html">Submit another resource</a>
 <div class="note">Editing a live resource sends it back for a quick review before the updated version replaces the current one.</div>
@@ -196,11 +232,11 @@ var DEMO = {
     who: "Little Botanist",
     memberSince: "Jul 14, 2026",
     businessName: "Little Botanist",
-    contactName: "Robin Achebe", contactEmail: "robin@littlebotanist.example", contactPhone: "",
+    contactName: "Robin Achebe", firstName: "Robin", contactEmail: "robin@littlebotanist.example", contactPhone: "",
     resources: [
-      { title: "Seed to Sprout Observation Journal", subject: "Science", subTopic: "Botany", resourceType: "Project", fromGrade: "K", toGrade: "4th", status: "activated", description: "A four-week guided journal for germinating beans, with daily drawing prompts and measurement charts." },
-      { title: "Backyard Bird Count Pack", subject: "Science", subTopic: "Zoology", resourceType: "Printable", fromGrade: "1st", toGrade: "6th", status: "updated", description: "Printable tally sheets and identification cards for a week-long backyard bird survey." },
-      { title: "Pollinator Garden Unit Study", subject: "Science", subTopic: "Ecology", resourceType: "Unit Study", fromGrade: "3rd", toGrade: "8th", status: "pending", description: "A six-lesson unit study on pollinators, with planting plans and a final project." }
+      { title: "Seed to Sprout Observation Journal", subject: ["Science"], subTopic: "Botany", resourceType: ["Project"], workingStyle: "Independent", fromGrade: "K", toGrade: "4th", status: "activated", uploadedAt: "2026-07-14", updatedAt: "2026-07-14", fileName: "seed-to-sprout-journal.pdf", fileType: "pdf", pages: 12, sampleLink: "https://littlebotanist.example/seed-to-sprout", description: "A four-week guided journal for germinating beans, with daily drawing prompts and measurement charts." },
+      { title: "Backyard Bird Count Pack", subject: ["Science"], subTopic: "Zoology", resourceType: ["Printable"], workingStyle: "Parent-led", fromGrade: "1st", toGrade: "6th", status: "updated", uploadedAt: "2026-06-02", updatedAt: "2026-07-22", fileName: "bird-count-pack.pdf", fileType: "pdf", pages: 5, sampleLink: "https://littlebotanist.example/bird-count", description: "Printable tally sheets and identification cards for a week-long backyard bird survey." },
+      { title: "Pollinator Garden Unit Study", subject: ["Science","STEM / STEAM"], subTopic: "Ecology", resourceType: ["Unit Study"], workingStyle: "Group / Co-op", fromGrade: "3rd", toGrade: "8th", status: "pending", uploadedAt: "2026-07-28", updatedAt: "2026-07-28", fileName: "", fileType: "link", pages: 0, sampleLink: "https://littlebotanist.example/pollinator-unit", description: "A six-lesson unit study on pollinators, with planting plans and a final project." }
     ]
   }
 };
@@ -261,24 +297,89 @@ function render(){
       "<div><h4>" + esc(d.orgName) + "</h4><div class=\"loc\">" + esc(loc) + "</div><p class=\"d\">" + esc(d.description) + "</p></div>";
     document.getElementById("listing-form").innerHTML = renderForm(EP_FORM, d);
   } else {
+    var ownerName = d.businessName ? (d.businessName + "  &middot;  " + (d.firstName || "")) : (d.firstName || d.contactName || "Your Resources");
+    document.getElementById("res-owner").innerHTML = ownerName;
     var list = d.resources.map(function(r, i){
+      var types = [].concat(r.resourceType || []);
+      var subs = [].concat(r.subject || []);
       var range = (r.fromGrade && r.toGrade) ? ("Grades " + r.fromGrade + " - " + r.toGrade) : "";
-      return "<div class=\"res-item\"><div class=\"res-body\">" +
+      var tags = "";
+      types.forEach(function(t){ tags += "<span class=\"res-tag\">" + esc(t) + "</span>"; });
+      subs.forEach(function(sj){ tags += "<span class=\"res-tag b\">" + esc(sj) + "</span>"; });
+      if(r.subTopic) tags += "<span class=\"res-tag b\">" + esc(r.subTopic) + "</span>";
+      if(r.workingStyle) tags += "<span class=\"res-tag\">" + esc(r.workingStyle) + "</span>";
+      if(range) tags += "<span class=\"res-tag c\">" + esc(range) + "</span>";
+      var dates = "<strong>Added</strong> " + fmtDate(r.uploadedAt);
+      if(r.updatedAt && r.updatedAt !== r.uploadedAt) dates += "  &middot;  <strong>Last updated</strong> " + fmtDate(r.updatedAt);
+      return "<div class=\"res-acc\" data-i=\"" + i + "\">" +
+        "<div class=\"res-sum\"><span class=\"res-chev\">&rsaquo;</span>" +
         "<h4>" + esc(r.title) + "</h4>" +
-        "<div class=\"res-meta\">" + esc([r.resourceType, r.subject, r.subTopic, range].filter(Boolean).join(" &middot; ").replace(/&amp;middot;/g,"&middot;")) + "</div>" +
-        "<p class=\"res-meta\">" + esc(r.description) + "</p>" +
-        "</div>" +
-        "<div style=\"display:flex;flex-direction:column;gap:9px;align-items:flex-end;\">" +
-        "<span class=\"pill pill-" + r.status + "\">" + STAGE_LABELS[r.status] + "</span>" +
-        "<div class=\"res-actions\"><button class=\"btn btn-ghost btn-sm\" onclick=\"editResource(" + i + ")\">Edit</button></div>" +
+        "<span class=\"pill pill-" + r.status + "\">" + STAGE_LABELS[r.status] + "</span></div>" +
+        "<div class=\"res-panel\">" +
+          "<div class=\"res-panel-top\"><div class=\"info\">" +
+            "<div class=\"res-tags\">" + tags + "</div>" +
+            "<p class=\"res-desc\">" + esc(r.description || "") + "</p>" +
+            "<p class=\"res-dates\">" + dates + "</p>" +
+          "</div><button class=\"btn-edit\" onclick=\"editResource(event," + i + ")\">Edit</button></div>" +
+          previewHTML(r, i) +
         "</div></div>";
     }).join("");
     document.getElementById("res-list").innerHTML = list;
+    Array.prototype.forEach.call(document.querySelectorAll(".res-acc"), function(acc){
+      acc.querySelector(".res-sum").onclick = function(){ acc.classList.toggle("open"); };
+    });
   }
 }
 
+function previewHTML(r, i){
+  var src = r.fileKey ? ("/partner-logos/" + r.fileKey) : "";
+  var head = "<div class=\"preview-bar\"><span class=\"pname\">" + esc(r.fileName || "No file uploaded") + "</span>";
+  if(r.fileType === "pdf" && r.pages > 1){
+    head += "<div class=\"pg-nav\">" +
+      "<button class=\"pg-btn\" onclick=\"turnPage(event," + i + ",-1)\" id=\"prev-" + i + "\" disabled>&lsaquo;</button>" +
+      "<span class=\"pg-count\" id=\"cnt-" + i + "\">Page 1 of " + r.pages + "</span>" +
+      "<button class=\"pg-btn\" onclick=\"turnPage(event," + i + ",1)\" id=\"next-" + i + "\">&rsaquo;</button></div>";
+  }
+  head += "</div>";
+  var body;
+  if(r.fileType === "pdf" && src){
+    body = "<div class=\"preview-stage\"><iframe id=\"frame-" + i + "\" src=\"" + esc(src) + "#page=1\" title=\"preview\"></iframe></div>";
+  } else if(r.fileType === "video" && src){
+    body = "<div class=\"preview-stage\"><video controls src=\"" + esc(src) + "\"></video></div>";
+  } else if(r.fileType === "pdf"){
+    body = "<div class=\"preview-stage\">" + pageMock(i, 1) + "</div>";
+  } else {
+    body = "<div class=\"no-file\">No file uploaded &mdash; only the sample link is on file.<br/>" +
+      (r.sampleLink ? "<a href=\"" + esc(r.sampleLink) + "\" target=\"_blank\" rel=\"noopener\">Open sample link</a>" : "") + "</div>";
+  }
+  return "<div class=\"preview-wrap\">" + head + body + "</div>";
+}
+
+function pageMock(i, n){
+  return "<div class=\"page-mock\" id=\"mock-" + i + "\">" +
+    "<div class=\"ln t\"></div><div class=\"ln\"></div><div class=\"ln s\"></div>" +
+    "<div class=\"ln\"></div><div class=\"ln q\"></div><div class=\"ln s\"></div><div class=\"ln\"></div>" +
+    "<div class=\"pnum\">Page " + n + "</div></div>";
+}
+
+var pageState = {};
+function turnPage(e, i, dir){
+  e.stopPropagation();
+  var r = DEMO.rp.resources[i];
+  var cur = pageState[i] || 1;
+  var next = Math.min(Math.max(cur + dir, 1), r.pages);
+  pageState[i] = next;
+  document.getElementById("cnt-" + i).textContent = "Page " + next + " of " + r.pages;
+  document.getElementById("prev-" + i).disabled = next === 1;
+  document.getElementById("next-" + i).disabled = next === r.pages;
+  var frame = document.getElementById("frame-" + i);
+  if(frame){ frame.src = frame.src.split("#")[0] + "#page=" + next; }
+  var mock = document.getElementById("mock-" + i);
+  if(mock){ mock.querySelector(".pnum").textContent = "Page " + next; }
+}
+
 function saveListing(){ toast("Saved - your update has been sent to HOMs for review."); }
-function editResource(i){ toast("In the live version this opens " + DEMO.rp.resources[i].title + " for editing."); }
+function editResource(e, i){ e.stopPropagation(); toast("In the live version this opens " + DEMO.rp.resources[i].title + " for editing."); }
 function managePlan(){ toast("This will open your secure Stripe billing portal once Stripe is connected."); }
 
 Array.prototype.forEach.call(document.querySelectorAll(".demo-btn"), function(b){
