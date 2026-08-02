@@ -225,7 +225,8 @@ function rangeLabel(r){
 }
 function cardHTML(r){
   var badges = "";
-  if(r.resourceType) badges += "<span class=\"res-badge\">" + esc(r.resourceType) + "</span>";
+  var types = Object.prototype.toString.call(r.resourceType)==="[object Array]" ? r.resourceType : (r.resourceType ? [r.resourceType] : []);
+  types.forEach(function(tp){ badges += "<span class=\"res-badge\">" + esc(tp) + "</span>"; });
   if(r.workingStyle) badges += "<span class=\"res-badge style\">" + esc(r.workingStyle) + "</span>";
   var rg = rangeLabel(r);
   if(rg) badges += "<span class=\"res-badge range\">" + esc(rg) + "</span>";
@@ -249,8 +250,9 @@ function cardHTML(r){
   var bySubject = {};
   SUBJECTS.forEach(function(s){ bySubject[s] = []; });
   resources.forEach(function(r){
-    var s = r.subject && bySubject[r.subject] ? r.subject : "Life Skills";
-    bySubject[s].push(r);
+    var subs = Object.prototype.toString.call(r.subject)==="[object Array]" ? r.subject.slice() : (r.subject ? [r.subject] : []);
+    if(!subs.length) subs = ["Life Skills"];
+    subs.forEach(function(s){ if(bySubject[s]) bySubject[s].push(r); });
   });
   box.innerHTML = SUBJECTS.map(function(s){
     var items = bySubject[s];
