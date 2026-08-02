@@ -124,13 +124,13 @@ footer{background:var(--ink);padding:52px 0 28px;} .foot-top{display:flex;justif
 <div class="form-group"><label for="title">Title <span class="req">*</span></label>
 <input type="text" id="title" placeholder="e.g. Seed to Sprout Observation Journal" required></div>
 
-<div class="form-row"><div class="form-group"><label for="resourceType">Resource type <span class="req">*</span></label>
-<select id="resourceType" required><option value="">Select...</option><option value="Printable">Printable</option><option value="Worksheet">Worksheet</option><option value="Workbook">Workbook</option><option value="Curriculum">Curriculum</option><option value="Unit Study">Unit Study</option><option value="Lesson Plan">Lesson Plan</option><option value="Project">Project</option><option value="Activity">Activity</option><option value="Game">Game</option><option value="Video">Video</option><option value="Audio">Audio</option><option value="Planner">Planner</option><option value="Guide">Guide</option><option value="Parenting Guidance">Parenting Guidance</option></select></div>
+<div class="form-row"><div class="form-group"><label>Resource type <span class="req">*</span></label>
+<div class="ms-dropdown" id="resourceType-dropdown"><button type="button" class="ms-toggle"><span class="ms-label placeholder">Select one or more types</span><span class="ms-chevron">&#9662;</span></button><div class="ms-panel"><label class="ms-option"><input type="checkbox" value="Printable"> Printable</label><label class="ms-option"><input type="checkbox" value="Worksheet"> Worksheet</label><label class="ms-option"><input type="checkbox" value="Workbook"> Workbook</label><label class="ms-option"><input type="checkbox" value="Curriculum"> Curriculum</label><label class="ms-option"><input type="checkbox" value="Unit Study"> Unit Study</label><label class="ms-option"><input type="checkbox" value="Lesson Plan"> Lesson Plan</label><label class="ms-option"><input type="checkbox" value="Project"> Project</label><label class="ms-option"><input type="checkbox" value="Activity"> Activity</label><label class="ms-option"><input type="checkbox" value="Game"> Game</label><label class="ms-option"><input type="checkbox" value="Video"> Video</label><label class="ms-option"><input type="checkbox" value="Audio"> Audio</label><label class="ms-option"><input type="checkbox" value="Planner"> Planner</label><label class="ms-option"><input type="checkbox" value="Guide"> Guide</label><label class="ms-option"><input type="checkbox" value="Parenting Guidance"> Parenting Guidance</label></div></div><p class="field-error" id="resourceType-error">Please select at least one resource type.</p></div>
 <div class="form-group"><label for="workingStyle">Working style <span class="opt">(optional)</span></label>
 <select id="workingStyle"><option value="">Select...</option><option value="Independent">Independent</option><option value="Parent-led">Parent-led</option><option value="One-on-one">One-on-one</option><option value="Group / Co-op">Group / Co-op</option><option value="Hybrid">Hybrid</option></select></div></div>
 
-<div class="form-row"><div class="form-group"><label for="subject">Subject <span class="req">*</span></label>
-<select id="subject" required><option value="">Select...</option><option value="Art">Art</option><option value="Faith Studies">Faith Studies</option><option value="Foreign Language">Foreign Language</option><option value="Health &amp; PE">Health &amp; PE</option><option value="Language Arts">Language Arts</option><option value="Life Skills">Life Skills</option><option value="Mathematics">Mathematics</option><option value="Music &amp; Theatre Arts">Music &amp; Theatre Arts</option><option value="Science">Science</option><option value="Social Studies / History">Social Studies / History</option><option value="STEM / STEAM">STEM / STEAM</option></select></div>
+<div class="form-row"><div class="form-group"><label>Subject <span class="req">*</span></label>
+<div class="ms-dropdown" id="subject-dropdown"><button type="button" class="ms-toggle"><span class="ms-label placeholder">Select one or more subjects</span><span class="ms-chevron">&#9662;</span></button><div class="ms-panel"><label class="ms-option"><input type="checkbox" value="Art"> Art</label><label class="ms-option"><input type="checkbox" value="Faith Studies"> Faith Studies</label><label class="ms-option"><input type="checkbox" value="Foreign Language"> Foreign Language</label><label class="ms-option"><input type="checkbox" value="Health &amp; PE"> Health &amp; PE</label><label class="ms-option"><input type="checkbox" value="Language Arts"> Language Arts</label><label class="ms-option"><input type="checkbox" value="Life Skills"> Life Skills</label><label class="ms-option"><input type="checkbox" value="Mathematics"> Mathematics</label><label class="ms-option"><input type="checkbox" value="Music &amp; Theatre Arts"> Music &amp; Theatre Arts</label><label class="ms-option"><input type="checkbox" value="Science"> Science</label><label class="ms-option"><input type="checkbox" value="Social Studies / History"> Social Studies / History</label><label class="ms-option"><input type="checkbox" value="STEM / STEAM"> STEM / STEAM</label></div></div><p class="field-error" id="subject-error">Please select at least one subject.</p></div>
 <div class="form-group"><label for="subTopic">Sub-topic <span class="opt">(optional)</span></label>
 <input type="text" id="subTopic" placeholder="e.g. Botany"></div></div>
 
@@ -224,19 +224,59 @@ fileInput.addEventListener("change", function(){
   reader.readAsDataURL(f);
 });
 
+function initMultiSelect(dropdownId, placeholderText){
+  var dropdown = document.getElementById(dropdownId);
+  var toggle = dropdown.querySelector(".ms-toggle");
+  var label = toggle.querySelector(".ms-label");
+  var panel = dropdown.querySelector(".ms-panel");
+  var checkboxes = panel.querySelectorAll("input[type=checkbox]");
+  toggle.addEventListener("click", function(e){
+    e.stopPropagation();
+    Array.prototype.forEach.call(document.querySelectorAll(".ms-dropdown.open"), function(d){ if(d !== dropdown) d.classList.remove("open"); });
+    dropdown.classList.toggle("open");
+  });
+  panel.addEventListener("click", function(e){ e.stopPropagation(); });
+  function updateLabel(){
+    var checked = Array.prototype.filter.call(checkboxes, function(c){ return c.checked; }).map(function(c){ return c.value; });
+    if(checked.length === 0){ label.textContent = placeholderText; label.classList.add("placeholder"); }
+    else if(checked.length <= 2){ label.textContent = checked.join(", "); label.classList.remove("placeholder"); }
+    else { label.textContent = checked[0] + ", " + checked[1] + " +" + (checked.length - 2) + " more"; label.classList.remove("placeholder"); }
+  }
+  Array.prototype.forEach.call(checkboxes, function(cb){
+    cb.addEventListener("change", function(){ updateLabel(); dropdown.classList.remove("invalid"); });
+  });
+  updateLabel();
+}
+function getChecked(dropdownId){
+  return Array.prototype.map.call(document.querySelectorAll("#" + dropdownId + " input[type=checkbox]:checked"), function(c){ return c.value; });
+}
+initMultiSelect("resourceType-dropdown", "Select one or more types");
+initMultiSelect("subject-dropdown", "Select one or more subjects");
+document.addEventListener("click", function(){
+  Array.prototype.forEach.call(document.querySelectorAll(".ms-dropdown.open"), function(d){ d.classList.remove("open"); });
+});
 function val(id){ var el = document.getElementById(id); return el ? el.value.trim() : ""; }
 
 form.addEventListener("submit", async function(e){
   e.preventDefault();
   var agreed = document.getElementById("agreementCheck").checked;
+  var rtSel = getChecked("resourceType-dropdown");
+  var subjSel = getChecked("subject-dropdown");
+  var okMulti = true;
+  document.getElementById("resourceType-error").classList.toggle("show", rtSel.length === 0);
+  document.getElementById("resourceType-dropdown").classList.toggle("invalid", rtSel.length === 0);
+  if(rtSel.length === 0) okMulti = false;
+  document.getElementById("subject-error").classList.toggle("show", subjSel.length === 0);
+  document.getElementById("subject-dropdown").classList.toggle("invalid", subjSel.length === 0);
+  if(subjSel.length === 0) okMulti = false;
   document.getElementById("agreement-error").classList.toggle("show", !agreed);
-  if(!agreed || !form.checkValidity()){ form.reportValidity(); return; }
+  if(!okMulti || !agreed || !form.checkValidity()){ form.reportValidity(); return; }
 
   var submission = {
     title: val("title"),
-    resourceType: val("resourceType"),
+    resourceType: getChecked("resourceType-dropdown"),
     workingStyle: val("workingStyle"),
-    subject: val("subject"),
+    subject: getChecked("subject-dropdown"),
     subTopic: val("subTopic"),
     fromGrade: val("fromGrade"),
     toGrade: val("toGrade"),
