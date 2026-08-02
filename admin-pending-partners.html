@@ -131,9 +131,9 @@ var EP_CONTACT = [
 ];
 var RP_FIELDS = [
   {k:"title",l:"Title",t:"text"},
-  {k:"resourceType",l:"Resource type",t:"select",opts:RESOURCE_TYPES},
+  {k:"resourceType",l:"Resource type",t:"list"},
   {k:"workingStyle",l:"Working style",t:"select",opts:WORKING_STYLES},
-  {k:"subject",l:"Subject",t:"select",opts:SUBJECTS},
+  {k:"subject",l:"Subject",t:"list"},
   {k:"subTopic",l:"Sub-topic",t:"text"},
   {k:"fromGrade",l:"From Grade",t:"select",opts:GRADES,half:true},
   {k:"toGrade",l:"To Grade",t:"select",opts:GRADES,half:true},
@@ -182,9 +182,10 @@ function render(){
   }
   area.innerHTML = "<div class=\"cards\">" + items.map(function(it,i){
     var title = state.type==="ep" ? (it.orgName||"Untitled") : (it.title||"Untitled");
-    var sub = state.type==="ep"
+    function joinVal(v){ return Object.prototype.toString.call(v)==="[object Array]" ? v.join(", ") : (v||""); }
+  var sub = state.type==="ep"
       ? [(it.city?it.city:""),(it.state?it.state:"")].filter(Boolean).join(", ") || (it.isNationwide?"Nationwide":"")
-      : [(it.subject||""),(it.subTopic||"")].filter(Boolean).join(" / ");
+      : [joinVal(it.subject),(it.subTopic||"")].filter(Boolean).join(" / ");
     var who = state.type==="ep" ? (it.contactName||"") : (it.businessName||it.contactName||"");
     return "<div class=\"card\" data-idx=\"" + i + "\">" +
       "<h3>" + esc(title) + "</h3>" +
