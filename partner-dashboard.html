@@ -1,0 +1,227 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Partner Dashboard - HOMs Homeschool</title><meta name="robots" content="noindex"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root{ --blue:#0EA5E9; --purple:#6C5CE7; --purple-deep:#4F3DC6; --green:#43B05C; --lavender:#EEF0FD; --ink:#241F45; --muted:#5B5876; --rose:#D6395B; --amber:#B7791F; --radius:20px; --shadow:0 20px 40px -18px rgba(76,63,190,0.25); }
+*{box-sizing:border-box;} body{margin:0;font-family:Poppins,sans-serif;color:var(--ink);background:#F6F5FC;display:flex;flex-direction:column;min-height:100vh;-webkit-font-smoothing:antialiased;}
+h1,h2,h3,h4{margin:0;font-weight:700;line-height:1.25;} p{margin:0;color:var(--muted);line-height:1.6;} a{text-decoration:none;}
+.ph{background:var(--ink);padding:16px 0;} .ph .inner{max-width:1060px;margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:13px;flex-wrap:wrap;}
+.badge{background:linear-gradient(135deg,var(--green),var(--blue));color:#fff;font-size:11px;font-weight:800;letter-spacing:1px;padding:5px 13px;border-radius:999px;text-transform:uppercase;}
+.ph h1{color:#fff;font-size:19px;} .ph .right{margin-left:auto;display:flex;align-items:center;gap:13px;}
+.who{color:#B8B4DE;font-size:12.5px;}
+.logout{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);color:#fff;font-family:Poppins,sans-serif;font-weight:700;font-size:13px;padding:9px 18px;border-radius:999px;cursor:pointer;}
+.page{flex:1;max-width:1060px;width:100%;margin:0 auto;padding:26px 24px 70px;}
+.demo{background:#FFF8EC;border:1.5px solid #F5E2BC;border-radius:14px;padding:14px 18px;margin-bottom:26px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.demo p{font-size:13px;color:var(--amber);font-weight:600;flex:1;min-width:240px;}
+.demo-switch{display:inline-flex;background:#fff;border:1.5px solid #E9D9B5;border-radius:999px;padding:3px;}
+.demo-btn{border:none;background:transparent;font-family:Poppins,sans-serif;font-weight:700;font-size:12.5px;padding:8px 15px;border-radius:999px;cursor:pointer;color:var(--muted);}
+.demo-btn.active{background:var(--amber);color:#fff;}
+.sec{background:#fff;border:1px solid #ECEAF9;border-radius:var(--radius);padding:26px;margin-bottom:20px;}
+.sec-head{display:flex;align-items:center;gap:12px;margin-bottom:6px;flex-wrap:wrap;}
+.sec-head h2{font-size:19px;} .sec-desc{font-size:13.5px;margin-bottom:20px;}
+.pill{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.6px;padding:3px 10px;border-radius:999px;text-transform:uppercase;}
+.pill-pending{background:#FFF4E5;color:var(--amber);} .pill-updated{background:#E8F1FE;color:#2563EB;} .pill-approved{background:#EDE9FE;color:var(--purple-deep);} .pill-activated{background:#E7F6EC;color:#227C42;} .pill-declined{background:#FDECEF;color:var(--rose);}
+.preview{border:1px solid #E7E9F3;border-radius:14px;padding:16px;display:flex;gap:13px;background:#FAFAFF;margin-bottom:22px;}
+.preview img{width:52px;height:52px;border-radius:10px;object-fit:contain;border:1px solid #E7E9F3;background:#fff;padding:6px;flex:0 0 auto;}
+.preview h4{font-size:15px;margin-bottom:3px;} .preview .loc{font-size:12.5px;font-weight:600;color:var(--purple-deep);margin-bottom:6px;}
+.preview .d{font-size:13.5px;} .preview-lbl{font-size:11.5px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-bottom:9px;}
+.fld{margin-bottom:16px;} .fld label{display:block;font-weight:700;font-size:13px;margin-bottom:6px;}
+.fld input,.fld select,.fld textarea{width:100%;font-family:Poppins,sans-serif;font-size:14px;color:var(--ink);padding:11px 13px;border:1.5px solid #E2E5FB;border-radius:11px;background:#FAFAFF;}
+.fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--purple);background:#fff;}
+.fld textarea{min-height:86px;resize:vertical;} .fld-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:Poppins,sans-serif;font-weight:700;font-size:14px;padding:12px 24px;border-radius:11px;border:none;cursor:pointer;}
+.btn-primary{background:var(--purple);color:#fff;} .btn-primary:hover{background:var(--purple-deep);}
+.btn-ghost{background:#F2F1FB;color:var(--ink);} .btn-ghost:hover{background:#E4E1F7;}
+.btn-green{background:linear-gradient(135deg,var(--blue),var(--green));color:#fff;}
+.note{background:#F4F3FC;border-radius:11px;padding:13px 15px;font-size:13px;color:var(--muted);line-height:1.6;margin-top:16px;}
+.res-item{border:1px solid #ECEAF9;border-radius:14px;padding:17px;margin-bottom:13px;display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;}
+.res-item h4{font-size:15px;margin-bottom:4px;} .res-meta{font-size:12.5px;color:var(--muted);margin-top:4px;}
+.res-body{flex:1;min-width:200px;} .res-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.btn-sm{font-size:12.5px;padding:8px 15px;border-radius:9px;}
+.sub-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:15px;margin-bottom:20px;}
+.sub-cell{background:#FAFAFF;border:1px solid #ECEAF9;border-radius:13px;padding:15px;}
+.sub-cell .k{font-size:11.5px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.sub-cell .v{font-size:16px;font-weight:700;}
+.docs{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;}
+.doc{display:flex;align-items:center;gap:11px;border:1px solid #ECEAF9;border-radius:13px;padding:15px;background:#FAFAFF;font-weight:700;font-size:13.5px;color:var(--ink);}
+.doc:hover{border-color:var(--purple);background:#fff;} .doc svg{flex:0 0 auto;}
+.hidden{display:none !important;}
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;font-weight:600;font-size:14px;padding:13px 24px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:200;}
+.toast.show{opacity:1;}
+@media (max-width:640px){ .fld-row{grid-template-columns:1fr;} }
+footer .wrap{max-width:1140px;margin:0 auto;padding:0 24px;}
+footer .logo-cube{width:34px;height:34px;}
+footer .logo-text{display:flex;flex-direction:column;line-height:1;}
+footer .logo-word{font-family:'Poppins',sans-serif;font-weight:800;font-size:22px;letter-spacing:0.5px;}
+footer .logo-sub{font-family:'Poppins',sans-serif;font-size:9px;letter-spacing:2.5px;color:var(--blue);font-weight:700;margin-top:1px;}
+footer{background:var(--ink);padding:52px 0 28px;} .foot-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:32px;margin-bottom:36px;} .foot-logo .logo-word{color:#fff;} .foot-logo .logo-sub{color:#8FE0FF;} .foot-tag{color:#B8B4DE;font-size:14px;max-width:280px;margin-top:10px;line-height:1.8;} .foot-tag a{color:#B8B4DE;} .foot-tag a:hover{color:#fff;} .foot-links{display:flex;gap:56px;flex-wrap:wrap;} .foot-col h4{color:#fff;font-size:13px;letter-spacing:0.5px;margin-bottom:14px;font-family:'Poppins',sans-serif;font-weight:700;} .foot-col a{display:block;color:#B8B4DE;font-size:14px;margin-bottom:10px;} .foot-col a:hover{color:#fff;} .foot-bottom{ border-top:1px solid rgba(255,255,255,0.1); padding-top:22px; display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px; } .foot-bottom p{color:#8B87AB;font-size:12.5px;} .app-store-note{display:flex;align-items:center;gap:8px;color:#B8B4DE;font-size:12.5px;font-weight:600;} .social-icons{ display:flex; align-items:center; gap:10px; margin-top:18px; } .social-icons a{ width:38px; height:38px; border-radius:50%; display:grid; place-items:center; color:#fff; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.16); transition:transform .18s ease,background .18s ease,border-color .18s ease; } .social-icons a:hover{ transform:translateY(-3px); background:var(--purple); border-color:transparent; } .social-icons svg{ width:18px; height:18px; fill:currentColor; } .hero-photo{width:100%;height:auto;display:block;border-radius:26px;box-shadow:var(--shadow);object-fit:cover}.fc{padding:0;min-height:390px;perspective:1200px;cursor:pointer;background:transparent;border:0}.fc:hover{transform:none;box-shadow:none}.fi{position:relative;min-height:390px;transform-style:preserve-3d;transition:.65s}.fc.on .fi{transform:rotateY(180deg)}.ff,.fb{position:absolute;inset:0;border:1px solid #f0effb;border-radius:var(--radius-lg);background:#fff;backface-visibility:hidden;overflow:hidden}.ff{padding:34px 28px}.fb{transform:rotateY(180deg);display:flex;flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(145deg,#f8f6ff,#eef9f4);padding:15px}.phone-shot{display:block;width:100%;height:auto;max-width:150px;margin:0 auto;filter:drop-shadow(0 16px 28px rgba(0,0,0,.28));}.how-grid .phone-shot{max-width:220px;}.tap,.fb>span{font-size:10px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;color:var(--purple)}.tap{display:block;margin-top:16px}.fb>span{margin-top:7px;color:var(--muted)}@media(max-width:900px){.fb svg{height:420px}}
+</style></head>
+<body>
+<header class="ph"><div class="inner"><span class="badge">Partner</span><h1>Partner Dashboard</h1>
+<div class="right"><span class="who" id="who">Demo preview</span>
+<button class="logout" onclick="location.href='/admin-login.html?tab=partner'">Log out</button></div>
+</div></header>
+
+<div class="page">
+<div class="demo"><p>Demo preview - this page is showing sample data so you can click through the layout. Real partner sign-in and live data get wired up with the Twilio login.</p>
+<div class="demo-switch"><button class="demo-btn active" data-view="ep">Enrichment Partner</button><button class="demo-btn" data-view="rp">Resource Partner</button></div></div>
+
+<div class="sec" id="listing-sec">
+<div class="sec-head"><h2 id="listing-title">Your Listing</h2><span class="pill pill-activated" id="listing-status">Activated</span></div>
+<p class="sec-desc" id="listing-desc"></p>
+<div class="preview-lbl">How families see you in the app</div>
+<div class="preview" id="preview"></div>
+<div id="listing-form"></div>
+<button class="btn btn-primary" onclick="saveListing()">Save changes</button>
+<div class="note">Edits to a live listing are reviewed by the HOMs team before they go back into the app. Your current listing stays visible in the meantime.</div>
+</div>
+
+<div class="sec hidden" id="resources-sec">
+<div class="sec-head"><h2>Your Resources</h2></div>
+<p class="sec-desc">Everything you have shared with the HOMs Box. Only resources marked Activated are live for families.</p>
+<div id="res-list"></div>
+<a class="btn btn-green" href="become-a-resource-partner.html">Submit another resource</a>
+<div class="note">Editing a live resource sends it back for a quick review before the updated version replaces the current one.</div>
+</div>
+
+<div class="sec">
+<div class="sec-head"><h2>Subscription &amp; Billing</h2><span class="pill pill-activated">Active</span></div>
+<p class="sec-desc">Your HOMs Partner membership.</p>
+<div class="sub-grid">
+<div class="sub-cell"><div class="k">Plan</div><div class="v">$5<span style="font-size:13px;font-weight:600;color:#5B5876">/mo</span></div></div>
+<div class="sub-cell"><div class="k">Status</div><div class="v" style="color:#227C42">Active</div></div>
+<div class="sub-cell"><div class="k">Member since</div><div class="v" id="member-since">Jul 14, 2026</div></div>
+<div class="sub-cell"><div class="k">Next billing date</div><div class="v">Aug 14, 2026</div></div>
+</div>
+<button class="btn btn-ghost" onclick="managePlan()">Manage subscription</button>
+<div class="note">Manage subscription opens a secure Stripe page where you can update your card, view invoices, or cancel anytime. HOMs never stores your card details.</div>
+</div>
+
+<div class="sec">
+<div class="sec-head"><h2>Your Documents</h2></div>
+<p class="sec-desc">The agreements and policies that apply to your partnership.</p>
+<div class="docs">
+<a class="doc" href="https://homsapp-website.helperofmoms.workers.dev/enrichment-partner-agreement.pdf" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" stroke="#6C5CE7" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 2v6h6" stroke="#6C5CE7" stroke-width="1.8" stroke-linejoin="round"/></svg><span>HOMs Partner Agreement</span></a><a class="doc" href="https://homsapp-website.helperofmoms.workers.dev/terms-and-conditions.pdf" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" stroke="#6C5CE7" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 2v6h6" stroke="#6C5CE7" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Terms & Conditions</span></a><a class="doc" href="https://homsapp-website.helperofmoms.workers.dev/privacy-policy.pdf" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" stroke="#6C5CE7" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 2v6h6" stroke="#6C5CE7" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Privacy Policy</span></a><a class="doc" href="https://homsapp-website.helperofmoms.workers.dev/refund-and-cancellation-policy.pdf" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z" stroke="#6C5CE7" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 2v6h6" stroke="#6C5CE7" stroke-width="1.8" stroke-linejoin="round"/></svg><span>Refund & Cancellation Policy</span></a>
+</div>
+</div>
+
+</div>
+<footer><div class="wrap"><div class="foot-top"><div class="foot-logo"><div class="logo-word"><span style="color:#38BDF8">H</span><span style="color:#9B8AFB">O</span><span style="color:#63C97C">M</span><span style="color:#9B8AFB">s</span></div><div class="logo-sub">HOMESCHOOL</div><p class="foot-tag">Frederick, MD, USA<br/><a href="tel:+12405753007">(240) 575-3007</a><br/><a href="mailto:helperofmoms@gmail.com">helperofmoms@gmail.com</a><br/><a href="https://calendar.app.google/z4BnCS9aK1Xyihw97" target="_blank" rel="noopener">Schedule a Meeting</a></p><div aria-label="HOMs social media" class="social-icons"><a aria-label="Facebook" href="https://www.facebook.com/profile.php?id=61554172673611" rel="noopener" target="_blank" title="Facebook"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M14 8h3V4h-3c-3 0-5 2-5 5v2H6v4h3v7h4v-7h3l1-4h-4V9c0-.7.3-1 1-1z"></path></svg></a><a aria-label="Instagram" href="https://www.instagram.com/homshomeschool/" rel="noopener" target="_blank" title="Instagram"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 3a2 2 0 0 0-2 2v10c0 1.1.9 2 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7zm5 3a4 4 0 1 1 0 8 4 4 0 0 1 0-8zm0 2.2a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6zM17.5 6.5a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" fill-rule="evenodd"></path></svg></a><a aria-label="TikTok" href="https://www.tiktok.com/@jasmynajlounyhoms" rel="noopener" target="_blank" title="TikTok"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M14 3h3c.4 2.1 1.6 3.4 4 3.8v3a9 9 0 0 1-4-1.4v7.1a6 6 0 1 1-6-6c.4 0 .8 0 1 .1v3.2a3 3 0 1 0 2 2.8V3z"></path></svg></a><a aria-label="YouTube" href="https://www.youtube.com/@HOMsHomeschool" rel="noopener" target="_blank" title="YouTube"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M22 8.2a3 3 0 0 0-2.1-2.1C18 5.6 12 5.6 12 5.6s-6 0-7.9.5A3 3 0 0 0 2 8.2 31 31 0 0 0 1.5 12c0 1.3.1 2.6.5 3.8a3 3 0 0 0 2.1 2.1c1.9.5 7.9.5 7.9.5s6 0 7.9-.5a3 3 0 0 0 2.1-2.1c.4-1.2.5-2.5.5-3.8s-.1-2.6-.5-3.8zM10 15.5v-7l6 3.5-6 3.5z"></path></svg></a><a aria-label="LinkedIn" href="https://www.linkedin.com/in/homshomeschool/" rel="noopener" target="_blank" title="LinkedIn"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M5 3.5A2.5 2.5 0 1 1 5 8a2.5 2.5 0 0 1 0-5zM3 9h4v12H3V9zm6 0h4v1.7c.9-1.3 2.2-2.1 4-2.1 3.2 0 4 2.1 4 5.2V21h-4v-6.4c0-1.5 0-3-2-3s-2.3 1.5-2.3 2.9V21H9V9z"></path></svg></a></div></div><div class="foot-links"><div class="foot-col"><h4>PRODUCT</h4><a href="#features">Features</a><a href="#how-it-works">How It Works</a><a href="#pricing">Pricing</a><a href="enrichment-partners.html">Enrichment Partners</a><a href="homs-box.html">The HOMs Box</a></div><div class="foot-col"><h4>GET STARTED</h4><a href="https://app.helperofmoms.com" rel="noopener" target="_blank">Log In / Sign Up</a><a href="https://admin.homsapp.com/admin-pending-partners.html" rel="noopener">Admin</a><a href="https://admin.homsapp.com/admin-login.html?tab=partner" rel="noopener">Partner</a></div><div class="foot-col"><h4>LEGAL</h4><a href="https://homsapp-website.helperofmoms.workers.dev/terms-and-conditions.pdf" rel="noopener" target="_blank">Terms &amp; Conditions</a><a href="https://homsapp-website.helperofmoms.workers.dev/privacy-policy.pdf" rel="noopener" target="_blank">Privacy Policy</a><a href="https://homsapp-website.helperofmoms.workers.dev/refund-and-cancellation-policy.pdf" rel="noopener" target="_blank">Refund &amp; Cancellation Policy</a><a href="https://homsapp-website.helperofmoms.workers.dev/enrichment-partner-agreement.pdf" rel="noopener" target="_blank">Enrichment Partner Agreement</a></div></div></div><div class="foot-bottom"><p>© 2026 HOMs Homeschool. All rights reserved.</p><div class="app-store-note"><svg fill="none" height="16" viewbox="0 0 24 24" width="16"><path d="M16.5 3c.1 1.1-.3 2.2-1 3-.8.9-2 1.6-3.2 1.5-.2-1.1.3-2.3 1-3C14.1 3.6 15.4 3 16.5 3Z" fill="#B8B4DE"></path><path d="M20.5 17.3c-.5 1.2-.8 1.7-1.5 2.7-1 1.4-2.3 3.2-4 3.2-1.5 0-1.9-1-3.9-1s-2.5 1-4 1c-1.7 0-3-1.6-4-3-2.5-3.6-2.8-7.9-1.2-10.2 1.1-1.6 2.9-2.6 4.5-2.6 1.7 0 2.7 1.1 4 1.1 1.3 0 2.1-1.1 4-1.1 1.5 0 3 .8 4.1 2.2-3.6 2-3 7.2 2 7.7Z" fill="#B8B4DE"></path></svg><svg fill="none" height="16" viewbox="0 0 24 24" width="16"><path d="M4 3.5c-.3.3-.5.8-.5 1.3v14.4c0 .5.2 1 .5 1.3l.1.1L13 12 4.1 3.4l-.1.1Z" fill="#B8B4DE"></path><path d="M16.1 15.1 13 12l3.1-3.1 3.6 2.1c.9.5.9 1.5 0 2l-3.6 2.1Z" fill="#B8B4DE"></path><path d="M4.1 3.4 13 12l3.1-3.1-11-6.4c-.4-.2-.7-.1-1 .2Z" fill="#B8B4DE"></path><path d="M4.1 20.6 13 12l3.1 3.1-11 6.4c-.4.2-.7.1-1-.2Z" fill="#B8B4DE"></path></svg> Coming soon to the Apple Store and Google Play </div></div></div></footer>
+<div class="toast" id="toast"></div>
+<script>
+var SUBJECTS = ["Art","Faith Studies","Foreign Language","Health & PE","Language Arts","Life Skills","Mathematics","Music & Theatre Arts","Science","Social Studies / History","STEM / STEAM"];
+var DEMO = {
+  ep: {
+    who: "Renee's Music Studio",
+    status: "activated",
+    memberSince: "Jul 14, 2026",
+    orgName: "Renee's Music Studio",
+    offerTitle: "Private & Group Lessons",
+    subjects: "Music & Theatre Arts",
+    city: "Urbana", state: "MD", county: "Frederick County",
+    streetAddress: "3610 Sugarloaf Pkwy",
+    website: "https://www.reneesmusicstudio.com/",
+    learnMore: "https://www.reneesmusicstudio.com/",
+    description: "A place to grow your skills and confidence, with mentors who guide you and peers who cheer you on. Lessons on a variety of instruments, plus vocals.",
+    contactName: "Renee Bell", contactEmail: "hello@reneesmusicstudio.com", contactPhone: "(240) 555-0142"
+  },
+  rp: {
+    who: "Little Botanist",
+    memberSince: "Jul 14, 2026",
+    businessName: "Little Botanist",
+    contactName: "Robin Achebe", contactEmail: "robin@littlebotanist.example", contactPhone: "",
+    resources: [
+      { title: "Seed to Sprout Observation Journal", subject: "Science", subTopic: "Botany", resourceType: "Project", fromGrade: "K", toGrade: "4th", status: "activated", description: "A four-week guided journal for germinating beans, with daily drawing prompts and measurement charts." },
+      { title: "Backyard Bird Count Pack", subject: "Science", subTopic: "Zoology", resourceType: "Printable", fromGrade: "1st", toGrade: "6th", status: "updated", description: "Printable tally sheets and identification cards for a week-long backyard bird survey." },
+      { title: "Pollinator Garden Unit Study", subject: "Science", subTopic: "Ecology", resourceType: "Unit Study", fromGrade: "3rd", toGrade: "8th", status: "pending", description: "A six-lesson unit study on pollinators, with planting plans and a final project." }
+    ]
+  }
+};
+var STAGE_LABELS = {pending:"Pending review",updated:"Update in review",approved:"Approved",activated:"Live",declined:"Declined"};
+var view = "ep";
+
+function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+function toast(m){ var t=document.getElementById("toast"); t.textContent=m; t.classList.add("show"); setTimeout(function(){t.classList.remove("show");},2400); }
+
+var EP_FORM = [
+  {k:"orgName",l:"Program or business name",t:"text"},
+  {k:"offerTitle",l:"Offer title",t:"text"},
+  {k:"subjects",l:"Subject",t:"select",opts:SUBJECTS},
+  {k:"description",l:"Short description",t:"textarea"},
+  {k:"website",l:"Website",t:"text"},
+  {k:"learnMore",l:"Learn more link",t:"text"},
+  {k:"streetAddress",l:"Address",t:"text"},
+  {k:"city",l:"City",t:"text",half:true},
+  {k:"state",l:"State",t:"text",half:true},
+  {k:"contactName",l:"Contact name",t:"text",half:true},
+  {k:"contactPhone",l:"Contact phone",t:"text",half:true},
+  {k:"contactEmail",l:"Contact email",t:"text"}
+];
+
+function fieldHTML(f, v){
+  v = v == null ? "" : v;
+  var inner;
+  if(f.t === "textarea") inner = "<textarea data-k=\"" + f.k + "\">" + esc(v) + "</textarea>";
+  else if(f.t === "select") inner = "<select data-k=\"" + f.k + "\">" + f.opts.map(function(o){ return "<option" + (String(o)===String(v)?" selected":"") + ">" + esc(o) + "</option>"; }).join("") + "</select>";
+  else inner = "<input type=\"text\" data-k=\"" + f.k + "\" value=\"" + esc(v) + "\"/>";
+  return "<div class=\"fld\"><label>" + esc(f.l) + "</label>" + inner + "</div>";
+}
+
+function renderForm(fields, data){
+  var out = "", i = 0;
+  while(i < fields.length){
+    var f = fields[i];
+    if(f.half && fields[i+1] && fields[i+1].half){
+      out += "<div class=\"fld-row\">" + fieldHTML(f, data[f.k]) + fieldHTML(fields[i+1], data[fields[i+1].k]) + "</div>"; i += 2;
+    } else { out += fieldHTML(f, data[f.k]); i += 1; }
+  }
+  return out;
+}
+
+function render(){
+  var isEP = view === "ep";
+  var d = DEMO[view];
+  document.getElementById("who").textContent = d.who;
+  document.getElementById("member-since").textContent = d.memberSince;
+  document.getElementById("listing-sec").classList.toggle("hidden", !isEP);
+  document.getElementById("resources-sec").classList.toggle("hidden", isEP);
+
+  if(isEP){
+    document.getElementById("listing-desc").textContent = "This is your Enrichment Partner listing as families see it in the HOMs app and directory.";
+    var loc = [d.city, d.state].filter(Boolean).join(", ");
+    document.getElementById("preview").innerHTML =
+      "<div style=\"width:52px;height:52px;border-radius:10px;border:1px solid #E7E9F3;background:#fff;display:grid;place-items:center;font-weight:800;color:#6C5CE7;flex:0 0 auto;\">" + esc((d.orgName||"?").charAt(0)) + "</div>" +
+      "<div><h4>" + esc(d.orgName) + "</h4><div class=\"loc\">" + esc(loc) + "</div><p class=\"d\">" + esc(d.description) + "</p></div>";
+    document.getElementById("listing-form").innerHTML = renderForm(EP_FORM, d);
+  } else {
+    var list = d.resources.map(function(r, i){
+      var range = (r.fromGrade && r.toGrade) ? ("Grades " + r.fromGrade + " - " + r.toGrade) : "";
+      return "<div class=\"res-item\"><div class=\"res-body\">" +
+        "<h4>" + esc(r.title) + "</h4>" +
+        "<div class=\"res-meta\">" + esc([r.resourceType, r.subject, r.subTopic, range].filter(Boolean).join(" &middot; ").replace(/&amp;middot;/g,"&middot;")) + "</div>" +
+        "<p class=\"res-meta\">" + esc(r.description) + "</p>" +
+        "</div>" +
+        "<div style=\"display:flex;flex-direction:column;gap:9px;align-items:flex-end;\">" +
+        "<span class=\"pill pill-" + r.status + "\">" + STAGE_LABELS[r.status] + "</span>" +
+        "<div class=\"res-actions\"><button class=\"btn btn-ghost btn-sm\" onclick=\"editResource(" + i + ")\">Edit</button></div>" +
+        "</div></div>";
+    }).join("");
+    document.getElementById("res-list").innerHTML = list;
+  }
+}
+
+function saveListing(){ toast("Saved - your update has been sent to HOMs for review."); }
+function editResource(i){ toast("In the live version this opens " + DEMO.rp.resources[i].title + " for editing."); }
+function managePlan(){ toast("This will open your secure Stripe billing portal once Stripe is connected."); }
+
+Array.prototype.forEach.call(document.querySelectorAll(".demo-btn"), function(b){
+  b.onclick = function(){
+    Array.prototype.forEach.call(document.querySelectorAll(".demo-btn"), function(x){ x.classList.remove("active"); });
+    b.classList.add("active"); view = b.getAttribute("data-view"); render();
+  };
+});
+render();
+</script>
+</body></html>
