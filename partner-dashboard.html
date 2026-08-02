@@ -244,6 +244,12 @@ var STAGE_LABELS = {pending:"Pending review",updated:"Update in review",approved
 var view = "ep";
 
 function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+function fmtDate(iso){
+  if(!iso) return "-";
+  var d = new Date(iso);
+  if(isNaN(d.getTime())) return iso;
+  return d.toLocaleDateString(undefined, { year:"numeric", month:"short", day:"numeric" });
+}
 function toast(m){ var t=document.getElementById("toast"); t.textContent=m; t.classList.add("show"); setTimeout(function(){t.classList.remove("show");},2400); }
 
 var EP_FORM = [
