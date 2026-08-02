@@ -226,6 +226,21 @@ export default {
           status: 'requested',
           submittedAt: new Date().toISOString()
         };
+        entry.photos = [];
+        const incoming = Array.isArray(b.photos) ? b.photos.slice(0, 3) : [];
+        for (let i = 0; i < incoming.length; i++) {
+          const ph = incoming[i];
+          if (!ph || !ph.dataUrl || !ph.name) continue;
+          const m = /^data:([^;]+);base64,(.*)$/.exec(ph.dataUrl);
+          if (!m) continue;
+          const bin = atob(m[2]);
+          const bytes = new Uint8Array(bin.length);
+          for (let k = 0; k < bin.length; k++) bytes[k] = bin.charCodeAt(k);
+          const safe = ph.name.replace(/[^A-Za-z0-9._-]/g, '_');
+          const photoKey = 'social_' + entry.id + '_' + i + '_' + safe;
+          await env.LOGOS_KV.put(photoKey, bytes.buffer, { metadata: { contentType: m[1] } });
+          entry.photos.push({ name: ph.name, key: photoKey });
+        }
         const list = await getList(env, 'inbox_social');
         list.push(entry);
         await setList(env, 'inbox_social', list);
