@@ -68,6 +68,35 @@ h1,h2,h3,h4{margin:0;font-weight:700;line-height:1.25;} p{margin:0;color:var(--m
 .cur-file{border:1px solid #E7E9F3;border-radius:11px;padding:13px 15px;background:#FAFAFF;font-size:13px;color:var(--muted);line-height:1.6;}
 .cur-file strong{color:var(--ink);}
 .review-note{background:#FFF8EC;border-radius:11px;padding:13px 15px;font-size:13px;color:var(--amber);font-weight:600;line-height:1.6;margin-top:18px;}
+.pcard{border:1px solid #E7E9F3;border-radius:16px;overflow:hidden;background:#fff;max-width:430px;box-shadow:0 14px 30px -20px rgba(36,31,69,0.35);}
+.pcard-banner{height:118px;display:grid;place-items:center;}
+.pcard-logo{display:flex;align-items:baseline;gap:3px;color:#fff;font-family:Poppins,sans-serif;font-weight:800;}
+.pcard-logo .big{font-size:30px;line-height:1;}
+.pcard-logo .small{font-size:12px;letter-spacing:2px;}
+.pcard-body{padding:18px;}
+.pcard-top{display:flex;align-items:flex-start;gap:12px;}
+.pcard-top h3{font-size:20px;margin:0 0 3px;flex:1;min-width:0;}
+.pcard-sub{font-size:14px;color:var(--muted);line-height:1.45;margin-bottom:11px;}
+.pcard-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:15px;}
+.pcard-tag{font-size:13px;font-weight:600;color:#fff;background:#8A8798;padding:6px 14px;border-radius:8px;}
+.pcard-tag.dark{background:#5B5876;}
+.pcard-rule{border:none;border-top:1px solid #E7E9F3;margin:0 0 14px;}
+.offers-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;background:#FAFAFF;border:1px solid #E7E9F3;border-radius:11px;padding:14px 16px;cursor:pointer;font-family:Poppins,sans-serif;font-weight:700;font-size:15px;color:var(--ink);}
+.offers-toggle:hover{background:#F4F3FC;}
+.offers-caret{font-size:11px;color:var(--ink);}
+.offers-list{display:none;margin-top:11px;}
+.offers-list.open{display:block;}
+.offer-item{border:1px solid #E7E9F3;border-radius:11px;padding:16px;background:#FAFAFF;margin-bottom:11px;}
+.offer-item h4{font-size:15.5px;margin:0 0 6px;}
+.offer-item p{font-size:14px;color:var(--muted);line-height:1.5;margin-bottom:13px;}
+.cal-btn{width:100%;border:1.5px solid var(--purple);background:#fff;color:var(--purple-deep);font-family:Poppins,sans-serif;font-weight:700;font-size:14.5px;padding:12px;border-radius:10px;cursor:pointer;}
+.cal-btn:hover{background:#F4F3FC;}
+.pcard-about{border:1px solid #E7E9F3;border-radius:11px;padding:16px;background:#FAFAFF;}
+.pcard-about p{font-size:14px;color:var(--muted);line-height:1.5;margin-bottom:10px;}
+.pcard-about a{color:var(--purple-deep);font-weight:700;font-size:14.5px;text-decoration:underline;}
+.edit-pill{border:1.5px solid #DCD9F2;background:#fff;color:var(--purple-deep);font-family:Poppins,sans-serif;font-weight:700;font-size:14px;padding:9px 16px;border-radius:10px;cursor:pointer;flex:0 0 auto;display:flex;align-items:center;gap:6px;}
+.edit-pill:hover{border-color:var(--purple);background:#FAFAFF;}
+.card-note{font-size:13px;color:var(--muted);line-height:1.6;margin-top:16px;}
 .res-acc{border:1px solid #ECEAF9;border-radius:15px;margin-bottom:12px;overflow:hidden;background:#fff;}
 .res-sum{display:flex;align-items:center;gap:13px;padding:17px 19px;cursor:pointer;user-select:none;}
 .res-sum:hover{background:#FAFAFF;}
@@ -163,13 +192,10 @@ footer{background:var(--ink);padding:52px 0 28px;} .foot-top{display:flex;justif
 <div class="demo-switch"><button class="demo-btn active" data-view="ep">Enrichment Partner</button><button class="demo-btn" data-view="rp">Resource Partner</button></div></div>
 
 <div class="sec" id="listing-sec">
-<div class="sec-head"><h2 id="listing-title">Your Listing</h2><span class="pill pill-activated" id="listing-status">Activated</span></div>
+<div class="sec-head"><h2 id="listing-title">Your Listing</h2><span class="pill pill-activated" id="listing-status">Live</span></div>
 <p class="sec-desc" id="listing-desc"></p>
-<div class="preview-lbl">How families see you in the app</div>
-<div class="preview" id="preview"></div>
-<div id="listing-form"></div>
-<button class="btn btn-primary" onclick="saveListing()">Save changes</button>
-<div class="note">Edits to a live listing are reviewed by the HOMs team before they go back into the app. Your current listing stays visible in the meantime.</div>
+<div id="listing-card"></div>
+<p class="card-note">This is exactly how families see you in the HOMs app and directory. Choose Edit to change anything &mdash; your current listing stays visible while HOMs reviews the update.</p>
 </div>
 
 <div class="sec hidden" id="resources-sec">
@@ -256,6 +282,15 @@ var SUBJECTS = ["Art","Faith Studies","Foreign Language","Health & PE","Language
 var DEMO = {
   ep: {
     who: "Renee's Music Studio",
+    brandColor: "#C93A50",
+    logoInitial: "R",
+    isNationwide: false,
+    locationTypes: ["Studio"],
+    subjectList: ["Music & Theatre Arts"],
+    offers: [
+      { title: "Private & Group Lessons", description: "Weekly lessons on piano, guitar, violin, drums and voice, for beginners through advanced." },
+      { title: "Summer Recital Workshop", description: "A four-week intensive ending in a family recital, open to all instruments." }
+    ],
     status: "activated",
     memberSince: "Jul 14, 2026",
     orgName: "Renee's Music Studio",
@@ -338,12 +373,16 @@ function render(){
   document.getElementById("resources-sec").classList.toggle("hidden", isEP);
 
   if(isEP){
-    document.getElementById("listing-desc").textContent = "This is your Enrichment Partner listing as families see it in the HOMs app and directory.";
-    var loc = [d.city, d.state].filter(Boolean).join(", ");
-    document.getElementById("preview").innerHTML =
-      "<div style=\"width:52px;height:52px;border-radius:10px;border:1px solid #E7E9F3;background:#fff;display:grid;place-items:center;font-weight:800;color:#6C5CE7;flex:0 0 auto;\">" + esc((d.orgName||"?").charAt(0)) + "</div>" +
-      "<div><h4>" + esc(d.orgName) + "</h4><div class=\"loc\">" + esc(loc) + "</div><p class=\"d\">" + esc(d.description) + "</p></div>";
-    document.getElementById("listing-form").innerHTML = renderForm(EP_FORM, d);
+    document.getElementById("listing-desc").textContent = "Your Enrichment Partner listing.";
+    document.getElementById("listing-card").innerHTML = listingCardHTML(d);
+    var ot = document.getElementById("offers-toggle");
+    if(ot){
+      ot.onclick = function(){
+        var lst = document.getElementById("offers-list");
+        var open = lst.classList.toggle("open");
+        document.getElementById("offers-caret").innerHTML = open ? "&#9650;" : "&#9660;";
+      };
+    }
   } else {
     var ownerName = d.businessName ? (d.businessName + "  &middot;  " + (d.firstName || "")) : (d.firstName || d.contactName || "Your Resources");
     document.getElementById("res-owner").innerHTML = ownerName;
@@ -436,6 +475,114 @@ function turnPage(e, i, dir){
   if(mock){ mock.querySelector(".pnum").textContent = "Page " + next; }
 }
 
+var LOCATION_TYPES = ["Co-op","Educational Program","Event","Farm","Gym","Hybrid School","Micro School","Museum","Product","Recreation Center","Studio"];
+var editMode = "resource";
+
+function openListingEditor(){
+  editMode = "listing";
+  editingIndex = null;
+  var d = DEMO.ep;
+  var src = d.listingDraft ? Object.assign({}, d, d.listingDraft) : d;
+  document.getElementById("edit-title").textContent = "Edit your listing";
+  document.getElementById("edit-submit-btn").textContent = "Resubmit";
+  var banner = d.listingDraft
+    ? "<div class=\"draft-banner\">You are editing an unsent draft saved " + fmtDate(d.listingDraftSavedAt) + ". Your live listing has not changed.</div>"
+    : "";
+  var offersHTML = [].concat(src.offers || []).map(function(o, idx){
+    return "<div class=\"fld\" style=\"border:1px solid #E7E9F3;border-radius:11px;padding:14px;background:#FAFAFF;\">" +
+      "<label>Offer " + (idx + 1) + " title</label><input type=\"text\" class=\"offer-t\" value=\"" + esc(o.title) + "\"/>" +
+      "<label style=\"margin-top:10px;\">Offer " + (idx + 1) + " description</label><textarea class=\"offer-d\">" + esc(o.description) + "</textarea></div>";
+  }).join("");
+  document.getElementById("edit-body").innerHTML =
+    banner +
+    "<div class=\"sec-lbl\">Program details</div>" +
+    "<div class=\"fld\"><label>Program or business name <span class=\"req\">*</span></label><input type=\"text\" id=\"l-org\" value=\"" + esc(src.orgName || "") + "\"/></div>" +
+    "<div class=\"fld\"><label>Offer title <span class=\"opt\">(optional)</span></label><input type=\"text\" id=\"l-offer\" value=\"" + esc(src.offerTitle || "") + "\"/></div>" +
+    "<div class=\"fld-row\">" +
+      "<div class=\"fld\"><label>Subject <span class=\"req\">*</span></label>" + msBlock("l-subjects", "Select one or more subjects", SUBJECTS, src.subjectList) + "<p class=\"f-err\" id=\"l-subjects-err\">Please select at least one subject.</p></div>" +
+      "<div class=\"fld\"><label>Location type <span class=\"req\">*</span></label>" + msBlock("l-loctypes", "Select one or more types", LOCATION_TYPES, src.locationTypes) + "<p class=\"f-err\" id=\"l-loctypes-err\">Please select at least one location type.</p></div>" +
+    "</div>" +
+    "<div class=\"fld\"><label>Short description <span class=\"req\">*</span></label><textarea id=\"l-desc\" maxlength=\"400\">" + esc(src.description || "") + "</textarea></div>" +
+    "<div class=\"fld-row\">" +
+      "<div class=\"fld\"><label>Website <span class=\"req\">*</span></label><input type=\"url\" id=\"l-site\" value=\"" + esc(src.website || "") + "\"/></div>" +
+      "<div class=\"fld\"><label>Learn more link <span class=\"opt\">(optional)</span></label><input type=\"url\" id=\"l-learn\" value=\"" + esc(src.learnMore || "") + "\"/></div>" +
+    "</div>" +
+    "<div class=\"sec-lbl\">Offers</div>" + (offersHTML || "<p class=\"res-desc\">No offers added yet.</p>") +
+    "<div class=\"sec-lbl\">Location</div>" +
+    "<div class=\"fld\"><label class=\"agreement-like\" style=\"display:flex;align-items:center;gap:10px;font-weight:600;font-size:13.5px;\"><input type=\"checkbox\" id=\"l-nationwide\" style=\"width:18px;height:18px;accent-color:#6C5CE7;\"" + (src.isNationwide ? " checked" : "") + "/> This program is nationwide</label></div>" +
+    "<div class=\"fld\"><label>Address</label><input type=\"text\" id=\"l-addr\" value=\"" + esc(src.streetAddress || "") + "\"/></div>" +
+    "<div class=\"fld-row\">" +
+      "<div class=\"fld\"><label>City</label><input type=\"text\" id=\"l-city\" value=\"" + esc(src.city || "") + "\"/></div>" +
+      "<div class=\"fld\"><label>State</label><input type=\"text\" id=\"l-state\" value=\"" + esc(src.state || "") + "\"/></div>" +
+    "</div>" +
+    "<div class=\"sec-lbl\">Contact</div>" +
+    "<div class=\"fld-row\">" +
+      "<div class=\"fld\"><label>Contact name</label><input type=\"text\" id=\"l-cname\" value=\"" + esc(src.contactName || "") + "\"/></div>" +
+      "<div class=\"fld\"><label>Contact email</label><input type=\"email\" id=\"l-cemail\" value=\"" + esc(src.contactEmail || "") + "\"/></div>" +
+    "</div>" +
+    "<div class=\"fld\"><label>Contact phone <span class=\"opt\">(optional)</span></label><input type=\"tel\" id=\"l-cphone\" value=\"" + esc(src.contactPhone || "") + "\"/></div>" +
+    "<div class=\"review-note\">Resubmit sends your listing to the HOMs team for a quick review. Your current listing stays live until the update is approved. Save draft keeps your edits without submitting them.</div>";
+  initMS("l-subjects", "Select one or more subjects");
+  initMS("l-loctypes", "Select one or more types");
+  document.getElementById("edit-ov").classList.add("open");
+}
+
+function collectListing(){
+  var offers = [];
+  var titles = document.querySelectorAll(".offer-t");
+  var descs = document.querySelectorAll(".offer-d");
+  for(var i = 0; i < titles.length; i++){
+    offers.push({ title: titles[i].value.trim(), description: descs[i] ? descs[i].value.trim() : "" });
+  }
+  return {
+    orgName: document.getElementById("l-org").value.trim(),
+    offerTitle: document.getElementById("l-offer").value.trim(),
+    subjectList: msValues("l-subjects"),
+    locationTypes: msValues("l-loctypes"),
+    description: document.getElementById("l-desc").value.trim(),
+    website: document.getElementById("l-site").value.trim(),
+    learnMore: document.getElementById("l-learn").value.trim(),
+    isNationwide: document.getElementById("l-nationwide").checked,
+    streetAddress: document.getElementById("l-addr").value.trim(),
+    city: document.getElementById("l-city").value.trim(),
+    state: document.getElementById("l-state").value.trim(),
+    contactName: document.getElementById("l-cname").value.trim(),
+    contactEmail: document.getElementById("l-cemail").value.trim(),
+    contactPhone: document.getElementById("l-cphone").value.trim(),
+    offers: offers
+  };
+}
+
+function listingCardHTML(d){
+  var loc = d.isNationwide ? "Nationwide" : [d.city, d.state].filter(Boolean).join(", ");
+  var tags = "";
+  [].concat(d.subjectList || []).forEach(function(s){ tags += "<span class=\"pcard-tag\">" + esc(s) + "</span>"; });
+  [].concat(d.locationTypes || []).forEach(function(s){ tags += "<span class=\"pcard-tag dark\">" + esc(s) + "</span>"; });
+  var offers = [].concat(d.offers || []);
+  var offersHTML = offers.map(function(o){
+    return "<div class=\"offer-item\"><h4>" + esc(o.title) + "</h4><p>" + esc(o.description) + "</p>" +
+      "<button class=\"cal-btn\" onclick=\"addToCalendar()\">&#128197; Add to Calendar</button></div>";
+  }).join("");
+  return "<div class=\"pcard\">" +
+    "<div class=\"pcard-banner\" style=\"background:" + esc(d.brandColor || "#6C5CE7") + "\">" +
+      "<div class=\"pcard-logo\"><span class=\"big\">" + esc(d.logoInitial || (d.orgName || "?").charAt(0)) + "</span><span class=\"small\">LOGO</span></div>" +
+    "</div>" +
+    "<div class=\"pcard-body\">" +
+      "<div class=\"pcard-top\"><h3>" + esc(d.orgName || "") + "</h3>" +
+        "<button class=\"edit-pill\" onclick=\"openListingEditor()\">&#9998; Edit</button></div>" +
+      "<div class=\"pcard-sub\">" + esc(d.offerTitle || "") + "<br/>" + esc(loc) + "</div>" +
+      "<div class=\"pcard-tags\">" + tags + "</div>" +
+      "<hr class=\"pcard-rule\"/>" +
+      (offers.length
+        ? ("<button class=\"offers-toggle\" id=\"offers-toggle\">Offers (" + offers.length + ")<span class=\"offers-caret\" id=\"offers-caret\">&#9660;</span></button>" +
+           "<div class=\"offers-list\" id=\"offers-list\">" + offersHTML + "</div>")
+        : "") +
+      "<div class=\"pcard-about\" style=\"margin-top:11px;\"><p>" + esc(d.description || "") + "</p>" +
+        (d.website ? "<a href=\"" + esc(d.website) + "\" target=\"_blank\" rel=\"noopener\">Visit website &rarr;</a>" : "") + "</div>" +
+    "</div></div>";
+}
+function addToCalendar(){ toast("In the live app this adds the offer to the family calendar."); }
+
 function saveListing(){ toast("Saved - your update has been sent to HOMs for review."); }
 var RESOURCE_TYPES = ["Printable","Worksheet","Workbook","Curriculum","Unit Study","Lesson Plan","Project","Activity","Game","Video","Audio","Planner","Guide","Parenting Guidance"];
 var WORKING_STYLES = ["Independent","Parent-led","One-on-one","Group / Co-op","Hybrid"];
@@ -489,6 +636,7 @@ function editResource(e, i){ openEditor(e, i); }
 
 function openEditor(e, i){
   if(e) e.stopPropagation();
+  editMode = "resource";
   editingIndex = i;
   var isNew = (i === -1);
   var live = isNew ? Object.assign({}, BLANK_RESOURCE) : DEMO.rp.resources[i];
@@ -564,6 +712,13 @@ function saveContactFields(){
 }
 
 function saveDraft(){
+  if(editMode === "listing"){
+    DEMO.ep.listingDraft = collectListing();
+    DEMO.ep.listingDraftSavedAt = new Date().toISOString().slice(0,10);
+    closeEdit(); render();
+    toast("Draft saved - your live listing has not changed.");
+    return;
+  }
   if(editingIndex === null) return;
   var vals = collectEdit();
   var today = new Date().toISOString().slice(0,10);
@@ -587,6 +742,25 @@ function saveDraft(){
 }
 
 function resubmitEdit(){
+  if(editMode === "listing"){
+    var lv = collectListing();
+    var lok = true;
+    document.getElementById("l-subjects-err").classList.toggle("show", lv.subjectList.length === 0);
+    document.getElementById("l-subjects").classList.toggle("invalid", lv.subjectList.length === 0);
+    if(!lv.subjectList.length) lok = false;
+    document.getElementById("l-loctypes-err").classList.toggle("show", lv.locationTypes.length === 0);
+    document.getElementById("l-loctypes").classList.toggle("invalid", lv.locationTypes.length === 0);
+    if(!lv.locationTypes.length) lok = false;
+    if(!lv.orgName || !lv.description || !lv.website){ lok = false; toast("Name, description and website are all required."); }
+    if(!lok) return;
+    Object.assign(DEMO.ep, lv);
+    delete DEMO.ep.listingDraft; delete DEMO.ep.listingDraftSavedAt;
+    document.getElementById("listing-status").textContent = "Update in review";
+    document.getElementById("listing-status").className = "pill pill-updated";
+    closeEdit(); render();
+    toast("Resubmitted - sent to HOMs for review.");
+    return;
+  }
   if(editingIndex === null) return;
   var types = msValues("e-types");
   var subs = msValues("e-subjects");
