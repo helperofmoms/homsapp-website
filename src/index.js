@@ -216,7 +216,7 @@ export default {
         const b = await request.json();
         const entry = {
           id: 'fb_' + Date.now(),
-          sentiment: b.sentiment || '',
+          sentiments: Array.isArray(b.sentiments) ? b.sentiments : (b.sentiment ? [b.sentiment] : []),
           topic: b.topic || '',
           note: b.note || '',
           partnerType: b.partnerType || '',
@@ -224,7 +224,7 @@ export default {
           status: 'new',
           submittedAt: new Date().toISOString()
         };
-        if (!entry.sentiment && !entry.note) return json({ error: 'empty feedback' }, 400);
+        if (!entry.sentiments.length && !entry.note) return json({ error: 'empty feedback' }, 400);
         const list = await getList(env, 'inbox_feedback');
         list.push(entry);
         await setList(env, 'inbox_feedback', list);
