@@ -36,6 +36,10 @@ h1,h2,h3,h4{margin:0;font-weight:700;line-height:1.25;} p{margin:0;color:var(--m
 .btn-ghost{background:#F2F1FB;color:var(--ink);} .btn-ghost:hover{background:#E4E1F7;}
 .btn-green{background:linear-gradient(135deg,var(--blue),var(--green));color:#fff;}
 .note{background:#F4F3FC;border-radius:11px;padding:13px 15px;font-size:13px;color:var(--muted);line-height:1.6;margin-top:16px;}
+.btn-draft{background:#fff;border:1.5px solid #E2E5FB;color:var(--purple-deep);}
+.btn-draft:hover{border-color:var(--purple);background:#FAFAFF;}
+.draft-flag{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;padding:3px 9px;border-radius:999px;background:#FFF4E5;color:var(--amber);}
+.draft-banner{background:#FFF8EC;border:1.5px solid #F5E2BC;border-radius:11px;padding:12px 14px;font-size:12.5px;color:var(--amber);font-weight:600;line-height:1.6;margin-bottom:16px;}
 .edit-ov{position:fixed;inset:0;background:rgba(36,31,69,0.55);display:none;align-items:flex-start;justify-content:center;padding:28px 16px;z-index:160;overflow-y:auto;}
 .edit-ov.open{display:flex;}
 .edit-modal{background:#fff;border-radius:var(--radius);max-width:620px;width:100%;box-shadow:0 30px 60px -20px rgba(36,31,69,0.5);}
@@ -172,7 +176,7 @@ footer{background:var(--ink);padding:52px 0 28px;} .foot-top{display:flex;justif
 <p class="sec-desc">Everything you have shared with the HOMs Box. Tap any resource to preview it. Only resources marked Live are visible to families.</p>
 <div id="res-list"></div>
 <a class="btn btn-green" href="become-a-resource-partner.html">Submit another resource</a>
-<div class="note">Editing a live resource sends it back for a quick review before the updated version replaces the current one.</div>
+<div class="note">Save draft keeps your edits privately without changing what families see. Resubmit sends them to HOMs for a quick review - your live version stays up until the update is approved.</div>
 </div>
 
 <div class="sec">
@@ -243,7 +247,7 @@ footer{background:var(--ink);padding:52px 0 28px;} .foot-top{display:flex;justif
 <div class="edit-ov" id="edit-ov"><div class="edit-modal">
 <div class="edit-head"><h3 id="edit-title">Edit resource</h3><button class="close-x-e" onclick="closeEdit()" style="border:none;background:#F2F1FB;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:17px;color:#5B5876;">&times;</button></div>
 <div class="edit-body" id="edit-body"></div>
-<div class="edit-foot"><button class="btn btn-ghost" onclick="closeEdit()">Cancel</button><button class="btn btn-primary" onclick="saveEdit()">Save changes</button></div>
+<div class="edit-foot"><button class="btn btn-ghost" onclick="closeEdit()">Cancel</button><button class="btn btn-draft" onclick="saveDraft()">Save draft</button><button class="btn btn-primary" onclick="resubmitEdit()">Resubmit</button></div>
 </div></div>
 <div class="toast" id="toast"></div>
 <script>
@@ -357,6 +361,7 @@ function render(){
       return "<div class=\"res-acc\" data-i=\"" + i + "\">" +
         "<div class=\"res-sum\"><span class=\"res-chev\">&rsaquo;</span>" +
         "<h4>" + esc(r.title) + "</h4>" +
+        (r.draft ? "<span class=\"draft-flag\">Unsent draft</span>" : "") +
         "<span class=\"pill pill-" + r.status + "\">" + STAGE_LABELS[r.status] + "</span></div>" +
         "<div class=\"res-panel\">" +
           "<div class=\"res-panel-top\"><div class=\"info\">" +
@@ -477,13 +482,18 @@ function msValues(id){
 function editResource(e, i){
   e.stopPropagation();
   editingIndex = i;
-  var r = DEMO.rp.resources[i];
+  var live = DEMO.rp.resources[i];
+  var r = live.draft ? Object.assign({}, live, live.draft) : live;
   var d = DEMO.rp;
-  document.getElementById("edit-title").textContent = "Edit: " + r.title;
-  var fileBlock = r.fileName
-    ? ("<div class=\"cur-file\">Current file: <strong>" + esc(r.fileName) + "</strong>" + (r.pages ? (" &middot; " + r.pages + " pages") : "") + (r.duration ? (" &middot; " + esc(r.duration)) : "") + "<br/>Uploading a new file replaces this one.</div>")
+  document.getElementById("edit-title").textContent = "Edit: " + (live.title || "");
+  var fileBlock = live.fileName
+    ? ("<div class=\"cur-file\">Current file: <strong>" + esc(live.fileName) + "</strong>" + (live.pages ? (" &middot; " + live.pages + " pages") : "") + (live.duration ? (" &middot; " + esc(live.duration)) : "") + "<br/>Uploading a new file replaces this one.</div>")
     : "<div class=\"cur-file\">No file uploaded &mdash; only the sample link is on file.</div>";
+  var draftBanner = live.draft
+    ? "<div class=\"draft-banner\">You are editing an unsent draft saved " + fmtDate(live.draftSavedAt) + ". Your live version has not changed. Choose Resubmit to send these edits to HOMs for review.</div>"
+    : "";
   document.getElementById("edit-body").innerHTML =
+    draftBanner +
     "<div class=\"sec-lbl\">Resource details</div>" +
     "<div class=\"fld\"><label>Title <span class=\"req\">*</span></label><input type=\"text\" id=\"e-title\" value=\"" + esc(r.title || "") + "\"/></div>" +
     "<div class=\"fld-row\">" +
@@ -509,7 +519,7 @@ function editResource(e, i){
       "<div class=\"fld\"><label>Contact email</label><input type=\"email\" id=\"e-cemail\" value=\"" + esc(d.contactEmail || "") + "\"/></div>" +
     "</div>" +
     "<div class=\"fld\"><label>Contact phone <span class=\"opt\">(optional)</span></label><input type=\"tel\" id=\"e-cphone\" value=\"" + esc(d.contactPhone || "") + "\"/></div>" +
-    "<div class=\"review-note\">Saving sends this resource back to the HOMs team for a quick review. Your current version stays live until the update is approved.</div>";
+    "<div class=\"review-note\">Resubmit sends this resource back to the HOMs team for a quick review. Your current version stays live until the update is approved. Save draft keeps your edits without submitting them.</div>";
   initMS("e-types", "Select one or more types");
   initMS("e-subjects", "Select one or more subjects");
   document.getElementById("edit-ov").classList.add("open");
@@ -518,7 +528,40 @@ function editResource(e, i){
 function closeEdit(){ document.getElementById("edit-ov").classList.remove("open"); editingIndex = null; }
 document.getElementById("edit-ov").onclick = function(e){ if(e.target.id === "edit-ov") closeEdit(); };
 
-function saveEdit(){
+function collectEdit(){
+  return {
+    title: document.getElementById("e-title").value.trim(),
+    resourceType: msValues("e-types"),
+    subject: msValues("e-subjects"),
+    workingStyle: document.getElementById("e-style").value,
+    subTopic: document.getElementById("e-subtopic").value.trim(),
+    fromGrade: document.getElementById("e-fromGrade").value,
+    toGrade: document.getElementById("e-toGrade").value,
+    fromAge: document.getElementById("e-fromAge").value,
+    toAge: document.getElementById("e-toAge").value,
+    description: document.getElementById("e-desc").value.trim(),
+    sampleLink: document.getElementById("e-link").value.trim()
+  };
+}
+
+function saveContactFields(){
+  DEMO.rp.businessName = document.getElementById("e-biz").value.trim();
+  DEMO.rp.contactName = document.getElementById("e-cname").value.trim();
+  DEMO.rp.contactEmail = document.getElementById("e-cemail").value.trim();
+  DEMO.rp.contactPhone = document.getElementById("e-cphone").value.trim();
+}
+
+function saveDraft(){
+  if(editingIndex === null) return;
+  var r = DEMO.rp.resources[editingIndex];
+  r.draft = collectEdit();
+  r.draftSavedAt = new Date().toISOString().slice(0,10);
+  saveContactFields();
+  closeEdit(); render();
+  toast("Draft saved - not sent for review yet.");
+}
+
+function resubmitEdit(){
   if(editingIndex === null) return;
   var types = msValues("e-types");
   var subs = msValues("e-subjects");
@@ -535,6 +578,7 @@ function saveEdit(){
   if(!title || !desc || !link){ ok = false; toast("Title, description and sample link are all required."); }
   if(!ok) return;
   var r = DEMO.rp.resources[editingIndex];
+  delete r.draft; delete r.draftSavedAt;
   r.title = title; r.resourceType = types; r.subject = subs;
   r.workingStyle = document.getElementById("e-style").value;
   r.subTopic = document.getElementById("e-subtopic").value.trim();
@@ -545,12 +589,9 @@ function saveEdit(){
   r.description = desc; r.sampleLink = link;
   r.updatedAt = new Date().toISOString().slice(0,10);
   if(r.status === "activated") r.status = "updated";
-  DEMO.rp.businessName = document.getElementById("e-biz").value.trim();
-  DEMO.rp.contactName = document.getElementById("e-cname").value.trim();
-  DEMO.rp.contactEmail = document.getElementById("e-cemail").value.trim();
-  DEMO.rp.contactPhone = document.getElementById("e-cphone").value.trim();
+  saveContactFields();
   closeEdit(); render();
-  toast("Saved - sent to HOMs for review.");
+  toast("Resubmitted - sent to HOMs for review.");
 }
 function managePlan(){ toast("This will open your secure Stripe billing portal once Stripe is connected."); }
 
