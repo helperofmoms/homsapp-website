@@ -22,6 +22,7 @@ h1,h2,h3,h4{margin:0;font-weight:700;line-height:1.25;} p{margin:0;color:var(--m
 .sec-head{display:flex;align-items:center;gap:12px;margin-bottom:6px;flex-wrap:wrap;}
 .sec-head h2{font-size:19px;} .sec-desc{font-size:13.5px;margin-bottom:20px;}
 .pill{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.6px;padding:3px 10px;border-radius:999px;text-transform:uppercase;}
+.pill-draft{background:#F0EFF7;color:#6B6885;}
 .pill-pending{background:#FFF4E5;color:var(--amber);} .pill-updated{background:#E8F1FE;color:#2563EB;} .pill-approved{background:#EDE9FE;color:var(--purple-deep);} .pill-activated{background:#E7F6EC;color:#227C42;} .pill-declined{background:#FDECEF;color:var(--rose);}
 .preview{border:1px solid #E7E9F3;border-radius:14px;padding:16px;display:flex;gap:13px;background:#FAFAFF;margin-bottom:22px;}
 .preview img{width:52px;height:52px;border-radius:10px;object-fit:contain;border:1px solid #E7E9F3;background:#fff;padding:6px;flex:0 0 auto;}
@@ -175,7 +176,7 @@ footer{background:var(--ink);padding:52px 0 28px;} .foot-top{display:flex;justif
 <div class="sec-head"><h2 id="res-owner">Your Resources</h2></div>
 <p class="sec-desc">Everything you have shared with the HOMs Box. Tap any resource to preview it. Only resources marked Live are visible to families.</p>
 <div id="res-list"></div>
-<a class="btn btn-green" href="become-a-resource-partner.html">Submit another resource</a>
+<button class="btn btn-green" onclick="newResource()">Submit another resource</button>
 <div class="note">Save draft keeps your edits privately without changing what families see. Resubmit sends them to HOMs for a quick review - your live version stays up until the update is approved.</div>
 </div>
 
@@ -247,7 +248,7 @@ footer{background:var(--ink);padding:52px 0 28px;} .foot-top{display:flex;justif
 <div class="edit-ov" id="edit-ov"><div class="edit-modal">
 <div class="edit-head"><h3 id="edit-title">Edit resource</h3><button class="close-x-e" onclick="closeEdit()" style="border:none;background:#F2F1FB;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:17px;color:#5B5876;">&times;</button></div>
 <div class="edit-body" id="edit-body"></div>
-<div class="edit-foot"><button class="btn btn-ghost" onclick="closeEdit()">Cancel</button><button class="btn btn-draft" onclick="saveDraft()">Save draft</button><button class="btn btn-primary" onclick="resubmitEdit()">Resubmit</button></div>
+<div class="edit-foot"><button class="btn btn-ghost" onclick="closeEdit()">Cancel</button><button class="btn btn-draft" onclick="saveDraft()">Save draft</button><button class="btn btn-primary" id="edit-submit-btn" onclick="resubmitEdit()">Resubmit</button></div>
 </div></div>
 <div class="toast" id="toast"></div>
 <script>
@@ -281,7 +282,7 @@ var DEMO = {
     ]
   }
 };
-var STAGE_LABELS = {pending:"Pending review",updated:"Update in review",approved:"Approved",activated:"Live",declined:"Declined"};
+var STAGE_LABELS = {draft:"Draft",pending:"Pending review",updated:"Update in review",approved:"Approved",activated:"Live",declined:"Declined"};
 var view = "ep";
 
 function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
@@ -360,7 +361,7 @@ function render(){
       if(r.updatedAt && r.updatedAt !== r.uploadedAt) dates += "  &middot;  <strong>Last updated</strong> " + fmtDate(r.updatedAt);
       return "<div class=\"res-acc\" data-i=\"" + i + "\">" +
         "<div class=\"res-sum\"><span class=\"res-chev\">&rsaquo;</span>" +
-        "<h4>" + esc(r.title) + "</h4>" +
+        "<h4>" + esc((r.status === "draft" && r.draft && r.draft.title) ? r.draft.title : r.title) + "</h4>" +
         (r.draft ? "<span class=\"draft-flag\">Unsent draft</span>" : "") +
         "<span class=\"pill pill-" + r.status + "\">" + STAGE_LABELS[r.status] + "</span></div>" +
         "<div class=\"res-panel\">" +
@@ -479,13 +480,22 @@ function msValues(id){
   return Array.prototype.map.call(document.querySelectorAll("#" + id + " input[type=checkbox]:checked"), function(c){ return c.value; });
 }
 
-function editResource(e, i){
-  e.stopPropagation();
+var BLANK_RESOURCE = { title:"", resourceType:[], subject:[], workingStyle:"", subTopic:"", fromGrade:"", toGrade:"", fromAge:"", toAge:"", description:"", sampleLink:"", fileName:"", fileType:"link", pages:0, status:"draft" };
+
+function newResource(){
+  openEditor(null, -1);
+}
+function editResource(e, i){ openEditor(e, i); }
+
+function openEditor(e, i){
+  if(e) e.stopPropagation();
   editingIndex = i;
-  var live = DEMO.rp.resources[i];
-  var r = live.draft ? Object.assign({}, live, live.draft) : live;
+  var isNew = (i === -1);
+  var live = isNew ? Object.assign({}, BLANK_RESOURCE) : DEMO.rp.resources[i];
+  var r = (!isNew && live.draft) ? Object.assign({}, live, live.draft) : live;
   var d = DEMO.rp;
-  document.getElementById("edit-title").textContent = "Edit: " + (live.title || "");
+  document.getElementById("edit-title").textContent = isNew ? "Submit a new resource" : ("Edit: " + (live.title || ""));
+  document.getElementById("edit-submit-btn").textContent = isNew ? "Submit for review" : "Resubmit";
   var fileBlock = live.fileName
     ? ("<div class=\"cur-file\">Current file: <strong>" + esc(live.fileName) + "</strong>" + (live.pages ? (" &middot; " + live.pages + " pages") : "") + (live.duration ? (" &middot; " + esc(live.duration)) : "") + "<br/>Uploading a new file replaces this one.</div>")
     : "<div class=\"cur-file\">No file uploaded &mdash; only the sample link is on file.</div>";
@@ -519,7 +529,9 @@ function editResource(e, i){
       "<div class=\"fld\"><label>Contact email</label><input type=\"email\" id=\"e-cemail\" value=\"" + esc(d.contactEmail || "") + "\"/></div>" +
     "</div>" +
     "<div class=\"fld\"><label>Contact phone <span class=\"opt\">(optional)</span></label><input type=\"tel\" id=\"e-cphone\" value=\"" + esc(d.contactPhone || "") + "\"/></div>" +
-    "<div class=\"review-note\">Resubmit sends this resource back to the HOMs team for a quick review. Your current version stays live until the update is approved. Save draft keeps your edits without submitting them.</div>";
+    (isNew
+      ? "<div class=\"review-note\">New resources go to the HOMs team for review before they appear in the HOMs Box. Save draft keeps it private until you are ready.</div>"
+      : "<div class=\"review-note\">Resubmit sends this resource back to the HOMs team for a quick review. Your current version stays live until the update is approved. Save draft keeps your edits without submitting them.</div>");
   initMS("e-types", "Select one or more types");
   initMS("e-subjects", "Select one or more subjects");
   document.getElementById("edit-ov").classList.add("open");
@@ -553,9 +565,22 @@ function saveContactFields(){
 
 function saveDraft(){
   if(editingIndex === null) return;
-  var r = DEMO.rp.resources[editingIndex];
-  r.draft = collectEdit();
-  r.draftSavedAt = new Date().toISOString().slice(0,10);
+  var vals = collectEdit();
+  var today = new Date().toISOString().slice(0,10);
+  if(editingIndex === -1){
+    var fresh = Object.assign({}, BLANK_RESOURCE, vals);
+    fresh.title = vals.title || "Untitled draft";
+    fresh.status = "draft";
+    fresh.uploadedAt = today;
+    fresh.updatedAt = today;
+    fresh.draft = vals;
+    fresh.draftSavedAt = today;
+    DEMO.rp.resources.push(fresh);
+  } else {
+    var r = DEMO.rp.resources[editingIndex];
+    r.draft = vals;
+    r.draftSavedAt = today;
+  }
   saveContactFields();
   closeEdit(); render();
   toast("Draft saved - not sent for review yet.");
@@ -577,6 +602,18 @@ function resubmitEdit(){
   if(!subs.length) ok = false;
   if(!title || !desc || !link){ ok = false; toast("Title, description and sample link are all required."); }
   if(!ok) return;
+  var today = new Date().toISOString().slice(0,10);
+  if(editingIndex === -1){
+    var created = Object.assign({}, BLANK_RESOURCE, collectEdit());
+    created.status = "pending";
+    created.uploadedAt = today;
+    created.updatedAt = today;
+    DEMO.rp.resources.push(created);
+    saveContactFields();
+    closeEdit(); render();
+    toast("Submitted - sent to HOMs for review.");
+    return;
+  }
   var r = DEMO.rp.resources[editingIndex];
   delete r.draft; delete r.draftSavedAt;
   r.title = title; r.resourceType = types; r.subject = subs;
