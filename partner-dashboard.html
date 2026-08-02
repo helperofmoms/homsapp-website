@@ -133,8 +133,8 @@ footer{background:var(--ink);padding:52px 0 28px;} .foot-top{display:flex;justif
 <div class="sec">
 <div class="sec-head"><h2>Send us feedback</h2></div>
 <p class="sec-desc">One tap is plenty. Add a topic or a note only if you want to.</p>
-<div class="fld"><label>How's it going?</label>
-<div class="chips" id="fb-chips"><button type="button" class="chip" data-v="Best homeschool tool for partners">Best homeschool tool for partners</button><button type="button" class="chip" data-v="Love this">Love this</button><button type="button" class="chip" data-v="Useful">Useful</button><button type="button" class="chip" data-v="Confusing">Confusing</button><button type="button" class="chip" data-v="Cluttered">Cluttered</button><button type="button" class="chip" data-v="Give me more to do">Give me more to do</button><button type="button" class="chip" data-v="Something's broken">Something's broken</button><button type="button" class="chip" data-v="Poorly Engineered">Poorly Engineered</button></div></div>
+<div class="fld"><label>How's it going? <span style="font-weight:500;color:#5B5876">(choose any that apply)</span></label>
+<div class="chips" id="fb-chips"><button type="button" class="chip" data-v="Bringing me new families">Bringing me new families</button><button type="button" class="chip" data-v="Easy to keep updated">Easy to keep updated</button><button type="button" class="chip" data-v="Worth the $5">Worth the $5</button><button type="button" class="chip" data-v="Want more visibility">Want more visibility</button><button type="button" class="chip" data-v="Want more control over my listing">Want more control over my listing</button><button type="button" class="chip" data-v="Approval took too long">Approval took too long</button><button type="button" class="chip" data-v="Confusing to set up">Confusing to set up</button><button type="button" class="chip" data-v="Something's broken">Something's broken</button></div></div>
 <div class="fld"><label>What's this about? <span style="font-weight:500;color:#5B5876">(optional)</span></label>
 <select id="fb-topic"><option value="">Choose a part of HOMs...</option><option>My listing or resources</option><option>Subscription & billing</option><option>Account & login</option><option>Applying / approval process</option><option>The HOMs Box</option><option>Something else</option></select></div>
 <div class="fld"><label>Anything else? <span style="font-weight:500;color:#5B5876">(optional)</span></label>
@@ -287,20 +287,17 @@ Array.prototype.forEach.call(document.querySelectorAll(".demo-btn"), function(b)
     b.classList.add("active"); view = b.getAttribute("data-view"); render();
   };
 });
-var fbSentiment = "";
+var fbSentiments = [];
 function syncFeedbackBtn(){
   var note = document.getElementById("fb-note").value.trim();
-  document.getElementById("fb-send").disabled = !(fbSentiment || note);
+  document.getElementById("fb-send").disabled = !(fbSentiments.length || note);
 }
 Array.prototype.forEach.call(document.querySelectorAll("#fb-chips .chip"), function(c){
   c.onclick = function(){
     var v = c.getAttribute("data-v");
-    if(fbSentiment === v){ fbSentiment = ""; c.classList.remove("on"); }
-    else {
-      fbSentiment = v;
-      Array.prototype.forEach.call(document.querySelectorAll("#fb-chips .chip"), function(x){ x.classList.remove("on"); });
-      c.classList.add("on");
-    }
+    var i = fbSentiments.indexOf(v);
+    if(i === -1){ fbSentiments.push(v); c.classList.add("on"); }
+    else { fbSentiments.splice(i, 1); c.classList.remove("on"); }
     syncFeedbackBtn();
   };
 });
@@ -310,7 +307,7 @@ async function sendFeedback(){
   var btn = document.getElementById("fb-send");
   btn.disabled = true;
   var payload = {
-    sentiment: fbSentiment,
+    sentiments: fbSentiments,
     topic: document.getElementById("fb-topic").value,
     note: document.getElementById("fb-note").value.trim(),
     partnerType: view,
@@ -319,7 +316,7 @@ async function sendFeedback(){
   try {
     var r = await fetch("/api/partner/feedback", {method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(payload)});
     if(!r.ok) throw new Error("failed");
-    fbSentiment = "";
+    fbSentiments = [];
     Array.prototype.forEach.call(document.querySelectorAll("#fb-chips .chip"), function(x){ x.classList.remove("on"); });
     document.getElementById("fb-topic").value = "";
     document.getElementById("fb-note").value = "";
