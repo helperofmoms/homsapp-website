@@ -81,6 +81,14 @@ h1,h2,h3,h4{margin:0;font-weight:700;line-height:1.25;} p{margin:0;color:var(--m
 .stat-row .k{font-size:13px;color:var(--muted);font-weight:600;}
 .stat-row .v{font-size:17px;font-weight:800;color:var(--ink);}
 .stat-foot{font-size:12px;color:var(--muted);margin-top:13px;line-height:1.6;}
+.photo-drop{border:2px dashed #DCD9F2;border-radius:12px;padding:16px;text-align:center;cursor:pointer;background:#FAFAFF;position:relative;font-size:13px;color:var(--muted);}
+.photo-drop:hover{border-color:var(--purple);}
+.photo-drop input{position:absolute;inset:0;opacity:0;cursor:pointer;}
+.photo-drop p{margin:0;font-size:13px;}
+.photo-previews{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+.photo-thumb{position:relative;width:62px;height:62px;border-radius:9px;overflow:hidden;border:1px solid #E2E5FB;background:#fff;}
+.photo-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+.photo-x{position:absolute;top:2px;right:2px;width:19px;height:19px;border:none;border-radius:50%;background:rgba(36,31,69,0.78);color:#fff;font-size:12px;line-height:1;cursor:pointer;padding:0;}
 .chipset{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:6px;}
 .pchip{border:1.5px solid #E2E5FB;background:#fff;font-family:Poppins,sans-serif;font-weight:600;font-size:12.5px;padding:7px 13px;border-radius:999px;cursor:pointer;color:var(--ink);}
 .pchip.on{background:var(--purple);border-color:var(--purple);color:#fff;}
@@ -156,7 +164,7 @@ h1,h2,h3,h4{margin:0;font-weight:700;line-height:1.25;} p{margin:0;color:var(--m
 .res-item h4{font-size:15px;margin-bottom:4px;} .res-meta{font-size:12.5px;color:var(--muted);margin-top:4px;}
 .res-body{flex:1;min-width:200px;} .res-actions{display:flex;gap:8px;flex-wrap:wrap;}
 .btn-sm{font-size:12.5px;padding:8px 15px;border-radius:9px;}
-.sub-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:15px;margin-bottom:20px;}
+.sub-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:13px;margin-bottom:18px;}
 .sub-cell{background:#FAFAFF;border:1px solid #ECEAF9;border-radius:13px;padding:15px;}
 .sub-cell .k{font-size:11.5px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
 .sub-cell .v{font-size:16px;font-weight:700;}
@@ -225,6 +233,18 @@ footer{background:var(--ink);padding:52px 0 28px;} .foot-top{display:flex;justif
 </div>
 
 
+<div class="sec">
+<div class="sec-head"><h2>Subscription &amp; Billing</h2><span class="pill pill-activated">Active</span></div>
+<p class="sec-desc">Your HOMs Partner membership.</p>
+<div class="sub-grid">
+<div class="sub-cell"><div class="k">Plan</div><div class="v">$5<span style="font-size:13px;font-weight:600;color:#5B5876">/mo</span></div></div>
+<div class="sub-cell"><div class="k">Status</div><div class="v" style="color:#227C42">Active</div></div>
+<div class="sub-cell"><div class="k">Member since</div><div class="v" id="member-since">Jul 14, 2026</div></div>
+<div class="sub-cell"><div class="k">Next billing date</div><div class="v">Aug 14, 2026</div></div>
+</div>
+<button class="btn btn-ghost" onclick="managePlan()">Manage subscription</button>
+<div class="note">Manage subscription opens a secure Stripe page where you can update your card, view invoices, or cancel anytime. HOMs never stores your card details.</div>
+</div>
 </div>
 <aside class="dash-side">
 
@@ -243,6 +263,11 @@ footer{background:var(--ink);padding:52px 0 28px;} .foot-top{display:flex;justif
 <textarea id="sp-msg" placeholder="e.g. Fall registration opens Monday - two spots left in the beginner piano group."></textarea></div>
 <div class="fld"><label>Link <span class="opt">(optional)</span></label><input type="url" id="sp-link" placeholder="https://"/></div>
 <div class="fld"><label>Post after <span class="opt">(optional)</span></label><input type="date" id="sp-date"/></div>
+<div class="fld"><label>Photos <span class="opt">(optional - up to 3)</span></label>
+<div class="photo-drop" id="photo-drop"><p id="photo-drop-text">Tap to add photos</p>
+<input type="file" id="sp-photos" accept="image/*" multiple/></div>
+<div class="photo-previews" id="photo-previews"></div>
+<p class="f-err" id="photo-err">Please choose image files no larger than 5MB each.</p></div>
 <div class="fld"><label>Where <span class="opt">(optional - we pick if you skip)</span></label>
 <div class="chipset" id="sp-platforms">
 <button type="button" class="pchip" data-p="Instagram">Instagram</button>
@@ -256,18 +281,6 @@ footer{background:var(--ink);padding:52px 0 28px;} .foot-top{display:flex;justif
 </div>
 
 </aside>
-</div>
-<div class="sec">
-<div class="sec-head"><h2>Subscription &amp; Billing</h2><span class="pill pill-activated">Active</span></div>
-<p class="sec-desc">Your HOMs Partner membership.</p>
-<div class="sub-grid">
-<div class="sub-cell"><div class="k">Plan</div><div class="v">$5<span style="font-size:13px;font-weight:600;color:#5B5876">/mo</span></div></div>
-<div class="sub-cell"><div class="k">Status</div><div class="v" style="color:#227C42">Active</div></div>
-<div class="sub-cell"><div class="k">Member since</div><div class="v" id="member-since">Jul 14, 2026</div></div>
-<div class="sub-cell"><div class="k">Next billing date</div><div class="v">Aug 14, 2026</div></div>
-</div>
-<button class="btn btn-ghost" onclick="managePlan()">Manage subscription</button>
-<div class="note">Manage subscription opens a secure Stripe page where you can update your card, view invoices, or cancel anytime. HOMs never stores your card details.</div>
 </div>
 
 <div class="sec">
@@ -619,6 +632,40 @@ function renderSidebar(){
   }).join("");
 }
 
+var socialPhotos = [];
+var PHOTO_MAX = 3;
+var PHOTO_BYTES = 5 * 1024 * 1024;
+function renderPhotoPreviews(){
+  document.getElementById("photo-previews").innerHTML = socialPhotos.map(function(p, i){
+    return "<div class=\"photo-thumb\"><img src=\"" + p.dataUrl + "\" alt=\"\"/>" +
+      "<button type=\"button\" class=\"photo-x\" onclick=\"removePhoto(" + i + ")\">&times;</button></div>";
+  }).join("");
+  var left = PHOTO_MAX - socialPhotos.length;
+  document.getElementById("photo-drop-text").textContent = left > 0
+    ? ("Tap to add photos (" + left + " left)")
+    : "Maximum of 3 photos added";
+}
+function removePhoto(i){ socialPhotos.splice(i, 1); renderPhotoPreviews(); }
+document.getElementById("sp-photos").addEventListener("change", function(e){
+  var err = document.getElementById("photo-err");
+  err.classList.remove("show");
+  var files = Array.prototype.slice.call(e.target.files || []);
+  var bad = false;
+  files.forEach(function(f){
+    if(socialPhotos.length >= PHOTO_MAX) return;
+    if(f.size > PHOTO_BYTES || f.type.indexOf("image/") !== 0){ bad = true; return; }
+    var reader = new FileReader();
+    reader.onload = function(ev){
+      if(socialPhotos.length >= PHOTO_MAX) return;
+      socialPhotos.push({ name: f.name, dataUrl: ev.target.result });
+      renderPhotoPreviews();
+    };
+    reader.readAsDataURL(f);
+  });
+  if(bad) err.classList.add("show");
+  e.target.value = "";
+});
+
 var socialPlatforms = [];
 function syncSocialBtn(){
   document.getElementById("sp-send-btn").disabled = document.getElementById("sp-msg").value.trim() === "";
@@ -632,6 +679,7 @@ Array.prototype.forEach.call(document.querySelectorAll("#sp-platforms .pchip"), 
   };
 });
 document.getElementById("sp-msg").addEventListener("input", syncSocialBtn);
+renderPhotoPreviews();
 
 async function sendSocial(){
   var btn = document.getElementById("sp-send-btn");
@@ -642,7 +690,8 @@ async function sendSocial(){
     postAfter: document.getElementById("sp-date").value,
     platforms: socialPlatforms.slice(),
     partnerType: view,
-    partnerName: DEMO[view].who
+    partnerName: DEMO[view].who,
+    photos: socialPhotos.slice(0, 3)
   };
   try {
     var r = await fetch("/api/partner/social-request", {method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(payload)});
@@ -652,6 +701,8 @@ async function sendSocial(){
     document.getElementById("sp-date").value = "";
     socialPlatforms = [];
     Array.prototype.forEach.call(document.querySelectorAll("#sp-platforms .pchip"), function(x){ x.classList.remove("on"); });
+    socialPhotos = [];
+    renderPhotoPreviews();
     syncSocialBtn();
     toast("Sent - HOMs will review it for the social rotation.");
   } catch(e){ btn.disabled = false; toast("Could not send that. Please try again."); }
