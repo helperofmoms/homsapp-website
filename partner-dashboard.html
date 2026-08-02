@@ -192,7 +192,7 @@ footer{background:var(--ink);padding:52px 0 28px;} .foot-top{display:flex;justif
 <div class="demo-switch"><button class="demo-btn active" data-view="ep">Enrichment Partner</button><button class="demo-btn" data-view="rp">Resource Partner</button></div></div>
 
 <div class="sec" id="listing-sec">
-<div class="sec-head"><h2 id="listing-title">Your Listing</h2><span class="pill pill-activated" id="listing-status">Live</span></div>
+<div class="sec-head"><h2 id="listing-title">Your Listing</h2><span class="pill pill-activated" id="listing-status">Live</span><button class="edit-pill" style="margin-left:auto;" onclick="openListingEditor()">&#9998; Edit listing</button></div>
 <p class="sec-desc" id="listing-desc"></p>
 <div id="listing-card"></div>
 <p class="card-note">This is exactly how families see you in the HOMs app and directory. Choose Edit to change anything &mdash; your current listing stays visible while HOMs reviews the update.</p>
@@ -568,8 +568,7 @@ function listingCardHTML(d){
       "<div class=\"pcard-logo\"><span class=\"big\">" + esc(d.logoInitial || (d.orgName || "?").charAt(0)) + "</span><span class=\"small\">LOGO</span></div>" +
     "</div>" +
     "<div class=\"pcard-body\">" +
-      "<div class=\"pcard-top\"><h3>" + esc(d.orgName || "") + "</h3>" +
-        "<button class=\"edit-pill\" onclick=\"openListingEditor()\">&#9998; Edit</button></div>" +
+      "<div class=\"pcard-top\"><h3>" + esc(d.orgName || "") + "</h3></div>" +
       "<div class=\"pcard-sub\">" + esc(d.offerTitle || "") + "<br/>" + esc(loc) + "</div>" +
       "<div class=\"pcard-tags\">" + tags + "</div>" +
       "<hr class=\"pcard-rule\"/>" +
