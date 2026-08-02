@@ -68,6 +68,22 @@ h1,h2,h3,h4{margin:0;font-weight:700;line-height:1.25;} p{margin:0;color:var(--m
 .cur-file{border:1px solid #E7E9F3;border-radius:11px;padding:13px 15px;background:#FAFAFF;font-size:13px;color:var(--muted);line-height:1.6;}
 .cur-file strong{color:var(--ink);}
 .review-note{background:#FFF8EC;border-radius:11px;padding:13px 15px;font-size:13px;color:var(--amber);font-weight:600;line-height:1.6;margin-top:18px;}
+.dash-grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:20px;align-items:start;}
+@media (max-width:1040px){ .dash-grid{grid-template-columns:1fr;} }
+.side-card{background:#fff;border:1px solid #ECEAF9;border-radius:var(--radius);padding:22px;margin-bottom:20px;}
+.side-card h3{font-size:16.5px;margin:0 0 5px;}
+.side-card .side-desc{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:16px;}
+.stat-hero{background:linear-gradient(135deg,var(--blue),var(--purple));border-radius:14px;padding:18px;color:#fff;margin-bottom:14px;}
+.stat-hero .n{font-family:Poppins,sans-serif;font-weight:800;font-size:34px;line-height:1;}
+.stat-hero .l{font-size:12.5px;font-weight:600;opacity:.93;margin-top:6px;line-height:1.4;}
+.stat-rows{display:flex;flex-direction:column;gap:10px;}
+.stat-row{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid #ECEAF9;border-radius:11px;padding:12px 14px;background:#FAFAFF;}
+.stat-row .k{font-size:13px;color:var(--muted);font-weight:600;}
+.stat-row .v{font-size:17px;font-weight:800;color:var(--ink);}
+.stat-foot{font-size:12px;color:var(--muted);margin-top:13px;line-height:1.6;}
+.chipset{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:6px;}
+.pchip{border:1.5px solid #E2E5FB;background:#fff;font-family:Poppins,sans-serif;font-weight:600;font-size:12.5px;padding:7px 13px;border-radius:999px;cursor:pointer;color:var(--ink);}
+.pchip.on{background:var(--purple);border-color:var(--purple);color:#fff;}
 .pcard{border:1px solid #E7E9F3;border-radius:16px;overflow:hidden;background:#fff;max-width:430px;box-shadow:0 14px 30px -20px rgba(36,31,69,0.35);}
 .pcard-banner{height:118px;display:grid;place-items:center;}
 .pcard-logo{display:flex;align-items:baseline;gap:3px;color:#fff;font-family:Poppins,sans-serif;font-weight:800;}
@@ -191,6 +207,8 @@ footer{background:var(--ink);padding:52px 0 28px;} .foot-top{display:flex;justif
 <div class="demo"><p>Demo preview - this page is showing sample data so you can click through the layout. Real partner sign-in and live data get wired up with the Twilio login.</p>
 <div class="demo-switch"><button class="demo-btn active" data-view="ep">Enrichment Partner</button><button class="demo-btn" data-view="rp">Resource Partner</button></div></div>
 
+<div class="dash-grid">
+<div class="dash-main">
 <div class="sec" id="listing-sec">
 <div class="sec-head"><h2 id="listing-title">Your Listing</h2><span class="pill pill-activated" id="listing-status">Live</span><button class="edit-pill" style="margin-left:auto;" onclick="openListingEditor()">&#9998; Edit listing</button></div>
 <p class="sec-desc" id="listing-desc"></p>
@@ -206,6 +224,39 @@ footer{background:var(--ink);padding:52px 0 28px;} .foot-top{display:flex;justif
 <div class="note">Save draft keeps your edits privately without changing what families see. Resubmit sends them to HOMs for a quick review - your live version stays up until the update is approved.</div>
 </div>
 
+
+</div>
+<aside class="dash-side">
+
+<div class="side-card">
+<h3>Your reach</h3>
+<p class="side-desc">What HOMs sent your way in the last 30 days.</p>
+<div class="stat-hero"><div class="n" id="st-clicks">0</div><div class="l" id="st-clicks-label">visits sent to your website</div></div>
+<div class="stat-rows" id="stat-rows"></div>
+<p class="stat-foot">Counts refresh daily. Families who find you through HOMs and click through are counted once each.</p>
+</div>
+
+<div class="side-card">
+<h3>Ask HOMs to post for you</h3>
+<p class="side-desc">Got an opening, an event, or news worth sharing? Send it over and we will work it into the HOMs social rotation.</p>
+<div class="fld"><label>What should we post?</label>
+<textarea id="sp-msg" placeholder="e.g. Fall registration opens Monday - two spots left in the beginner piano group."></textarea></div>
+<div class="fld"><label>Link <span class="opt">(optional)</span></label><input type="url" id="sp-link" placeholder="https://"/></div>
+<div class="fld"><label>Post after <span class="opt">(optional)</span></label><input type="date" id="sp-date"/></div>
+<div class="fld"><label>Where <span class="opt">(optional - we pick if you skip)</span></label>
+<div class="chipset" id="sp-platforms">
+<button type="button" class="pchip" data-p="Instagram">Instagram</button>
+<button type="button" class="pchip" data-p="Facebook">Facebook</button>
+<button type="button" class="pchip" data-p="TikTok">TikTok</button>
+<button type="button" class="pchip" data-p="YouTube">YouTube</button>
+<button type="button" class="pchip" data-p="LinkedIn">LinkedIn</button>
+</div></div>
+<button class="btn btn-green" id="sp-send-btn" disabled onclick="sendSocial()" style="width:100%;">Send to HOMs</button>
+<p class="stat-foot">We review every request before posting and may adjust wording to fit the feed.</p>
+</div>
+
+</aside>
+</div>
 <div class="sec">
 <div class="sec-head"><h2>Subscription &amp; Billing</h2><span class="pill pill-activated">Active</span></div>
 <p class="sec-desc">Your HOMs Partner membership.</p>
@@ -282,6 +333,7 @@ var SUBJECTS = ["Art","Faith Studies","Foreign Language","Health & PE","Language
 var DEMO = {
   ep: {
     who: "Renee's Music Studio",
+    stats: { clicks: 47, views: 612, offerOpens: 138, calendarAdds: 29 },
     brandColor: "#C93A50",
     logoInitial: "R",
     isNationwide: false,
@@ -305,6 +357,7 @@ var DEMO = {
   },
   rp: {
     who: "Little Botanist",
+    stats: { clicks: 83, views: 1094, previews: 271, downloads: 156 },
     memberSince: "Jul 14, 2026",
     businessName: "Little Botanist",
     contactName: "Robin Achebe", firstName: "Robin", contactEmail: "robin@littlebotanist.example", contactPhone: "",
@@ -366,6 +419,7 @@ function renderForm(fields, data){
 
 function render(){
   var isEP = view === "ep";
+  renderSidebar();
   var d = DEMO[view];
   document.getElementById("who").textContent = d.who;
   document.getElementById("member-since").textContent = d.memberSince;
@@ -551,6 +605,56 @@ function collectListing(){
     contactPhone: document.getElementById("l-cphone").value.trim(),
     offers: offers
   };
+}
+
+function renderSidebar(){
+  var d = DEMO[view];
+  var s = d.stats || {};
+  document.getElementById("st-clicks").textContent = (s.clicks || 0).toLocaleString();
+  var rows = view === "ep"
+    ? [["Listing views", s.views], ["Offers opened", s.offerOpens], ["Added to a family calendar", s.calendarAdds]]
+    : [["Resource views", s.views], ["Previews opened", s.previews], ["Downloads", s.downloads]];
+  document.getElementById("stat-rows").innerHTML = rows.map(function(r){
+    return "<div class=\"stat-row\"><span class=\"k\">" + esc(r[0]) + "</span><span class=\"v\">" + (r[1] || 0).toLocaleString() + "</span></div>";
+  }).join("");
+}
+
+var socialPlatforms = [];
+function syncSocialBtn(){
+  document.getElementById("sp-send-btn").disabled = document.getElementById("sp-msg").value.trim() === "";
+}
+Array.prototype.forEach.call(document.querySelectorAll("#sp-platforms .pchip"), function(c){
+  c.onclick = function(){
+    var p = c.getAttribute("data-p");
+    var i = socialPlatforms.indexOf(p);
+    if(i === -1){ socialPlatforms.push(p); c.classList.add("on"); }
+    else { socialPlatforms.splice(i, 1); c.classList.remove("on"); }
+  };
+});
+document.getElementById("sp-msg").addEventListener("input", syncSocialBtn);
+
+async function sendSocial(){
+  var btn = document.getElementById("sp-send-btn");
+  btn.disabled = true;
+  var payload = {
+    message: document.getElementById("sp-msg").value.trim(),
+    link: document.getElementById("sp-link").value.trim(),
+    postAfter: document.getElementById("sp-date").value,
+    platforms: socialPlatforms.slice(),
+    partnerType: view,
+    partnerName: DEMO[view].who
+  };
+  try {
+    var r = await fetch("/api/partner/social-request", {method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(payload)});
+    if(!r.ok) throw new Error("failed");
+    document.getElementById("sp-msg").value = "";
+    document.getElementById("sp-link").value = "";
+    document.getElementById("sp-date").value = "";
+    socialPlatforms = [];
+    Array.prototype.forEach.call(document.querySelectorAll("#sp-platforms .pchip"), function(x){ x.classList.remove("on"); });
+    syncSocialBtn();
+    toast("Sent - HOMs will review it for the social rotation.");
+  } catch(e){ btn.disabled = false; toast("Could not send that. Please try again."); }
 }
 
 function listingCardHTML(d){
