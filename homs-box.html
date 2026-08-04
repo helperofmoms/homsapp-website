@@ -212,10 +212,14 @@ footer{background:var(--ink);padding:52px 0 28px;}
 .pv-dl{background:linear-gradient(135deg,var(--blue),var(--green));color:#fff;font-family:Poppins,sans-serif;font-weight:700;font-size:13.5px;padding:9px 17px;border-radius:9px;text-decoration:none;}
 .pv-x{border:none;background:#F2F1FB;width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:18px;color:#5B5876;line-height:1;}
 .pv-body{flex:1;background:#F4F3FC;position:relative;}
-.pv-body iframe{width:100%;height:100%;border:0;display:block;}
+.pv-body{overflow-y:auto;}
+.pv-pages{display:flex;flex-direction:column;align-items:center;gap:16px;padding:18px;}
+.pv-pages canvas{width:100%;max-width:700px;height:auto;background:#fff;border-radius:6px;box-shadow:0 10px 26px -14px rgba(36,31,69,0.45);}
+.pv-state{padding:40px 24px;text-align:center;font-size:14px;color:var(--muted);}
+.pv-state a{color:var(--purple-deep);font-weight:700;}
 .pv-fallback{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:26px;text-align:center;}
 .pv-fallback p{font-size:14px;color:var(--muted);max-width:340px;}
-@media (max-width:640px){ .pv-modal{height:82vh;} .pv-body iframe{display:none;} .pv-fallback{display:flex;} }
+@media (max-width:640px){ .pv-modal{height:86vh;} .pv-pages{padding:10px;gap:10px;} }
 .free-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;}
 .free-card{border:1.5px solid #E7E9F3;border-radius:20px;padding:26px;background:#fff;display:flex;flex-direction:column;transition:transform .16s ease,box-shadow .16s ease;}
 .free-card:hover{transform:translateY(-4px);box-shadow:0 22px 44px -22px rgba(76,63,190,0.45);}
@@ -266,19 +270,19 @@ footer{background:var(--ink);padding:52px 0 28px;}
 <div class="free-icon" style="background:linear-gradient(135deg,#F07A4A,#D6395B)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3 7-7" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></div>
 <h3>Chore Charts</h3>
 <p>Simple, gender-neutral charts that work for one child or a whole crew. Weekly and daily layouts, with blank rows so you can add your own.</p>
-<div class="free-actions"><button class="free-btn ghost" onclick="openPreview('/freebies/homs-chore-charts.pdf','Chore Charts')">&#128065; Preview</button><a class="free-btn" href="/freebies/homs-chore-charts.pdf" download>&#8681; Download PDF</a></div>
+<div class="free-actions"><button class="free-btn ghost" onclick="openPreview('/freebies/homs-chore-charts.pdf','Chore Charts')">Preview</button><a class="free-btn" href="/freebies/homs-chore-charts.pdf" download>&#8681; Download PDF</a></div>
 </div>
 <div class="free-card">
 <div class="free-icon" style="background:linear-gradient(135deg,#6C5CE7,#0EA5E9)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="#fff" stroke-width="2.2"/><path d="M3.5 6.5L12 13l8.5-6.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
 <h3>Pen Pal Templates</h3>
 <p>Guided letter templates that take the blank-page panic out of writing practice, plus an addressing guide and a matching envelope.</p>
-<div class="free-actions"><button class="free-btn ghost" onclick="openPreview('/freebies/homs-pen-pal-templates.pdf','Pen Pal Templates')">&#128065; Preview</button><a class="free-btn" href="/freebies/homs-pen-pal-templates.pdf" download>&#8681; Download PDF</a></div>
+<div class="free-actions"><button class="free-btn ghost" onclick="openPreview('/freebies/homs-pen-pal-templates.pdf','Pen Pal Templates')">Preview</button><a class="free-btn" href="/freebies/homs-pen-pal-templates.pdf" download>&#8681; Download PDF</a></div>
 </div>
 <div class="free-card">
 <div class="free-icon" style="background:linear-gradient(135deg,#43B05C,#0EA5E9)"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="2" stroke="#fff" stroke-width="2.2"/><path d="M3 10h18M8 3v4M16 3v4" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg></div>
 <h3>Learner Scheduling Templates</h3>
 <p>Flexible weekly planners built for homeschool rhythms &mdash; loop scheduling, block scheduling, and a plain undated week.</p>
-<div class="free-actions"><button class="free-btn ghost" onclick="openPreview('/freebies/homs-scheduling-templates.pdf','Learner Scheduling Templates')">&#128065; Preview</button><a class="free-btn" href="/freebies/homs-scheduling-templates.pdf" download>&#8681; Download PDF</a></div>
+<div class="free-actions"><button class="free-btn ghost" onclick="openPreview('/freebies/homs-scheduling-templates.pdf','Learner Scheduling Templates')">Preview</button><a class="free-btn" href="/freebies/homs-scheduling-templates.pdf" download>&#8681; Download PDF</a></div>
 </div>
 </div>
 <p class="free-note">Loved these? There are hundreds more waiting inside the app.</p>
@@ -372,22 +376,61 @@ function cardHTML(r){
 <div class="pv-head"><h3 id="pv-title">Preview</h3>
 <a class="pv-dl" id="pv-dl" href="#" download>&#8681; Download</a>
 <button class="pv-x" onclick="closePreview()">&times;</button></div>
-<div class="pv-body"><iframe id="pv-frame" title="PDF preview"></iframe>
-<div class="pv-fallback"><p>Previews open best on a larger screen. Tap below to open this printable in a new tab.</p>
-<a class="pv-dl" id="pv-open" href="#" target="_blank" rel="noopener">Open the PDF</a></div>
+<div class="pv-body"><div class="pv-pages" id="pv-pages"></div>
+<div class="pv-state" id="pv-state">Loading preview...</div>
 </div></div></div>
 <script>
-function openPreview(url, title){
+var PDFJS_SRC = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js";
+var pdfjsReady = null;
+function loadPdfJs(){
+  if(pdfjsReady) return pdfjsReady;
+  pdfjsReady = new Promise(function(resolve, reject){
+    var s = document.createElement("script");
+    s.src = PDFJS_SRC;
+    s.onload = function(){
+      window["pdfjs-dist/build/pdf"].GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+      resolve(window["pdfjs-dist/build/pdf"]);
+    };
+    s.onerror = function(){ reject(new Error("pdfjs failed")); };
+    document.head.appendChild(s);
+  });
+  return pdfjsReady;
+}
+
+var pvToken = 0;
+async function openPreview(url, title){
+  var mine = ++pvToken;
   document.getElementById("pv-title").textContent = title;
   document.getElementById("pv-dl").href = url;
-  document.getElementById("pv-open").href = url;
-  document.getElementById("pv-frame").src = url + "#view=FitH";
+  document.getElementById("pv-pages").innerHTML = "";
+  var state = document.getElementById("pv-state");
+  state.style.display = "block";
+  state.textContent = "Loading preview...";
   document.getElementById("pv-ov").classList.add("open");
   document.body.style.overflow = "hidden";
+  try {
+    var pdfjs = await loadPdfJs();
+    var doc = await pdfjs.getDocument(url).promise;
+    if(mine !== pvToken) return;
+    state.style.display = "none";
+    for(var n = 1; n <= doc.numPages; n++){
+      var page = await doc.getPage(n);
+      if(mine !== pvToken) return;
+      var vp = page.getViewport({ scale: 1.6 });
+      var canvas = document.createElement("canvas");
+      canvas.width = vp.width; canvas.height = vp.height;
+      document.getElementById("pv-pages").appendChild(canvas);
+      await page.render({ canvasContext: canvas.getContext("2d"), viewport: vp }).promise;
+    }
+  } catch(err){
+    state.style.display = "block";
+    state.innerHTML = "Could not load the preview here. <a href=\"" + url + "\" target=\"_blank\" rel=\"noopener\">Open the PDF in a new tab</a> instead.";
+  }
 }
 function closePreview(){
+  pvToken++;
   document.getElementById("pv-ov").classList.remove("open");
-  document.getElementById("pv-frame").src = "";
+  document.getElementById("pv-pages").innerHTML = "";
   document.body.style.overflow = "";
 }
 document.getElementById("pv-ov").onclick = function(e){ if(e.target.id === "pv-ov") closePreview(); };
